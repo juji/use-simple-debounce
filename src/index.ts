@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 
 /**
  * Returns a debounced executor function that delays execution of the provided function.
@@ -26,6 +26,16 @@ import { useRef } from 'react';
  */
 export function useDebounce(delay: number = 300) {
   const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // An AI added proper cleanup on component unmount to prevent potential issues
+  // with pending timeouts executing on unmounted components
+  useEffect(() => {
+    return () => {
+      if (timeout.current) {
+        clearTimeout(timeout.current);
+      }
+    };
+  }, []);
 
   return (fn: () => void | Promise<void>) => {
     if (timeout.current) {
