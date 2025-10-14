@@ -1,7 +1,7 @@
 {
   "name": "use-simple-debounce",
   "version": "1.0.0",
-  "description": "A simple, dependency-free React hook for debouncing function execution",
+  "description": "A simple, dependency-free React hook for debouncing function execution with async support",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -26,7 +26,10 @@
     "hook",
     "debounce",
     "typescript",
-    "performance"
+    "performance",
+    "async",
+    "simple",
+    "lightweight"
   ],
   "author": "juji",
   "license": "MIT",

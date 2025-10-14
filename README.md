@@ -5,18 +5,15 @@ A simple, dependency-free React hook for debouncing function execution. No exter
 ```tsx
 import { useDebounce } from 'use-simple-debounce';
 
-// define
-const debounced = useDebounce( /* 300 */ ) // defaults to 300ms
+// Create a debouncer (defaults to 300ms)
+const debounced = useDebounce();
 
-// use
-debounced(() => { /* this is debounced */ })
-// or 
-debounced(async () => { /* this is debounced */ })
+// Use it to debounce any function
+debounced(() => { /* this executes after 300ms */ });
+
+// Works with async functions too
+debounced(async () => { /* this executes after 300ms */ });
 ```
-
-Cheers, j
-
-The text below are AI generated.
 
 ## Features
 
@@ -193,17 +190,15 @@ MIT © [juji](https://github.com/juji)
 ## Changelog
 
 ### v1.0.0
-- � **Initial Release**: Simple, dependency-free React debouncing hook
-- � **Zero Dependencies**: No external libraries, works with all React versions
+- 🎉 **Initial Release**: Simple, dependency-free React debouncing hook
+- 🚀 **Zero Dependencies**: No external libraries, works with all React versions
 - ⚡ **Async Support**: Handles both sync and async functions with `Promise<void>` types
 - 🎯 **Smart Defaults**: 300ms delay (most common usage pattern)
 - 📦 **Dual Builds**: ESM + CommonJS with full TypeScript support
-- � **Type Safe**: Complete TypeScript definitions and JSDoc
+- 🔒 **Type Safe**: Complete TypeScript definitions and JSDoc
 - 📚 **Rich Documentation**: Usage examples, delay guides, and comparisons
 - 🧹 **Memory Safe**: Automatic cleanup prevents memory leaks
 
 ## Contributing
 
 Contributions welcome! Please feel free to submit a Pull Request.
-
-j: but seriously, why?
