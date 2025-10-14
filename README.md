@@ -9,10 +9,10 @@ import { useDebounce } from 'use-simple-debounce';
 const debounced = useDebounce();
 
 // Use it to debounce any function
-debounced(() => { /* this executes after 300ms */ });
+debounced(() => { /* debounced for 300ms */ });
 
 // Works with async functions too
-debounced(async () => { /* this executes after 300ms */ });
+debounced(async () => { /* debounced for 300ms */ });
 ```
 
 ## Features
