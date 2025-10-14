@@ -1,0 +1,50 @@
+{
+  "name": "use-simple-debounce",
+  "version": "1.0.0",
+  "description": "A simple, dependency-free React hook for debouncing function execution",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "react",
+    "hook",
+    "debounce",
+    "typescript",
+    "performance"
+  ],
+  "author": "juji",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=16.8.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.16",
+    "react": "^19.1.1",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/juji/use-simple-debounce"
+  },
+  "bugs": {
+    "url": "https://github.com/juji/use-simple-debounce/issues"
+  },
+  "homepage": "https://github.com/juji/use-simple-debounce#readme"
+}
