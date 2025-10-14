@@ -19,6 +19,7 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
+    "test": "node test.js",
     "prepublishOnly": "npm run build"
   },
   "keywords": [

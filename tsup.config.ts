@@ -7,4 +7,7 @@ export default defineConfig({
   clean: true,
   minify: false,
   sourcemap: true,
+  outExtension: ({ format }) => ({
+    js: format === 'esm' ? '.mjs' : '.js'
+  }),
 })
