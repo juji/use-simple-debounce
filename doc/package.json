@@ -17,6 +17,7 @@
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
     "astro": "^5.14.5",
+    "pagefind": "^1.4.0",
     "preact": "^10.27.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
