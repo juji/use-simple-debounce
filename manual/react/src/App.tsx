@@ -89,7 +89,7 @@ const App: React.FC = () => {
 
       <main className="main-content">
         <header className="page-header">
-          <h1>use-simple-debounce Manual Tests (REACT)</h1>
+          <h1>use-simple-debounce Manual Tests</h1>
           <p>React Implementation</p>
         </header>
         {renderTestCase()}
