@@ -36,9 +36,9 @@ export function createRapidCallsTest(container: HTMLElement) {
         immediateCount.textContent = `Immediate Count: ${count}`;
         addLog(`Immediate count: ${count}`);
         debounced(() => {
-          debouncedValue = count;
+          debouncedValue += 1;
           debouncedCount.textContent = `Debounced Count: ${debouncedValue}`;
-          addLog(`Debounced count: ${count}`);
+          addLog(`Debounced count: ${debouncedValue}`);
         }, 300);
       }, i * 50); // Call every 50ms
     }

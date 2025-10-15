@@ -38,9 +38,9 @@
       "require": "./dist/vue.js"
     },
     "./vanilla": {
-      "types": "./dist/native.d.ts",
-      "import": "./dist/native.mjs",
-      "require": "./dist/native.js"
+      "types": "./dist/vanilla.d.ts",
+      "import": "./dist/vanilla.mjs",
+      "require": "./dist/vanilla.js"
     }
   },
   "files": [
@@ -48,7 +48,7 @@
   ],
   "scripts": {
     "build": "tsup",
-    "dev": "concurrently \"tsup --watch\" \"cd manual/react && npm run dev\" \"cd manual/solid && npm run dev\" \"cd manual/svelte && npm run dev\" \"cd manual/vue && npm run dev\" \"cd manual/preact && npm run dev\" \"cd manual/svelte5 && npm run dev\"",
+    "dev": "concurrently \"tsup --watch\" \"cd manual/react && npm run dev\" \"cd manual/solid && npm run dev\" \"cd manual/svelte && npm run dev\" \"cd manual/vue && npm run dev\" \"cd manual/preact && npm run dev\" \"cd manual/svelte5 && npm run dev\" \"cd manual/vanilla && npm run dev\"",
     "test": "vitest run",
     "test:watch": "vitest",
     "prepublishOnly": "npm run build"
