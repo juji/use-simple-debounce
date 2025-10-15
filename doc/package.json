@@ -20,6 +20,7 @@
     "preact": "^10.27.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "shiki": "^3.13.0",
     "solid-js": "^1.9.9",
     "svelte": "^5.40.0",
     "typescript": "^5.9.3",

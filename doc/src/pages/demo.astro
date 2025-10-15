@@ -1,0 +1,286 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ShikiHighlighter from '../components/ShikiHighlighter.astro';
+---
+
+<BaseLayout title="Shiki Highlighter Demo - use-simple-debounce">
+	<main class="demo-page">
+		<div class="container">
+			<header class="page-header">
+				<h1>Shiki Highlighter Demo</h1>
+				<p>Beautiful syntax highlighting powered by Shiki</p>
+			</header>
+
+			<section class="demo-section">
+				<h2>JavaScript Example</h2>
+				<ShikiHighlighter
+					code={`import { useDebounce } from 'use-simple-debounce';
+
+// Create a debouncer
+const debounced = useDebounce();
+
+// Use it to debounce any function
+debounced(() => {
+  // This executes 300ms after the last call
+  performSearch(query);
+}, 300);
+
+// Works with async functions too
+debounced(async () => {
+  try {
+    await saveToServer(data);
+    console.log('Auto-saved!');
+  } catch (error) {
+    console.error('Save failed:', error);
+  }
+}, 1000);`}
+					lang="javascript"
+				/>
+			</section>
+
+			<section class="demo-section">
+				<h2>TypeScript Example</h2>
+				<ShikiHighlighter
+					code={`import { useDebounce } from 'use-simple-debounce';
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+function UserSearch() {
+  const [users, setUsers] = useState<User[]>([]);
+  const [query, setQuery] = useState('');
+  const debounced = useDebounce();
+
+  const searchUsers = async (searchQuery: string): Promise<void> => {
+    try {
+      const response = await fetch(\`/api/users?q=\${searchQuery}\`);
+      const data = await response.json();
+      setUsers(data.users);
+    } catch (error) {
+      console.error('Search failed:', error);
+    }
+  };
+
+  const handleSearch = (searchQuery: string) => {
+    setQuery(searchQuery);
+    debounced(() => searchUsers(searchQuery), 300);
+  };
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={query}
+        onChange={e => handleSearch(e.target.value)}
+        placeholder="Search users..."
+      />
+      <ul>
+        {users.map(user => (
+          <li key={user.id}>{user.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}`}
+					lang="typescript"
+				/>
+			</section>
+
+			<section class="demo-section">
+				<h2>React Hook Usage</h2>
+				<ShikiHighlighter
+					code={`import React, { useState } from 'react';
+import { useDebounce } from 'use-simple-debounce';
+
+function SearchComponent() {
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState([]);
+  const debounced = useDebounce();
+
+  const performSearch = async (searchQuery) => {
+    const response = await fetch(\`/api/search?q=\${searchQuery}\`);
+    const data = await response.json();
+    setResults(data.results);
+  };
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setQuery(value);
+
+    debounced(() => performSearch(value), 300);
+  };
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={query}
+        onChange={handleInputChange}
+        placeholder="Search..."
+      />
+      <div>
+        {results.map((result, index) => (
+          <div key={index}>{result.title}</div>
+        ))}
+      </div>
+    </div>
+  );
+}`}
+					lang="jsx"
+				/>
+			</section>
+
+			<section class="demo-section">
+				<h2>CSS Example</h2>
+				<ShikiHighlighter
+					code={`.debounce-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.2s ease;
+}
+
+.debounce-input:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.search-results {
+  margin-top: 16px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.result-item {
+  padding: 8px 12px;
+  border-bottom: 1px solid #f3f4f6;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.result-item:hover {
+  background-color: #f9fafb;
+}
+
+.result-item:last-child {
+  border-bottom: none;
+}`}
+					lang="css"
+				/>
+			</section>
+
+			<section class="demo-section">
+				<h2>JSON Configuration</h2>
+				<ShikiHighlighter
+					code={`{
+  "debounce": {
+    "delay": 300,
+    "leading": false,
+    "trailing": true
+  },
+  "api": {
+    "baseUrl": "https://api.example.com",
+    "timeout": 5000,
+    "retries": 3
+  },
+  "features": {
+    "autoSave": true,
+    "realTimeSearch": true,
+    "caching": false
+  }
+}`}
+					lang="json"
+				/>
+			</section>
+
+			<section class="demo-section">
+				<h2>Shell Script</h2>
+				<ShikiHighlighter
+					code={`#!/bin/bash
+
+# Build and test script for use-simple-debounce
+echo "Building use-simple-debounce..."
+
+# Install dependencies
+npm install
+
+# Run type checking
+npm run type-check
+
+# Build the library
+npm run build
+
+# Run tests
+npm test
+
+# Run manual test apps
+npm run dev
+
+echo "Build complete! 🎉"`}
+					lang="bash"
+				/>
+			</section>
+		</div>
+	</main>
+</BaseLayout>
+
+<style>
+	.demo-page {
+		padding: var(--spacing-2xl) 0;
+		min-height: calc(100vh - var(--header-height) - 200px);
+	}
+
+	.page-header {
+		text-align: center;
+		margin-bottom: var(--spacing-2xl);
+	}
+
+	.page-header h1 {
+		font-size: var(--font-size-4xl);
+		font-weight: 700;
+		color: var(--color-text-primary);
+		margin-bottom: var(--spacing-md);
+	}
+
+	.page-header p {
+		font-size: var(--font-size-lg);
+		color: var(--color-text-secondary);
+		max-width: 600px;
+		margin: 0 auto;
+	}
+
+	.demo-section {
+		margin-bottom: var(--spacing-2xl);
+	}
+
+	.demo-section h2 {
+		font-size: var(--font-size-2xl);
+		font-weight: 600;
+		color: var(--color-text-primary);
+		margin-bottom: var(--spacing-lg);
+		border-bottom: 2px solid var(--color-accent);
+		padding-bottom: var(--spacing-sm);
+		display: inline-block;
+	}
+
+	/* Mobile responsive */
+	@media (max-width: 768px) {
+		.demo-page {
+			padding: var(--spacing-xl) 0;
+		}
+
+		.page-header h1 {
+			font-size: var(--font-size-3xl);
+		}
+
+		.demo-section h2 {
+			font-size: var(--font-size-xl);
+		}
+	}
+</style>
