@@ -21,7 +21,7 @@ export function RapidCallsTest() {
           addLog(`Immediate count: ${newCount}`)
           debounced(() => {
             setDebouncedCountRef(prev => prev + 1)
-            setDebouncedCount(debouncedCountRef() + 1)
+            setDebouncedCount(debouncedCountRef())
             addLog(`Debounced count: ${newCount}`)
           }, 300)
           return newCount

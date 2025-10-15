@@ -48,7 +48,7 @@
   ],
   "scripts": {
     "build": "tsup",
-    "dev": "tsup --watch",
+    "dev": "concurrently \"tsup --watch\" \"cd manual/react && npm run dev\" \"cd manual/solid && npm run dev\" \"cd manual/svelte && npm run dev\" \"cd manual/vue && npm run dev\" \"cd manual/preact && npm run dev\" \"cd manual/svelte5 && npm run dev\"",
     "test": "vitest run",
     "test:watch": "vitest",
     "prepublishOnly": "npm run build"
