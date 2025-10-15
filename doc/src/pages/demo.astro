@@ -16,24 +16,26 @@ import ShikiHighlighter from '../components/ShikiHighlighter.astro';
 				<ShikiHighlighter
 					code={`import { useDebounce } from 'use-simple-debounce';
 
-// Create a debouncer
-const debounced = useDebounce();
+import { useDebounce } from 'use-simple-debounce';
 
-// Use it to debounce any function
-debounced(() => {
-  // This executes 300ms after the last call
-  performSearch(query);
-}, 300);
+function SearchComponent() {
+  const debounced = useDebounce();
 
-// Works with async functions too
-debounced(async () => {
-  try {
-    await saveToServer(data);
-    console.log('Auto-saved!');
-  } catch (error) {
-    console.error('Save failed:', error);
-  }
-}, 1000);`}
+  const handleSearch = (query: string) => {
+    debounced(() => {
+      // This will only execute 300ms after the user stops typing
+      performSearch(query);
+    }, 300);
+  };
+
+  return (
+    <input
+      type="text"
+      onChange={e => handleSearch(e.target.value)}
+      placeholder="Search..."
+    />
+  );
+}`}
 					lang="javascript"
 				/>
 			</section>

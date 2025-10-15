@@ -69,18 +69,16 @@ import ShikiHighlighter from './ShikiHighlighter.astro';
 						code={`import { useDebounce } from 'use-simple-debounce';
 
 function SearchComponent() {
-  const [query, setQuery] = useState('');
-  const debouncedQuery = useDebounce(query, 300);
+  const debounced = useDebounce();
 
-  // Search API call happens here
-  useEffect(() => {
-    searchAPI(debouncedQuery);
-  }, [debouncedQuery]);
+  const handleSearch = (query: string) => {
+    debounced(() => performSearch(query), 300);
+  };
 
   return (
     <input
-      value={query}
-      onChange={(e) => setQuery(e.target.value)}
+      type="text"
+      onChange={e => handleSearch(e.target.value)}
       placeholder="Search..."
     />
   );
