@@ -42,8 +42,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { useDebounce } from 'use-simple-debounce'
+import { ref } from 'vue'
+import { useDebounce } from 'use-simple-debounce/vue'
 
 const input = ref('')
 const output = ref('')

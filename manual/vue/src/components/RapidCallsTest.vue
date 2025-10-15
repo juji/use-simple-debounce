@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useDebounce } from 'use-simple-debounce'
+import { useDebounce } from 'use-simple-debounce/vue'
 
 const count = ref(0)
 const debouncedCount = ref(0)

@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useDebounce } from 'use-simple-debounce'
+import { useDebounce } from 'use-simple-debounce/vue'
 import DebounceComponent from './DebounceComponent.vue'
 
 const componentMounted = ref(true)
