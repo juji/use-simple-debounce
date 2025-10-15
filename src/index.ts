@@ -14,9 +14,7 @@ import { useRef, useEffect } from 'react';
  *
  *   const handleInputChange = (value: string) => {
  *     // This will be debounced - only executes 300ms after the last call
- *     debounced(() => {
- *       saveToServer(value);
- *     }, 300);
+ *     debounced(() => saveToServer(value), 300);
  *   };
  *
  *   return <input onChange={e => handleInputChange(e.target.value)} />;
@@ -36,7 +34,7 @@ export function useDebounce() {
     };
   }, []);
 
-  return (fn: () => void | Promise<void>, delay: number = 300) => {
+  return (fn: () => void, delay: number = 300) => {
     if (timeout.current) {
       clearTimeout(timeout.current);
     }

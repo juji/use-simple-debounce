@@ -41,7 +41,7 @@ export function useDebounce() {
     };
   }, []);
 
-  return (fn: () => void | Promise<void>, delay: number = 300) => {
+  return (fn: () => void, delay: number = 300) => {
     if (timeout.current) {
       clearTimeout(timeout.current);
     }
