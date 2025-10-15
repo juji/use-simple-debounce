@@ -104,8 +104,8 @@ import TabbedCodePreview from './TabbedCodePreview.astro';
 	}
 
 	.hero-title-main {
-		font-size: clamp(var(--font-size-3xl), 5vw, var(--font-size-4xl));
-		font-weight: 700;
+		font-size: clamp(var(--font-size-2xl), 4vw, var(--font-size-3xl)); /* Smaller than before */
+		font-weight: 700; /* Bold */
 		background: linear-gradient(135deg, var(--color-accent), var(--color-success));
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
@@ -150,12 +150,12 @@ import TabbedCodePreview from './TabbedCodePreview.astro';
 	.hero-button.primary {
 		background: linear-gradient(135deg, var(--color-accent), var(--color-accent-hover));
 		color: white;
-		box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+		box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3); /* Emerald green shadow */
 	}
 
 	.hero-button.primary:hover {
 		transform: translateY(-2px);
-		box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+		box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4); /* Emerald green shadow on hover */
 	}
 
 	.hero-button.secondary {

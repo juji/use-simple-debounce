@@ -32,9 +32,9 @@
   --color-text-secondary: #6c757d;
   --color-text-muted: #adb5bd;
   --color-border: #dee2e6;
-  --color-accent: #007bff;
-  --color-accent-hover: #0056b3;
-  --color-success: #28a745;
+  --color-accent: #059669; /* Emerald green */
+  --color-accent-hover: #047857; /* Darker emerald */
+  --color-success: #10b981; /* Green */
   --color-warning: #ffc107;
   --color-danger: #dc3545;
   --color-code-bg: #f8f9fa;
@@ -56,8 +56,8 @@ html.dark {
   --color-text-secondary: #cccccc;
   --color-text-muted: #888888;
   --color-border: #404040;
-  --color-accent: #4dabf7;
-  --color-accent-hover: #339af0;
+  --color-accent: #10b981; /* Lighter emerald for dark theme */
+  --color-accent-hover: #059669; /* Darker emerald for hover */
   --color-code-bg: #2d2d2d;
   --color-shadow: rgba(0, 0, 0, 0.3);
 }
