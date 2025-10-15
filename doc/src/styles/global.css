@@ -75,6 +75,11 @@ html.dark {
 	}
 }
 
+/* CSS Reset - Box sizing */
+*, *::before, *::after {
+	box-sizing: border-box;
+}
+
 /* Custom scrollbar styling */
 ::-webkit-scrollbar {
 	width: 8px;
