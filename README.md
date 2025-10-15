@@ -4,27 +4,6 @@ A simple, dependency-free debounce utility for **React**, **Preact**, **Solid**,
 
 For those who like simple things: https://use-simple-debounce.jujiplay.com/
 
-```tsx
-import { useDebounce } from 'use-simple-debounce'; // React
-import { useDebounce } from 'use-simple-debounce/preact'; // Preact
-import { createDebounce } from 'use-simple-debounce/solid'; // Solid
-import { createDebounce } from 'use-simple-debounce/svelte'; // Svelte
-import { useDebounce } from 'use-simple-debounce/vue'; // Vue
-
-// Create a debouncer
-const debounced = useDebounce(); // or createDebounce()
-
-// Use it to debounce any function with custom delay
-debounced(() => {
-  /* debounced for 300ms */
-}, 300);
-
-// Works with async functions too
-debounced(async () => {
-  /* debounced for 500ms */
-}, 500);
-```
-
 ## Features
 
 - 🚀 **Simple & Lightweight** - Just 5 lines of code, zero dependencies
