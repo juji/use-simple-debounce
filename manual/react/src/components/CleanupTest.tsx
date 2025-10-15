@@ -1,22 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useDebounce } from 'use-simple-debounce';
 
-export const CleanupTest: React.FC = () => {
+// Component that uses debounce - this will be mounted/unmounted
+const DebounceComponent: React.FC<{ addLog: (msg: string) => void }> = ({ addLog }) => {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
-  const [componentMounted, setComponentMounted] = useState(true);
-  const [logs, setLogs] = useState<string[]>([]);
 
-  const addLog = (message: string) => {
-    setLogs(prev => [...prev, `${new Date().toLocaleTimeString()}: ${message}`]);
-  };
-
-  const debouncedUpdate = useDebounce(1000);
+  const debouncedUpdate = useDebounce(5000);
 
   useEffect(() => {
+    addLog('DebounceComponent mounted');
     return () => {
-      setComponentMounted(false);
-      addLog('Component unmounting - cleanup should prevent debounced callback');
+      addLog('DebounceComponent unmounting - cleanup should prevent pending debounced callbacks');
     };
   }, []);
 
@@ -25,18 +20,51 @@ export const CleanupTest: React.FC = () => {
     setInput(value);
     addLog(`Input changed: "${value}"`);
     debouncedUpdate(() => {
-      if (componentMounted) {
-        setOutput(value);
-        addLog(`Debounced update: "${value}"`);
-      } else {
-        addLog(`Debounced update cancelled (component unmounted): "${value}"`);
-      }
+      console.log('Debounced callback executed');
+      setOutput(value);
+      addLog(`Debounced callback executed: "${value}"`);
     });
   };
 
-  const reset = () => {
-    setInput('');
-    setOutput('');
+  return (
+    <div className="debounce-component">
+      <div className="test-controls">
+        <label>
+          Input (debounced):
+          <input
+            type="text"
+            value={input}
+            onChange={handleInputChange}
+            placeholder="Type to trigger debounced update..."
+          />
+        </label>
+      </div>
+      <div className="test-output">
+        <p><strong>Debounced Output:</strong> {output}</p>
+      </div>
+    </div>
+  );
+};
+
+export const CleanupTest: React.FC = () => {
+  const [componentMounted, setComponentMounted] = useState(true);
+  const [logs, setLogs] = useState<string[]>([]);
+
+  const addLog = (message: string) => {
+    setLogs(prev => [...prev, `${new Date().toLocaleTimeString()}: ${message}`]);
+  };
+
+  const mountComponent = () => {
+    setComponentMounted(true);
+    addLog('Mounting DebounceComponent');
+  };
+
+  const unmountComponent = () => {
+    setComponentMounted(false);
+    addLog('Unmounting DebounceComponent');
+  };
+
+  const clearLogs = () => {
     setLogs([]);
   };
 
@@ -48,24 +76,22 @@ export const CleanupTest: React.FC = () => {
       </header>
 
       <h3>⚡ Cleanup Test</h3>
-      <p>Test that debounced functions are properly cleaned up on unmount.</p>
-      <p><em>Note: Type something, then quickly refresh the page to test cleanup.</em></p>
+      <p>Test that debounced functions are properly cleaned up when components unmount.</p>
+      <p><em>Type in the input, then unmount the component before the 5s delay expires.</em></p>
+      <p><em>The debounced function is called with console.log after 5 seconds.</em></p>
 
       <div className="test-controls">
-        <label>
-          Input:
-          <input
-            type="text"
-            value={input}
-            onChange={handleInputChange}
-            placeholder="Type something..."
-          />
-        </label>
-        <button onClick={reset}>Reset</button>
+        <button onClick={mountComponent} disabled={componentMounted}>
+          {componentMounted ? 'Component Mounted' : 'Mount Component'}
+        </button>
+        <button onClick={unmountComponent} disabled={!componentMounted}>
+          {!componentMounted ? 'Component Unmounted' : 'Unmount Component'}
+        </button>
+        <button onClick={clearLogs}>Clear Logs</button>
       </div>
 
-      <div className="test-output">
-        <p><strong>Output:</strong> {output}</p>
+      <div className="component-container">
+        {componentMounted && <DebounceComponent addLog={addLog} />}
       </div>
 
       <div className="test-logs">
