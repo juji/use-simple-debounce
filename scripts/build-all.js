@@ -34,9 +34,9 @@ async function copyBuildOutputs() {
     { src: 'manual/solid/dist', dest: 'doc/public/solid' },
     { src: 'manual/svelte/dist', dest: 'doc/public/svelte' },
     { src: 'manual/vue/dist', dest: 'doc/public/vue' },
-    { src: 'manual/preact/dist', dest: 'doc/public/preact' },
+    // { src: 'manual/preact/dist', dest: 'doc/public/preact' },
     { src: 'manual/vanilla/dist', dest: 'doc/public/vanilla' },
-    { src: 'manual/svelte5/.svelte-kit/output/client', dest: 'doc/public/svelte5' },
+    { src: 'manual/svelte5/build', dest: 'doc/public/svelte5' },
   ];
 
   for (const { src, dest } of copies) {
@@ -60,13 +60,33 @@ async function main() {
     console.log('🔨 Building all manual examples...');
     await concurrently(
       [
-        { command: 'cd manual/react && npm run build', name: 'react', prefixColor: 'magenta' },
-        { command: 'cd manual/solid && npm run build', name: 'solid', prefixColor: 'cyan' },
-        { command: 'cd manual/svelte && npm run build', name: 'svelte', prefixColor: 'yellow' },
-        { command: 'cd manual/vue && npm run build', name: 'vue', prefixColor: 'green' },
-        { command: 'cd manual/preact && npm run build', name: 'preact', prefixColor: 'white' },
-        { command: 'cd manual/svelte5 && npm run build', name: 'svelte5', prefixColor: 'red' },
-        { command: 'cd manual/vanilla && npm run build', name: 'vanilla', prefixColor: 'gray' },
+        {
+          command: 'cd manual/react && npm i && npm run build',
+          name: 'react',
+          prefixColor: 'magenta',
+        },
+        {
+          command: 'cd manual/solid && npm i && npm run build',
+          name: 'solid',
+          prefixColor: 'cyan',
+        },
+        {
+          command: 'cd manual/svelte && npm i && npm run build',
+          name: 'svelte',
+          prefixColor: 'yellow',
+        },
+        { command: 'cd manual/vue && npm i && npm run build', name: 'vue', prefixColor: 'green' },
+        // { command: 'cd manual/preact && npm i && npm run build', name: 'preact', prefixColor: 'white' },
+        {
+          command: 'cd manual/svelte5 && npm i && npm run build',
+          name: 'svelte5',
+          prefixColor: 'red',
+        },
+        {
+          command: 'cd manual/vanilla && npm i && npm run build',
+          name: 'vanilla',
+          prefixColor: 'gray',
+        },
       ],
       {
         prefix: 'name',
