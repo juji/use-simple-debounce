@@ -48,11 +48,17 @@
   ],
   "scripts": {
     "build": "tsup",
-  "dev": "node scripts/dev-all.js",
-  "dev:all": "node scripts/dev-all.js",
+    "dev": "node scripts/dev-all.js",
+    "dev:all": "node scripts/dev-all.js",
     "test": "vitest run",
     "test:watch": "vitest",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,md,css,html}": [
+      "prettier --write"
+    ]
   },
   "keywords": [
     "react",
@@ -81,6 +87,9 @@
     "@types/react": "^19.2.2",
     "@vitest/ui": "^3.2.4",
     "concurrently": "^9.2.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.4",
+    "prettier": "^3.6.2",
     "react": "^19.1.1",
     "solid-js": "^1.9.9",
     "svelte": "^5.40.0",
