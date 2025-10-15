@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useDebounce } from 'use-simple-debounce';
 
 export const RapidCallsTest: React.FC = () => {
@@ -11,7 +11,7 @@ export const RapidCallsTest: React.FC = () => {
   };
 
   const debounced = useDebounce();
-
+  const debouncedCountRef = useRef(0)
   const handleRapidCalls = () => {
     for (let i = 0; i < 10; i++) {
       setTimeout(() => {
@@ -19,7 +19,8 @@ export const RapidCallsTest: React.FC = () => {
           const newCount = prev + 1;
           addLog(`Immediate count: ${newCount}`);
           debounced(() => {
-            setDebouncedCount(newCount);
+            debouncedCountRef.current = debouncedCountRef.current + 1;
+            setDebouncedCount(debouncedCountRef.current);
             addLog(`Debounced count: ${newCount}`);
           }, 300);
           return newCount;
