@@ -1,7 +1,7 @@
 import { defineConfig } from 'tsup'
 
 export default defineConfig({
-  entry: ['src/index.ts', 'src/solid.ts', 'src/svelte.ts', 'src/vue.ts', 'src/native.ts'],
+  entry: ['src/index.ts', 'src/solid.ts', 'src/svelte.ts', 'src/vue.ts', 'src/vanilla.ts'],
   format: ['cjs', 'esm'],
   dts: true,
   clean: true,

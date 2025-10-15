@@ -42,14 +42,14 @@ const addLog = (message: string) => {
   logs.value.push(`${new Date().toLocaleTimeString()}: ${message}`)
 }
 
-const debouncedAsyncOperation = useDebounce(500)
+const debounced = useDebounce()
 
 const handleInputChange = (e: Event) => {
   const target = e.target as HTMLInputElement
   const value = target.value
   input.value = value
   addLog(`Input changed: "${value}"`)
-  debouncedAsyncOperation(async () => {
+  debounced(async () => {
     loading.value = true
     addLog(`Starting async operation for: "${value}"`)
 
@@ -60,6 +60,6 @@ const handleInputChange = (e: Event) => {
     result.value = processed
     loading.value = false
     addLog(`Async operation completed: "${processed}"`)
-  })
+  }, 500)
 }
 </script>

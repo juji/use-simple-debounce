@@ -34,17 +34,17 @@ const addLog = (message: string) => {
   logs.value.push(`${new Date().toLocaleTimeString()}: ${message}`)
 }
 
-const debouncedUpdate = useDebounce(300)
+const debounced = useDebounce()
 
 const handleRapidCalls = () => {
   for (let i = 0; i < 10; i++) {
     setTimeout(() => {
       count.value += 1
       addLog(`Immediate count: ${count.value}`)
-      debouncedUpdate(() => {
+      debounced(() => {
         debouncedCount.value = count.value
         addLog(`Debounced count: ${count.value}`)
-      })
+      }, 300)
     }, i * 50) // Call every 50ms
   }
 }

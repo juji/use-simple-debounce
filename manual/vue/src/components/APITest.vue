@@ -67,14 +67,14 @@ const mockAPI = async (searchQuery: string): Promise<SearchResult> => {
   return { query: searchQuery, results: mockResults }
 }
 
-const debouncedSearch = useDebounce(300)
+const debounced = useDebounce()
 
 const handleInputChange = (e: Event) => {
   const target = e.target as HTMLInputElement
   const value = target.value
   query.value = value
   addLog(`Search query changed: "${value}"`)
-  debouncedSearch(async () => {
+  debounced(async () => {
     if (!value.trim()) {
       results.value = null
       return
@@ -90,6 +90,6 @@ const handleInputChange = (e: Event) => {
     } finally {
       loading.value = false
     }
-  })
+  }, 300)
 }
 </script>

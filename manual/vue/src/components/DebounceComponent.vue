@@ -30,7 +30,7 @@ const props = defineProps<Props>()
 const input = ref('')
 const output = ref('')
 
-const debouncedUpdate = useDebounce(5000)
+const debounced = useDebounce()
 
 onMounted(() => {
   props.addLog('DebounceComponent mounted')
@@ -45,10 +45,10 @@ const handleInputChange = (e: Event) => {
   const value = target.value
   input.value = value
   props.addLog(`Input changed: "${value}"`)
-  debouncedUpdate(() => {
+  debounced(() => {
     console.log('Debounced callback executed')
     output.value = value
     props.addLog(`Debounced callback executed: "${value}"`)
-  })
+  }, 5000)
 }
 </script>

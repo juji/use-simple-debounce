@@ -54,21 +54,20 @@ const addLog = (message: string) => {
   logs.value.push(`${new Date().toLocaleTimeString()}: ${message}`)
 }
 
-let debouncedUpdate = useDebounce(delay.value)
+const debounced = useDebounce()
 
 const handleInputChange = (e: Event) => {
   const target = e.target as HTMLInputElement
   const value = target.value
   input.value = value
   addLog(`Input changed: "${value}"`)
-  debouncedUpdate(() => {
+  debounced(() => {
     output.value = value
     addLog(`Debounced update: "${value}"`)
-  })
+  }, delay.value)
 }
 
 const handleDelayChange = () => {
-  // Recreate debounce with new delay
-  debouncedUpdate = useDebounce(delay.value)
+  // No need to recreate debouncer - delay is passed per call
 }
 </script>
