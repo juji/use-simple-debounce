@@ -2,7 +2,7 @@
 // Shiki Highlighter Component for Astro
 // Provides syntax highlighting with Shiki
 
-import { createHighlighter } from 'shiki';
+import { getHighlighter } from '../lib/shiki';
 
 interface Props {
   code: string;
@@ -12,41 +12,8 @@ interface Props {
 
 const { code, lang = 'javascript', class: className }: Props = Astro.props;
 
-// Create highlighter with both light and dark themes
-const highlighter = await createHighlighter({
-  themes: ['github-light', 'github-dark'],
-  langs: [
-    'javascript',
-    'typescript',
-    'jsx',
-    'tsx',
-    'html',
-    'css',
-    'json',
-    'bash',
-    'shell',
-    'python',
-    'java',
-    'cpp',
-    'c',
-    'go',
-    'rust',
-    'php',
-    'ruby',
-    'swift',
-    'kotlin',
-    'dart',
-    'scala',
-    'sql',
-    'yaml',
-    'xml',
-    'markdown',
-    'dockerfile',
-    'makefile',
-    'vue',
-    'svelte'
-  ]
-});
+// Get the singleton highlighter instance
+const highlighter = await getHighlighter();
 
 // Generate HTML for both themes
 const lightHtml = highlighter.codeToHtml(code, {
@@ -54,7 +21,7 @@ const lightHtml = highlighter.codeToHtml(code, {
   theme: 'github-light',
   transformers: [
     {
-      line(node, line) {
+      line(node: any, line: number) {
         node.properties['data-line'] = line;
       }
     }
@@ -66,7 +33,7 @@ const darkHtml = highlighter.codeToHtml(code, {
   theme: 'github-dark',
   transformers: [
     {
-      line(node, line) {
+      line(node: any, line: number) {
         node.properties['data-line'] = line;
       }
     }
