@@ -3,28 +3,27 @@ import { useRef, useEffect } from 'react';
 /**
  * Returns a debounced executor function that delays execution of the provided function.
  *
- * @param delay - The delay in milliseconds before executing the function (default: 300ms)
- * @returns A function that accepts another function to debounce its execution
+ * @returns A function that accepts a function to debounce and an optional delay
  *
  * @example
  * ```tsx
  * import { useDebounce } from 'use-simple-debounce';
  *
  * function MyComponent() {
- *   const debouncedSave = useDebounce(500);
+ *   const debounced = useDebounce();
  *
  *   const handleInputChange = (value: string) => {
- *     // This will be debounced - only executes 500ms after the last call
- *     debouncedSave(() => {
+ *     // This will be debounced - only executes 300ms after the last call
+ *     debounced(() => {
  *       saveToServer(value);
- *     });
+ *     }, 300);
  *   };
  *
  *   return <input onChange={e => handleInputChange(e.target.value)} />;
  * }
  * ```
  */
-export function useDebounce(delay: number = 300) {
+export function useDebounce() {
   const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // An AI added proper cleanup on component unmount to prevent potential issues
@@ -37,7 +36,7 @@ export function useDebounce(delay: number = 300) {
     };
   }, []);
 
-  return (fn: () => void | Promise<void>) => {
+  return (fn: () => void | Promise<void>, delay: number = 300) => {
     if (timeout.current) {
       clearTimeout(timeout.current);
     }

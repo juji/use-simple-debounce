@@ -10,7 +10,7 @@ export function RapidCallsTest() {
     setLogs(prev => [...prev, `${new Date().toLocaleTimeString()}: ${message}`])
   }
 
-  const debouncedUpdate = createDebounce(300)
+  const debounced = createDebounce()
 
   const handleRapidCalls = () => {
     for (let i = 0; i < 10; i++) {
@@ -18,10 +18,10 @@ export function RapidCallsTest() {
         setCount(prev => {
           const newCount = prev + 1
           addLog(`Immediate count: ${newCount}`)
-          debouncedUpdate(() => {
+          debounced(() => {
             setDebouncedCount(newCount)
             addLog(`Debounced count: ${newCount}`)
-          })
+          }, 300)
           return newCount
         })
       }, i * 50) // Call every 50ms
@@ -52,8 +52,8 @@ export function RapidCallsTest() {
       <div class="test-logs">
         <h4>Logs:</h4>
         <div class="logs-container">
-          {logs().map((log, index) => (
-            <div class="log-entry" key={index}>{log}</div>
+          {logs().map((log) => (
+            <div class="log-entry">{log}</div>
           ))}
         </div>
       </div>

@@ -10,23 +10,21 @@
     logs = [...logs, `${new Date().toLocaleTimeString()}: ${message}`]
   }
 
-  let debouncedUpdate = createDebounce(delay)
+  const debounced = createDebounce()
 
   function handleInputChange(event) {
     const target = event.target
     input = target.value
     addLog(`Input changed: "${input}"`)
-    debouncedUpdate(() => {
+    debounced(() => {
       output = input
       addLog(`Debounced update: "${input}"`)
-    })
+    }, delay)
   }
 
   function handleDelayChange(event) {
     const target = event.target
     delay = Number(target.value)
-    // Recreate debounce with new delay
-    debouncedUpdate = createDebounce(delay)
   }
 </script>
 

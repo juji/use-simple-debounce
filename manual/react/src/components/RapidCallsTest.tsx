@@ -10,7 +10,7 @@ export const RapidCallsTest: React.FC = () => {
     setLogs(prev => [...prev, `${new Date().toLocaleTimeString()}: ${message}`]);
   };
 
-  const debouncedUpdate = useDebounce(300);
+  const debounced = useDebounce();
 
   const handleRapidCalls = () => {
     for (let i = 0; i < 10; i++) {
@@ -18,10 +18,10 @@ export const RapidCallsTest: React.FC = () => {
         setCount(prev => {
           const newCount = prev + 1;
           addLog(`Immediate count: ${newCount}`);
-          debouncedUpdate(() => {
+          debounced(() => {
             setDebouncedCount(newCount);
             addLog(`Debounced count: ${newCount}`);
-          });
+          }, 300);
           return newCount;
         });
       }, i * 50); // Call every 50ms

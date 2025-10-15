@@ -9,16 +9,16 @@
     logs = [...logs, `${new Date().toLocaleTimeString()}: ${message}`]
   }
 
-  const debouncedUpdate = createDebounce(500)
+  const debounced = createDebounce()
 
   function handleInputChange(event: Event) {
     const target = event.target as HTMLInputElement
     input = target.value
     addLog(`Input changed: "${input}"`)
-    debouncedUpdate(() => {
+    debounced(() => {
       output = input
       addLog(`Debounced update: "${input}"`)
-    })
+    }, 500)
   }
 </script>
 

@@ -6,7 +6,7 @@ function DebounceComponent(props: { addLog: (msg: string) => void }) {
   const [input, setInput] = createSignal('')
   const [output, setOutput] = createSignal('')
 
-  const debouncedUpdate = createDebounce(5000)
+  const debounced = createDebounce()
 
   onMount(() => {
     props.addLog('DebounceComponent mounted')
@@ -21,11 +21,11 @@ function DebounceComponent(props: { addLog: (msg: string) => void }) {
     const value = target.value
     setInput(value)
     props.addLog(`Input changed: "${value}"`)
-    debouncedUpdate(() => {
+    debounced(() => {
       console.log('Debounced callback executed')
       setOutput(value)
       props.addLog(`Debounced callback executed: "${value}"`)
-    })
+    }, 5000)
   }
 
   return (

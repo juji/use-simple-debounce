@@ -12,21 +12,21 @@ describe('useDebounce (Native)', () => {
   })
 
   it('should return a cancel function', () => {
-    const debouncedFactory = useDebounce(100)
-    const cancelFn = debouncedFactory(() => {})
+    const debounced = useDebounce()
+    const cancelFn = debounced(() => {}, 100)
 
     expect(typeof cancelFn).toBe('function')
   })
 
   it('should debounce function calls', () => {
     const mockFn = vi.fn()
-    const debouncedFactory = useDebounce(100)
-    const cancelFn = debouncedFactory(mockFn)
+    const debounced = useDebounce()
+    const cancelFn = debounced(mockFn, 100)
 
     // Call multiple times rapidly - each call returns a new cancel function
-    debouncedFactory(mockFn)
-    debouncedFactory(mockFn)
-    debouncedFactory(mockFn)
+    debounced(mockFn, 100)
+    debounced(mockFn, 100)
+    debounced(mockFn, 100)
 
     // Function should not be called immediately
     expect(mockFn).not.toHaveBeenCalled()
@@ -41,12 +41,12 @@ describe('useDebounce (Native)', () => {
   it('should cancel previous calls when called again', () => {
     const mockFn1 = vi.fn()
     const mockFn2 = vi.fn()
-    const debouncedFactory = useDebounce(100)
+    const debounced = useDebounce()
 
     // Call with first function
-    debouncedFactory(mockFn1)
+    debounced(mockFn1, 100)
     // Call with second function before delay
-    debouncedFactory(mockFn2)
+    debounced(mockFn2, 100)
 
     // Advance time
     vi.advanceTimersByTime(100)
@@ -58,8 +58,8 @@ describe('useDebounce (Native)', () => {
 
   it('should support cancellation', () => {
     const mockFn = vi.fn()
-    const debouncedFactory = useDebounce(100)
-    const cancel = debouncedFactory(mockFn)
+    const debounced = useDebounce()
+    const cancel = debounced(mockFn, 100)
 
     // Call cancel immediately
     cancel()
@@ -71,9 +71,9 @@ describe('useDebounce (Native)', () => {
 
   it('should support async functions', async () => {
     const mockAsyncFn = vi.fn().mockResolvedValue('done')
-    const debouncedFactory = useDebounce(100)
+    const debounced = useDebounce()
 
-    debouncedFactory(mockAsyncFn)
+    debounced(mockAsyncFn, 100)
 
     vi.advanceTimersByTime(100)
 
@@ -82,8 +82,8 @@ describe('useDebounce (Native)', () => {
 
   it('should use default delay of 300ms when no delay provided', () => {
     const mockFn = vi.fn()
-    const debouncedFactory = useDebounce(300) // Need to provide delay since it's required
-    const cancelFn = debouncedFactory(mockFn)
+    const debounced = useDebounce()
+    const cancelFn = debounced(mockFn)
 
     // Advance by less than delay
     vi.advanceTimersByTime(200)
@@ -96,8 +96,8 @@ describe('useDebounce (Native)', () => {
 
   it('should handle different delay values', () => {
     const mockFn = vi.fn()
-    const debouncedFactory = useDebounce(50)
-    const cancelFn = debouncedFactory(mockFn)
+    const debounced = useDebounce()
+    const cancelFn = debounced(mockFn, 50)
 
     // Advance by less than delay
     vi.advanceTimersByTime(25)
@@ -112,11 +112,11 @@ describe('useDebounce (Native)', () => {
     const mockFn1 = vi.fn()
     const mockFn2 = vi.fn()
 
-    const debouncedFactory1 = useDebounce(100)
-    const debouncedFactory2 = useDebounce(100)
+    const debounced1 = useDebounce()
+    const debounced2 = useDebounce()
 
-    debouncedFactory1(mockFn1)
-    debouncedFactory2(mockFn2)
+    debounced1(mockFn1, 100)
+    debounced2(mockFn2, 100)
 
     vi.advanceTimersByTime(100)
 
@@ -128,11 +128,11 @@ describe('useDebounce (Native)', () => {
     const mockFn1 = vi.fn()
     const mockFn2 = vi.fn()
 
-    const debouncedFactory1 = useDebounce(100)
-    const debouncedFactory2 = useDebounce(100)
+    const debounced1 = useDebounce()
+    const debounced2 = useDebounce()
 
-    const cancel1 = debouncedFactory1(mockFn1)
-    debouncedFactory2(mockFn2)
+    const cancel1 = debounced1(mockFn1, 100)
+    debounced2(mockFn2, 100)
 
     // Cancel only the first one
     cancel1()

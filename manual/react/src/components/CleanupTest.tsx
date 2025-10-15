@@ -6,7 +6,7 @@ const DebounceComponent: React.FC<{ addLog: (msg: string) => void }> = ({ addLog
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
 
-  const debouncedUpdate = useDebounce(5000);
+  const debounced = useDebounce();
 
   useEffect(() => {
     addLog('DebounceComponent mounted');
@@ -19,11 +19,11 @@ const DebounceComponent: React.FC<{ addLog: (msg: string) => void }> = ({ addLog
     const value = e.target.value;
     setInput(value);
     addLog(`Input changed: "${value}"`);
-    debouncedUpdate(() => {
+    debounced(() => {
       console.log('Debounced callback executed');
       setOutput(value);
       addLog(`Debounced callback executed: "${value}"`);
-    });
+    }, 5000);
   };
 
   return (

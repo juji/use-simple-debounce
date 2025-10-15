@@ -31,13 +31,13 @@ export const APITest: React.FC = () => {
     return { query: searchQuery, results: mockResults };
   };
 
-  const debouncedSearch = useDebounce(300);
+  const debounced = useDebounce();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setQuery(value);
     addLog(`Search query changed: "${value}"`);
-    debouncedSearch(async () => {
+    debounced(async () => {
       if (!value.trim()) {
         setResults(null);
         return;
@@ -53,7 +53,7 @@ export const APITest: React.FC = () => {
       } finally {
         setLoading(false);
       }
-    });
+    }, 300);
   };
 
   return (

@@ -25,13 +25,13 @@
     return { query: searchQuery, results: mockResults }
   }
 
-  const debouncedSearch = createDebounce(300)
+  const debounced = createDebounce()
 
   function handleInputChange(event: Event) {
     const target = event.target as HTMLInputElement
     query = target.value
     addLog(`Search query changed: "${query}"`)
-    debouncedSearch(async () => {
+    debounced(async () => {
       if (!query.trim()) {
         results = null
         return
@@ -46,7 +46,7 @@
       } finally {
         loading = false
       }
-    })
+    }, 300)
   }
 </script>
 

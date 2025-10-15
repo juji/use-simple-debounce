@@ -10,13 +10,13 @@
     logs = [...logs, `${new Date().toLocaleTimeString()}: ${message}`]
   }
 
-  const debouncedAsyncOperation = createDebounce(500)
+  const debounced = createDebounce()
 
   function handleInputChange(event: Event) {
     const target = event.target as HTMLInputElement
     input = target.value
     addLog(`Input changed: "${input}"`)
-    debouncedAsyncOperation(async () => {
+    debounced(async () => {
       loading = true
       addLog(`Starting async operation for: "${input}"`)
 
@@ -26,7 +26,7 @@
       result = input.toUpperCase()
       loading = false
       addLog(`Async operation completed: "${result}"`)
-    })
+    }, 500)
   }
 </script>
 

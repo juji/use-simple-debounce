@@ -31,14 +31,14 @@ export function APITest() {
     return { query: searchQuery, results: mockResults }
   }
 
-  const debouncedSearch = createDebounce(300)
+  const debounced = createDebounce()
 
   const handleInputChange = (e: Event) => {
     const target = e.target as HTMLInputElement
     const value = target.value
     setQuery(value)
     addLog(`Search query changed: "${value}"`)
-    debouncedSearch(async () => {
+    debounced(async () => {
       if (!value.trim()) {
         setResults(null)
         return
@@ -54,7 +54,7 @@ export function APITest() {
       } finally {
         setLoading(false)
       }
-    })
+    }, 300)
   }
 
   return (
@@ -79,8 +79,8 @@ export function APITest() {
           <div>
             <p><strong>Search Results for "{results()!.query}":</strong></p>
             <ul>
-              {results()!.results.map((result, index) => (
-                <li key={index}>{result}</li>
+              {results()!.results.map((result) => (
+                <li>{result}</li>
               ))}
             </ul>
           </div>
@@ -91,8 +91,8 @@ export function APITest() {
       <div class="test-logs">
         <h4>Logs:</h4>
         <div class="logs-container">
-          {logs().map((log, index) => (
-            <div class="log-entry" key={index}>{log}</div>
+          {logs().map((log) => (
+            <div class="log-entry">{log}</div>
           ))}
         </div>
       </div>

@@ -3,8 +3,7 @@ import { ref, onUnmounted } from 'vue';
 /**
  * Returns a debounced executor function that delays execution of the provided function.
  *
- * @param delay - The delay in milliseconds before executing the function (default: 300ms)
- * @returns A function that accepts another function to debounce its execution
+ * @returns A function that accepts a function to debounce and an optional delay
  *
  * @example
  * ```vue
@@ -17,18 +16,18 @@ import { ref, onUnmounted } from 'vue';
  * import { useDebounce } from 'use-simple-debounce/vue';
  *
  * const query = ref('');
- * const debouncedSearch = useDebounce(300);
+ * const debounced = useDebounce();
  *
  * const handleInputChange = () => {
- *   debouncedSearch(() => {
+ *   debounced(() => {
  *     // This will be debounced - only executes 300ms after the last call
  *     performSearch(query.value);
- *   });
+ *   }, 300);
  * };
  * </script>
  * ```
  */
-export function useDebounce(delay: number = 300) {
+export function useDebounce() {
   const timeout = ref<ReturnType<typeof setTimeout> | null>(null);
 
   // Cleanup on component unmount
@@ -38,7 +37,7 @@ export function useDebounce(delay: number = 300) {
     }
   });
 
-  return (fn: () => void | Promise<void>) => {
+  return (fn: () => void | Promise<void>, delay: number = 300) => {
     if (timeout.value) {
       clearTimeout(timeout.value);
     }

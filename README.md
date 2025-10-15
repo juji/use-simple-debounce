@@ -8,14 +8,14 @@ import { createDebounce } from 'use-simple-debounce/solid'; // Solid
 import { createDebounce } from 'use-simple-debounce/svelte'; // Svelte
 import { useDebounce } from 'use-simple-debounce/vue'; // Vue
 
-// Create a debouncer (defaults to 300ms)
+// Create a debouncer
 const debounced = useDebounce(); // or createDebounce()
 
-// Use it to debounce any function
-debounced(() => { /* debounced for 300ms */ });
+// Use it to debounce any function with custom delay
+debounced(() => { /* debounced for 300ms */ }, 300);
 
 // Works with async functions too
-debounced(async () => { /* debounced for 300ms */ });
+debounced(async () => { /* debounced for 500ms */ }, 500);
 ```
 
 ## Features
@@ -42,13 +42,13 @@ npm install use-simple-debounce
 import { useDebounce } from 'use-simple-debounce';
 
 function SearchComponent() {
-  const debouncedSearch = useDebounce(300);
+  const debounced = useDebounce();
 
   const handleSearch = (query: string) => {
-    debouncedSearch(() => {
+    debounced(() => {
       // This will only execute 300ms after the user stops typing
       performSearch(query);
-    });
+    }, 300);
   };
 
   return (
@@ -69,14 +69,14 @@ import { createDebounce } from 'use-simple-debounce/solid';
 
 function SearchComponent() {
   const [query, setQuery] = createSignal('');
-  const debouncedSearch = createDebounce(300);
+  const debounced = createDebounce();
 
   const handleSearch = (value: string) => {
     setQuery(value);
-    debouncedSearch(() => {
+    debounced(() => {
       // This will only execute 300ms after the user stops typing
       performSearch(value);
-    });
+    }, 300);
   };
 
   return (
@@ -97,14 +97,14 @@ function SearchComponent() {
   import { createDebounce } from 'use-simple-debounce/svelte';
 
   let query = '';
-  const debouncedSearch = createDebounce(300);
+  const debounced = createDebounce();
 
   function handleSearch(value) {
     query = value;
-    debouncedSearch(() => {
+    debounced(() => {
       // This will only execute 300ms after the user stops typing
       performSearch(value);
-    });
+    }, 300);
   }
 </script>
 
@@ -132,13 +132,13 @@ import { ref } from 'vue';
 import { useDebounce } from 'use-simple-debounce/vue';
 
 const query = ref('');
-const debouncedSearch = useDebounce(300);
+const debounced = useDebounce();
 
 const handleSearch = () => {
-  debouncedSearch(() => {
+  debounced(() => {
     // This will be debounced - only executes 300ms after the last call
     performSearch(query.value);
-  });
+  }, 300);
 };
 </script>
 ```
@@ -148,13 +148,13 @@ const handleSearch = () => {
 ```javascript
 import { useDebounce } from 'use-simple-debounce/native';
 
-const debouncedSearch = useDebounce(300);
+const debounced = useDebounce();
 
-// Get the debounced function and cancel function
-const [search, cancel] = debouncedSearch(() => {
+// Get the cancel function for the debounced execution
+const cancel = debounced(() => {
   // This will be debounced - only executes 300ms after the last call
   performSearch(query);
-});
+}, 300);
 
 // To cancel the pending execution
 cancel();
@@ -167,19 +167,19 @@ import { useDebounce } from 'use-simple-debounce';
 
 function AutoSaveEditor() {
   const [content, setContent] = useState('');
-  const debouncedSave = useDebounce(1000); // Save after 1 second of inactivity
+  const debounced = useDebounce(); // Save after 1 second of inactivity
 
   const handleChange = (newContent: string) => {
     setContent(newContent);
 
-    debouncedSave(async () => {
+    debounced(async () => {
       try {
         await saveToServer(newContent);
         console.log('Auto-saved!');
       } catch (err) {
         console.error('Save failed:', err);
       }
-    });
+    }, 1000);
   };
 
   return (
@@ -200,7 +200,7 @@ import { useDebounce } from 'use-simple-debounce';
 function SearchComponent() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
-  const debouncedSearch = useDebounce(300);
+  const debounced = useDebounce();
 
   const performSearch = async (searchQuery: string) => {
     const response = await fetch(`/api/search?q=${searchQuery}`);
@@ -210,7 +210,7 @@ function SearchComponent() {
 
   const handleInputChange = (value: string) => {
     setQuery(value);
-    debouncedSearch(() => performSearch(value));
+    debounced(() => performSearch(value), 300);
   };
 
   return (
@@ -233,20 +233,20 @@ function SearchComponent() {
 
 ### API Reference
 
-#### `useDebounce(delay?: number)` / `createDebounce(delay?: number)`
+#### `useDebounce()` / `createDebounce()`
 
 Returns a debounced executor function.
 
 **Parameters:**
-- `delay` (optional): Delay in milliseconds before executing the function. Default: `300ms`
+None
 
 **Returns:**
-A function that accepts another function to debounce its execution.
+A function that accepts a function to debounce and an optional delay.
 
 **Type:**
 ```typescript
-function useDebounce(delay?: number): (fn: () => void | Promise<void>) => void
-function createDebounce(delay?: number): (fn: () => void | Promise<void>) => void
+function useDebounce(): (fn: () => void | Promise<void>, delay?: number) => void
+function createDebounce(): (fn: () => void | Promise<void>, delay?: number) => void
 ```
 
 **Supported Function Types:**
@@ -259,7 +259,7 @@ function createDebounce(delay?: number): (fn: () => void | Promise<void>) => voi
 - **Solid**: `import { createDebounce } from 'use-simple-debounce/solid'`
 - **Svelte**: `import { createDebounce } from 'use-simple-debounce/svelte'`
 - **Vue**: `import { useDebounce } from 'use-simple-debounce/vue'`
-- **Vanilla JS**: `import { useDebounce } from 'use-simple-debounce/native'`
+- **Vanilla JS**: `import { useDebounce } from 'use-simple-debounce/native'` (returns cancel function)
 
 ## Choosing the Right Delay
 
@@ -300,6 +300,12 @@ The most frequently used delay across React applications is **`300ms`** - it pro
 
 MIT © [juji](https://github.com/juji)
 ## Changelog
+
+### v1.2.0
+- 🔄 **API Enhancement**: Changed from `useDebounce(delay)` to `useDebounce()` for more flexible per-call delay specification
+- 🎯 **Improved Flexibility**: Users can now specify different delays for different debounced operations
+- 📚 **Updated Documentation**: All examples and API reference updated to reflect new usage patterns
+- ✅ **Backward Compatibility**: Breaking change - existing code will need to be updated
 
 ### v1.1.0
 - 🎉 **Multi-Framework Support**: Added Solid, Svelte, Vue, and vanilla JavaScript implementations

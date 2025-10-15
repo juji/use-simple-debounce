@@ -7,7 +7,7 @@
   let input = ''
   let output = ''
 
-  const debouncedUpdate = createDebounce(5000)
+  const debounced = createDebounce()
 
   onMount(() => {
     addLog('DebounceComponent mounted')
@@ -21,11 +21,11 @@
     const target = event.target
     input = target.value
     addLog(`Input changed: "${input}"`)
-    debouncedUpdate(() => {
+    debounced(() => {
       console.log('Debounced callback executed')
       output = input
       addLog(`Debounced callback executed: "${input}"`)
-    })
+    }, 5000)
   }
 </script>
 

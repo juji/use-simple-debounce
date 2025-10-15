@@ -11,17 +11,17 @@ export function DelayTest() {
     setLogs(prev => [...prev, `${new Date().toLocaleTimeString()}: ${message}`])
   }
 
-  const debouncedUpdate = createDebounce(delay())
+  const debounced = createDebounce()
 
   const handleInputChange = (e: Event) => {
     const target = e.target as HTMLInputElement
     const value = target.value
     setInput(value)
     addLog(`Input changed: "${value}"`)
-    debouncedUpdate(() => {
+    debounced(() => {
       setOutput(value)
       addLog(`Debounced update: "${value}"`)
-    })
+    }, delay())
   }
 
   const handleDelayChange = (e: Event) => {
@@ -66,8 +66,8 @@ export function DelayTest() {
       <div class="test-logs">
         <h4>Logs:</h4>
         <div class="logs-container">
-          {logs().map((log, index) => (
-            <div class="log-entry" key={index}>{log}</div>
+          {logs().map((log) => (
+            <div class="log-entry">{log}</div>
           ))}
         </div>
       </div>

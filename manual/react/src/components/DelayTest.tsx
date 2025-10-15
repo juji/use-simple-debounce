@@ -11,16 +11,16 @@ export const DelayTest: React.FC = () => {
     setLogs(prev => [...prev, `${new Date().toLocaleTimeString()}: ${message}`]);
   };
 
-  const debouncedUpdate = useDebounce(delay);
+  const debounced = useDebounce();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setInput(value);
     addLog(`Input changed: "${value}"`);
-    debouncedUpdate(() => {
+    debounced(() => {
       setOutput(value);
       addLog(`Debounced update: "${value}"`);
-    });
+    }, delay);
   };
 
   const handleDelayChange = (e: React.ChangeEvent<HTMLInputElement>) => {

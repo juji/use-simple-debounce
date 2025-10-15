@@ -11,13 +11,13 @@ export const AsyncTest: React.FC = () => {
     setLogs(prev => [...prev, `${new Date().toLocaleTimeString()}: ${message}`]);
   };
 
-  const debouncedAsyncOperation = useDebounce(500);
+  const debounced = useDebounce();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setInput(value);
     addLog(`Input changed: "${value}"`);
-    debouncedAsyncOperation(async () => {
+    debounced(async () => {
       setLoading(true);
       addLog(`Starting async operation for: "${value}"`);
 
@@ -28,7 +28,7 @@ export const AsyncTest: React.FC = () => {
       setResult(processed);
       setLoading(false);
       addLog(`Async operation completed: "${processed}"`);
-    });
+    }, 500);
   };
 
   return (

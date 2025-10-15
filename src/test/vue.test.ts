@@ -24,12 +24,12 @@ describe('useDebounce (Vue)', () => {
 
   it('should debounce function calls', () => {
     const mockFn = vi.fn()
-    const debouncedFn = useDebounce(100)
+    const debounced = useDebounce()
 
     // Call multiple times rapidly
-    debouncedFn(mockFn)
-    debouncedFn(mockFn)
-    debouncedFn(mockFn)
+    debounced(mockFn, 100)
+    debounced(mockFn, 100)
+    debounced(mockFn, 100)
 
     // Function should not be called immediately
     expect(mockFn).not.toHaveBeenCalled()
@@ -44,12 +44,12 @@ describe('useDebounce (Vue)', () => {
   it('should cancel previous calls when called again', () => {
     const mockFn1 = vi.fn()
     const mockFn2 = vi.fn()
-    const debouncedFn = useDebounce(100)
+    const debounced = useDebounce()
 
     // Call with first function
-    debouncedFn(mockFn1)
+    debounced(mockFn1, 100)
     // Call with second function before delay
-    debouncedFn(mockFn2)
+    debounced(mockFn2, 100)
 
     // Advance time
     vi.advanceTimersByTime(100)
@@ -61,9 +61,9 @@ describe('useDebounce (Vue)', () => {
 
   it('should support async functions', async () => {
     const mockAsyncFn = vi.fn().mockResolvedValue('done')
-    const debouncedFn = useDebounce(100)
+    const debounced = useDebounce()
 
-    debouncedFn(mockAsyncFn)
+    debounced(mockAsyncFn, 100)
 
     vi.advanceTimersByTime(100)
 
@@ -72,9 +72,9 @@ describe('useDebounce (Vue)', () => {
 
   it('should use default delay of 300ms when no delay provided', () => {
     const mockFn = vi.fn()
-    const debouncedFn = useDebounce()
+    const debounced = useDebounce()
 
-    debouncedFn(mockFn)
+    debounced(mockFn)
 
     // Advance by less than default delay
     vi.advanceTimersByTime(200)
@@ -87,9 +87,9 @@ describe('useDebounce (Vue)', () => {
 
   it('should handle different delay values', () => {
     const mockFn = vi.fn()
-    const debouncedFn = useDebounce(50)
+    const debounced = useDebounce()
 
-    debouncedFn(mockFn)
+    debounced(mockFn, 50)
 
     // Advance by less than delay
     vi.advanceTimersByTime(25)
