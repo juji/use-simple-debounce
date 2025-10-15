@@ -6,9 +6,12 @@ import preact from '@astrojs/preact';
 import svelte from '@astrojs/svelte';
 import solidJs from '@astrojs/solid-js';
 
+import netlify from '@astrojs/netlify';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://use-simple-debounce.jujiplay.com',
+
   integrations: [
     react({
       include: ['**/react/**'],
@@ -23,4 +26,6 @@ export default defineConfig({
       include: ['**/solid/**'],
     }),
   ],
+
+  adapter: netlify(),
 });
