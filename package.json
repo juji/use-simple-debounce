@@ -32,7 +32,7 @@
       "import": "./dist/vue.mjs",
       "require": "./dist/vue.js"
     },
-    "./native": {
+    "./vanilla": {
       "types": "./dist/native.d.ts",
       "import": "./dist/native.mjs",
       "require": "./dist/native.js"

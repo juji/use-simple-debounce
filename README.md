@@ -146,7 +146,7 @@ const handleSearch = () => {
 ### Vanilla JavaScript
 
 ```javascript
-import { useDebounce } from 'use-simple-debounce/native';
+import { useDebounce } from 'use-simple-debounce/vanilla';
 
 const debounced = useDebounce();
 
@@ -259,7 +259,7 @@ function createDebounce(): (fn: () => void | Promise<void>, delay?: number) => v
 - **Solid**: `import { createDebounce } from 'use-simple-debounce/solid'`
 - **Svelte**: `import { createDebounce } from 'use-simple-debounce/svelte'`
 - **Vue**: `import { useDebounce } from 'use-simple-debounce/vue'`
-- **Vanilla JS**: `import { useDebounce } from 'use-simple-debounce/native'` (returns cancel function)
+- **Vanilla JS**: `import { useDebounce } from 'use-simple-debounce/vanilla'` (returns cancel function)
 
 ## Choosing the Right Delay
 
@@ -310,7 +310,7 @@ MIT © [juji](https://github.com/juji)
 ### v1.1.0
 - 🎉 **Multi-Framework Support**: Added Solid, Svelte, Vue, and vanilla JavaScript implementations
 - 📦 **Modular Exports**: Framework-specific entry points for tree-shaking
-- 🔧 **Consistent API**: Same debounce function across all frameworks (except native which provides cancellation)
+- 🔧 **Consistent API**: Same debounce function across all frameworks (except vanilla which provides cancellation)
 - 📚 **Updated Documentation**: Examples for React, Solid, Svelte, Vue, and vanilla JavaScript
 
 ### v1.0.0

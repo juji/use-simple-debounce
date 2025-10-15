@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { useDebounce } from '../native'
 
-describe('useDebounce (Native)', () => {
+describe('useDebounce (Vanilla)', () => {
   beforeEach(() => {
     vi.useFakeTimers()
   })
