@@ -1,6 +1,6 @@
 ---
 // Hero component for the homepage
-import ShikiHighlighter from './ShikiHighlighter.astro';
+import TabbedCodePreview from './TabbedCodePreview.astro';
 ---
 
 <section class="hero">
@@ -13,38 +13,7 @@ import ShikiHighlighter from './ShikiHighlighter.astro';
 		</div>
 
 		<div class="hero-visual">
-			<div class="code-preview">
-				<div class="code-header">
-					<div class="code-dots">
-						<span class="dot red"></span>
-						<span class="dot yellow"></span>
-						<span class="dot green"></span>
-					</div>
-					<span class="code-title">useDebounce.js</span>
-				</div>
-				<div class="code-content">
-					<ShikiHighlighter
-						code={`import { useDebounce } from 'use-simple-debounce';
-
-function SearchComponent() {
-  const debounced = useDebounce();
-
-  const handleSearch = (query: string) => {
-    debounced(() => performSearch(query), 300);
-  };
-
-  return (
-    <input
-      type="text"
-      onChange={e => handleSearch(e.target.value)}
-      placeholder="Search..."
-    />
-  );
-}`}
-						lang="javascript"
-					/>
-				</div>
-			</div>
+			<TabbedCodePreview />
 		</div>
 
 		<p class="hero-description">
@@ -236,62 +205,6 @@ function SearchComponent() {
 		align-items: center;
 	}
 
-	.code-preview {
-		background: var(--color-bg-primary);
-		border: 1px solid var(--color-border);
-		border-radius: var(--border-radius-lg);
-		box-shadow: 0 8px 32px var(--color-shadow);
-		overflow: hidden;
-		width: 100%;
-		max-width: var(--max-width);
-	}
-
-	.code-header {
-		background: var(--color-bg-secondary);
-		padding: var(--spacing-md);
-		display: flex;
-		align-items: center;
-		gap: var(--spacing-md);
-		border-bottom: 1px solid var(--color-border);
-	}
-
-	.code-dots {
-		display: flex;
-		gap: var(--spacing-xs);
-	}
-
-	.dot {
-		width: 12px;
-		height: 12px;
-		border-radius: 50%;
-	}
-
-	.dot.red {
-		background: #ff5f57;
-	}
-
-	.dot.yellow {
-		background: #ffbd2e;
-	}
-
-	.dot.green {
-		background: #28ca42;
-	}
-
-	.code-title {
-		font-size: var(--font-size-xs);
-		color: var(--color-text-secondary);
-		font-weight: 500;
-		line-height: 1;
-	}
-
-	.code-content {
-		padding: 0;
-		font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-		font-size: var(--font-size-sm);
-		line-height: 1.5;
-	}
-
 	/* Mobile responsive styles */
 	@media (max-width: 640px) {
 		.hero {
@@ -327,14 +240,6 @@ function SearchComponent() {
 			flex-direction: column;
 			align-items: flex-start;
 			gap: var(--spacing-md);
-		}
-
-		.code-preview {
-			max-width: 100%;
-		}
-
-		.code-content {
-			font-size: var(--font-size-xs);
 		}
 	}
 </style>

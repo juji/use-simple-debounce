@@ -1,0 +1,261 @@
+---
+// Tabbed Code Preview Component
+import ShikiHighlighter from './ShikiHighlighter.astro';
+
+const tabs = [
+  {
+    name: 'React',
+    lang: 'tsx',
+    code: `import { useDebounce } from 'use-simple-debounce';
+
+function SearchComponent() {
+  const debounced = useDebounce();
+
+  const handleSearch = (query: string) => {
+    debounced(() => performSearch(query), 300);
+  };
+
+  return (
+    <input
+      type="text"
+      onChange={e => handleSearch(e.target.value)}
+      placeholder="Search..."
+    />
+  );
+}`
+  },
+  {
+    name: 'Preact',
+    lang: 'tsx',
+    code: `import { useDebounce } from 'use-simple-debounce/preact';
+
+function SearchComponent() {
+  const debounced = useDebounce();
+
+  const handleSearch = (query: string) => {
+    debounced(() => performSearch(query), 300);
+  };
+
+  return (
+    <input
+      type="text"
+      onInput={e => handleSearch(e.target.value)}
+      placeholder="Search..."
+    />
+  );
+}`
+  },
+  {
+    name: 'Vue',
+    lang: 'vue',
+    code: `<template>
+  <input v-model="query" @input="handleInputChange" placeholder="Search..." />
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import { useDebounce } from 'use-simple-debounce/vue';
+
+const query = ref('');
+const debounced = useDebounce();
+
+const handleInputChange = () => {
+  debounced(() => performSearch(query.value), 300);
+};
+</script>`
+  },
+  {
+    name: 'Solid',
+    lang: 'tsx',
+    code: `import { createDebounce } from 'use-simple-debounce/solid';
+
+function SearchComponent() {
+  const debounced = createDebounce();
+
+  const handleSearch = (query: string) => {
+    debounced(() => performSearch(query), 300);
+  };
+
+  return (
+    <input
+      type="text"
+      onInput={e => handleSearch(e.target.value)}
+      placeholder="Search..."
+    />
+  );
+}`
+  },
+  {
+    name: 'Svelte',
+    lang: 'svelte',
+    code: `<script>
+  import { createDebounce } from 'use-simple-debounce/svelte';
+
+  let query = '';
+  const debounced = createDebounce();
+
+  function handleInputChange(event) {
+    const value = event.target.value;
+    debounced(() => performSearch(value), 300);
+  }
+</script>
+
+<input bind:value={query} on:input={handleInputChange} placeholder="Search..." />`
+  },
+  {
+    name: 'Svelte 5',
+    lang: 'svelte',
+    code: `<script>
+  import { createDebounce } from 'use-simple-debounce/svelte';
+
+  let query = $state('');
+  const debounced = createDebounce();
+
+  function handleInputChange(event) {
+    const value = event.target.value;
+    debounced(() => performSearch(value), 300);
+  }
+</script>
+
+<input bind:value={query} oninput={handleInputChange} placeholder="Search..." />`
+  },
+  {
+    name: 'Vanilla JS',
+    lang: 'javascript',
+    code: `import { useDebounce } from 'use-simple-debounce/vanilla';
+
+const debounced = useDebounce();
+
+function handleSearch(query) {
+  debounced(() => performSearch(query), 300);
+}
+
+const input = document.querySelector('input');
+input.addEventListener('input', e => handleSearch(e.target.value));`
+  }
+];
+---
+
+<div class="tabbed-code-preview">
+  <div class="tabs">
+    {tabs.map((tab, index) => (
+      <button
+        class={`tab ${index === 0 ? 'active' : ''}`}
+        data-tab={index}
+        onclick="switchTab(event)"
+      >
+        {tab.name}
+      </button>
+    ))}
+  </div>
+  <div class="code-container">
+    {tabs.map((tab, index) => (
+      <div class={`code-content ${index === 0 ? 'active' : ''}`} data-tab={index}>
+        <ShikiHighlighter code={tab.code} lang={tab.lang} />
+      </div>
+    ))}
+  </div>
+</div>
+
+<script>
+  window.switchTab = function(event) {
+    const tabIndex = parseInt(event.target.dataset.tab);
+    const container = event.target.closest('.tabbed-code-preview');
+
+    // Update tab buttons
+    container.querySelectorAll('.tab').forEach((tab, index) => {
+      tab.classList.toggle('active', index === tabIndex);
+    });
+
+    // Update code content
+    container.querySelectorAll('.code-content').forEach((content, index) => {
+      content.classList.toggle('active', index === tabIndex);
+    });
+  };
+</script>
+
+<style>
+  .tabbed-code-preview {
+    background: var(--color-bg-primary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 8px 32px var(--color-shadow);
+    overflow: hidden;
+    width: 100%;
+    max-width: var(--max-width);
+  }
+
+  .tabs {
+    display: flex;
+    background: var(--color-bg-secondary);
+    border-bottom: 1px solid var(--color-border);
+    padding: 0 var(--spacing-md);
+  }
+
+  .tab {
+    background: none;
+    border: none;
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
+    position: relative;
+  }
+
+  .tab:hover {
+    background: var(--color-bg-primary);
+    color: var(--color-text-primary);
+  }
+
+  .tab.active {
+    background: var(--color-bg-primary);
+    color: var(--color-accent);
+    border-bottom: 2px solid var(--color-accent);
+  }
+
+  .tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--color-accent);
+  }
+
+  .code-container {
+    position: relative;
+  }
+
+  .code-content {
+    display: none;
+    padding: 0;
+  }
+
+  .code-content.active {
+    display: block;
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 640px) {
+    .tabs {
+      padding: 0 var(--spacing-sm);
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab {
+      padding: var(--spacing-sm) var(--spacing-md);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+  }
+</style>
