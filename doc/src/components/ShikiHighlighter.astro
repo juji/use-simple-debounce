@@ -1,0 +1,154 @@
+---
+// Shiki Highlighter Component for Astro
+// Provides syntax highlighting with Shiki
+
+import { createHighlighter } from 'shiki';
+
+interface Props {
+  code: string;
+  lang?: string;
+  class?: string;
+}
+
+const { code, lang = 'javascript', class: className }: Props = Astro.props;
+
+// Create highlighter with both light and dark themes
+const highlighter = await createHighlighter({
+  themes: ['github-light', 'github-dark'],
+  langs: [
+    'javascript',
+    'typescript',
+    'jsx',
+    'tsx',
+    'html',
+    'css',
+    'json',
+    'bash',
+    'shell',
+    'python',
+    'java',
+    'cpp',
+    'c',
+    'go',
+    'rust',
+    'php',
+    'ruby',
+    'swift',
+    'kotlin',
+    'dart',
+    'scala',
+    'sql',
+    'yaml',
+    'xml',
+    'markdown',
+    'dockerfile',
+    'makefile'
+  ]
+});
+
+// Generate HTML for both themes
+const lightHtml = highlighter.codeToHtml(code, {
+  lang,
+  theme: 'github-light',
+  transformers: [
+    {
+      line(node, line) {
+        node.properties['data-line'] = line;
+      }
+    }
+  ]
+});
+
+const darkHtml = highlighter.codeToHtml(code, {
+  lang,
+  theme: 'github-dark',
+  transformers: [
+    {
+      line(node, line) {
+        node.properties['data-line'] = line;
+      }
+    }
+  ]
+});
+---
+
+<div class={`shiki-highlighter ${className || ''}`} data-lang={lang}>
+  <div class="shiki-header">
+    <span class="shiki-language">{lang}</span>
+  </div>
+  <div class="shiki-content">
+    <!-- Light theme version -->
+    <div class="shiki-code light-theme" set:html={lightHtml}></div>
+    <!-- Dark theme version -->
+    <div class="shiki-code dark-theme" set:html={darkHtml}></div>
+  </div>
+</div>
+
+<style>
+  .shiki-highlighter {
+    background: var(--color-bg-primary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 2px 8px var(--color-shadow);
+    margin: var(--spacing-md) 0;
+  }
+
+  .shiki-header {
+    background: var(--color-bg-tertiary);
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .shiki-content {
+    position: relative;
+    padding: var(--spacing-md);
+    overflow-x: auto;
+  }
+
+  .shiki-code {
+    display: none;
+  }
+
+  /* Show light theme by default */
+  .shiki-code.light-theme {
+    display: block;
+  }
+
+  /* Show dark theme when html has dark class */
+  html.dark .shiki-code.light-theme {
+    display: none;
+  }
+
+  html.dark .shiki-code.dark-theme {
+    display: block;
+  }
+
+  .shiki-content :global(pre) {
+    margin: 0;
+    padding: 0;
+    background: transparent !important;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+  }
+
+  .shiki-content :global(code) {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .shiki-content {
+      padding: var(--spacing-sm);
+      font-size: var(--font-size-xs);
+    }
+  }
+</style>
