@@ -2,7 +2,7 @@
 :root {
   /* Layout */
   --max-width: 888px;
-  --header-height: 4rem;
+  --header-height: 1.75rem; /* Very small header - 28px */
   --side-padding-mobile: 1rem;
   --side-padding-desktop: 2rem;
 
