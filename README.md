@@ -1,9 +1,10 @@
 # use-simple-debounce
 
-A simple, dependency-free debounce utility for **React**, **Solid**, **Svelte**, **Vue**, and **vanilla JavaScript** with async support.
+A simple, dependency-free debounce utility for **React**, **Preact**, **Solid**, **Svelte**, **Vue**, and **vanilla JavaScript** with async support.
 
 ```tsx
 import { useDebounce } from 'use-simple-debounce'; // React
+import { useDebounce } from 'use-simple-debounce/preact'; // Preact
 import { createDebounce } from 'use-simple-debounce/solid'; // Solid
 import { createDebounce } from 'use-simple-debounce/svelte'; // Svelte
 import { useDebounce } from 'use-simple-debounce/vue'; // Vue
@@ -26,7 +27,7 @@ debounced(async () => { /* debounced for 500ms */ }, 500);
 - 🎯 **Flexible** - Works with sync and async functions, any delay
 - 🧹 **Memory Safe** - Automatic cleanup prevents memory leaks
 - ⚡ **Async Support** - Handles both synchronous and asynchronous functions
-- 🎨 **Multi-Framework** - Supports React, Solid, Svelte, and Vue
+- 🎨 **Multi-Framework** - Supports React, Preact, Solid, Svelte, and Vue
 
 ## Installation
 
@@ -55,6 +56,35 @@ function SearchComponent() {
     <input
       type="text"
       onChange={e => handleSearch(e.target.value)}
+      placeholder="Search..."
+    />
+  );
+}
+```
+
+### Preact
+
+```tsx
+import { useState } from 'preact/hooks';
+import { useDebounce } from 'use-simple-debounce/preact';
+
+function SearchComponent() {
+  const [query, setQuery] = useState('');
+  const debounced = useDebounce();
+
+  const handleSearch = (value: string) => {
+    setQuery(value);
+    debounced(() => {
+      // This will only execute 300ms after the user stops typing
+      performSearch(value);
+    }, 300);
+  };
+
+  return (
+    <input
+      type="text"
+      value={query}
+      onInput={e => handleSearch(e.target.value)}
       placeholder="Search..."
     />
   );
@@ -256,6 +286,7 @@ function createDebounce(): (fn: () => void | Promise<void>, delay?: number) => v
 
 **Framework Usage:**
 - **React**: `import { useDebounce } from 'use-simple-debounce'` or `import { useDebounce } from 'use-simple-debounce/react'`
+- **Preact**: `import { useDebounce } from 'use-simple-debounce/preact'`
 - **Solid**: `import { createDebounce } from 'use-simple-debounce/solid'`
 - **Svelte**: `import { createDebounce } from 'use-simple-debounce/svelte'`
 - **Vue**: `import { useDebounce } from 'use-simple-debounce/vue'`
@@ -290,7 +321,7 @@ The most frequently used delay across React applications is **`300ms`** - it pro
 ## Why Choose use-simple-debounce?
 
 1. **Zero Dependencies** - No risk of version conflicts or security issues
-2. **Universal Compatibility** - Works with React 16.8+, Solid, Svelte, Vue, and vanilla JavaScript
+2. **Universal Compatibility** - Works with React 16.8+, Preact, Solid, Svelte, Vue, and vanilla JavaScript
 3. **Tiny Bundle Size** - Minimal impact on your app's size
 4. **Simple API** - Easy to understand and use across all frameworks
 5. **Memory Safe** - Automatic cleanup prevents memory leaks
@@ -306,6 +337,7 @@ MIT © [juji](https://github.com/juji)
 - 🎯 **Improved Flexibility**: Users can now specify different delays for different debounced operations
 - 📚 **Updated Documentation**: All examples and API reference updated to reflect new usage patterns
 - ✅ **Backward Compatibility**: Breaking change - existing code will need to be updated
+- 🎉 **Preact Support**: Added dedicated Preact implementation with proper hooks integration
 
 ### v1.1.0
 - 🎉 **Multi-Framework Support**: Added Solid, Svelte, Vue, and vanilla JavaScript implementations

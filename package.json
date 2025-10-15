@@ -22,6 +22,11 @@
       "import": "./dist/solid.mjs",
       "require": "./dist/solid.js"
     },
+    "./preact": {
+      "types": "./dist/preact.d.ts",
+      "import": "./dist/preact.mjs",
+      "require": "./dist/preact.js"
+    },
     "./svelte": {
       "types": "./dist/svelte.d.ts",
       "import": "./dist/svelte.mjs",
@@ -89,5 +94,8 @@
   "bugs": {
     "url": "https://github.com/juji/use-simple-debounce/issues"
   },
-  "homepage": "https://github.com/juji/use-simple-debounce#readme"
+  "homepage": "https://github.com/juji/use-simple-debounce#readme",
+  "dependencies": {
+    "preact": "^10.27.2"
+  }
 }
