@@ -10,10 +10,20 @@ import solidJs from '@astrojs/solid-js';
 // https://astro.build/config
 export default defineConfig({
   integrations: [
-    vue(),
-    react(),
-    preact(),
-    svelte(),
-    solidJs()
+    vue({
+      include: ['**/vue/**']
+    }),
+    react({
+      include: ['**/react/**']
+    }),
+    preact({
+      include: ['**/preact/**']
+    }),
+    svelte({
+      include: ['**/svelte/**']
+    }),
+    solidJs({
+      include: ['**/solid/**']
+    })
   ]
 });
