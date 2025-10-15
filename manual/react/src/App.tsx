@@ -89,8 +89,8 @@ const App: React.FC = () => {
 
       <main className="main-content">
         <header className="page-header">
-          <h1>use-simple-debounce Manual Tests</h1>
-          <p>React Implementation</p>
+          <h1>use-simple-debounce React Manual Tests</h1>
+          <p><img src="/src/assets/react-logo.svg" alt="React" className="framework-logo" /> React Implementation</p>
         </header>
         {renderTestCase()}
       </main>

@@ -76,8 +76,8 @@
 
   <div class="main-content">
     <header class="page-header">
-      <h1>use-simple-debounce Manual Tests</h1>
-      <p>Svelte Implementation</p>
+      <h1>use-simple-debounce Svelte Manual Tests</h1>
+      <p><img src="/src/assets/svelte-logo.svg" alt="Svelte" class="framework-logo" /> Svelte Implementation</p>
     </header>
 
     {#if activeTest === 'basic'}

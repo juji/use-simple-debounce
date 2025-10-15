@@ -89,8 +89,8 @@ export function App() {
 
       <main className="main-content">
         <header className="page-header">
-          <h1>use-simple-debounce Manual Tests</h1>
-          <p>Preact Implementation</p>
+          <h1>use-simple-debounce Preact Manual Tests</h1>
+          <p><img src="/src/assets/preact-logo.svg" alt="Preact" className="framework-logo" /> Preact Implementation</p>
         </header>
         {renderTestCase()}
       </main>

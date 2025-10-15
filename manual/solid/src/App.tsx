@@ -89,8 +89,8 @@ export default function App() {
 
       <main class="main-content">
         <header class="page-header">
-          <h1>use-simple-debounce Manual Tests</h1>
-          <p>SolidJS Implementation</p>
+          <h1>use-simple-debounce Solid Manual Tests</h1>
+          <p><img src="/src/assets/solid-logo.svg" alt="Solid" class="framework-logo" /> SolidJS Implementation</p>
         </header>
         {renderTestCase()}
       </main>

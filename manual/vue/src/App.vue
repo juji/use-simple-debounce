@@ -56,8 +56,8 @@
 
     <main class="main-content">
       <header class="page-header">
-        <h1>use-simple-debounce Manual Tests</h1>
-        <p>Vue Implementation</p>
+        <h1>use-simple-debounce Vue Manual Tests</h1>
+        <p><img src="/src/assets/vue-logo.svg" alt="Vue" class="framework-logo" /> Vue Implementation</p>
       </header>
       <component :is="currentComponent" />
     </main>
