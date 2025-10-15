@@ -1,0 +1,56 @@
+<script lang="ts">
+  import { createDebounce } from 'use-simple-debounce/svelte'
+
+  let count = $state(0)
+  let debouncedCount = $state(0)
+  let logs = $state<string[]>([])
+
+  function addLog(message: string) {
+    logs = [...logs, `${new Date().toLocaleTimeString()}: ${message}`]
+  }
+
+  const debouncedUpdate = createDebounce(300)
+
+  function handleRapidCalls() {
+    for (let i = 0; i < 10; i++) {
+      setTimeout(() => {
+        count += 1
+        addLog(`Immediate count: ${count}`)
+        debouncedUpdate(() => {
+          debouncedCount = count
+          addLog(`Debounced count: ${count}`)
+        })
+      }, i * 50) // Call every 50ms
+    }
+  }
+
+  function reset() {
+    count = 0
+    debouncedCount = 0
+    logs = []
+  }
+</script>
+
+<div class="test-case">
+  <h3>⚡ Rapid Calls Test</h3>
+  <p>Test debouncing with rapid successive calls (10 calls in 500ms).</p>
+
+  <div class="test-controls">
+    <button onclick={handleRapidCalls}>Trigger Rapid Calls</button>
+    <button onclick={reset}>Reset</button>
+  </div>
+
+  <div class="test-output">
+    <p><strong>Immediate Count:</strong> {count}</p>
+    <p><strong>Debounced Count:</strong> {debouncedCount}</p>
+  </div>
+
+  <div class="test-logs">
+    <h4>Logs:</h4>
+    <div class="logs-container">
+      {#each logs as log}
+        <div class="log-entry">{log}</div>
+      {/each}
+    </div>
+  </div>
+</div>
