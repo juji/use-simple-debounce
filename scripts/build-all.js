@@ -8,15 +8,22 @@ import { join } from 'path';
 
 async function cleanPublicDir() {
   const publicDir = 'doc/public';
-  console.log('🧹 Cleaning doc/public directory...');
+  console.log('🧹 Cleaning manual example directories in doc/public...');
 
-  if (existsSync(publicDir)) {
-    await rm(publicDir, { recursive: true, force: true });
+  // Ensure the public directory exists
+  execSync(`mkdir -p ${publicDir}`);
+
+  const dirsToClean = ['react', 'solid', 'svelte', 'vue', 'preact', 'vanilla', 'svelte5'];
+
+  for (const dir of dirsToClean) {
+    const dirPath = join(publicDir, dir);
+    if (existsSync(dirPath)) {
+      await rm(dirPath, { recursive: true, force: true });
+      console.log(`✅ Cleaned ${dirPath}`);
+    }
   }
 
-  // Recreate the directory
-  execSync(`mkdir -p ${publicDir}`);
-  console.log('✅ doc/public cleaned');
+  console.log('✅ Manual example directories cleaned');
 }
 
 async function copyBuildOutputs() {
