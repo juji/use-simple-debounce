@@ -4,6 +4,7 @@
   let count = $state(0)
   let debouncedCount = $state(0)
   let logs = $state<string[]>([])
+  let debouncedCountRef = $state(0)
 
   function addLog(message: string) {
     logs = [...logs, `${new Date().toLocaleTimeString()}: ${message}`]
@@ -17,7 +18,8 @@
         count += 1
         addLog(`Immediate count: ${count}`)
         debounced(() => {
-          debouncedCount = count
+          debouncedCountRef = debouncedCountRef + 1
+          debouncedCount = debouncedCountRef
           addLog(`Debounced count: ${count}`)
         }, 300)
       }, i * 50) // Call every 50ms
@@ -27,6 +29,7 @@
   function reset() {
     count = 0
     debouncedCount = 0
+    debouncedCountRef = 0
     logs = []
   }
 </script>

@@ -79,6 +79,7 @@
   "devDependencies": {
     "@types/react": "^19.2.2",
     "@vitest/ui": "^3.2.4",
+    "concurrently": "^9.2.1",
     "react": "^19.1.1",
     "solid-js": "^1.9.9",
     "svelte": "^5.40.0",

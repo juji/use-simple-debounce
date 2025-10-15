@@ -1,4 +1,4 @@
-import { useState } from 'preact/hooks';
+import { useState, useRef } from 'preact/hooks';
 import { useDebounce } from 'use-simple-debounce/preact';
 
 export function RapidCallsTest() {
@@ -11,16 +11,21 @@ export function RapidCallsTest() {
   };
 
   const debounced = useDebounce();
+  const debouncedCountRef = useRef(0);
 
   const handleRapidCalls = () => {
     for (let i = 0; i < 10; i++) {
       setTimeout(() => {
-        setCount(prev => prev + 1);
-        addLog(`Immediate count: ${count + 1}`);
-        debounced(() => {
-          setDebouncedCount(count + 1);
-          addLog(`Debounced count: ${count + 1}`);
-        }, 300);
+        setCount(prev => {
+          const newCount = prev + 1;
+          addLog(`Immediate count: ${newCount}`);
+          debounced(() => {
+            debouncedCountRef.current = debouncedCountRef.current + 1;
+            setDebouncedCount(debouncedCountRef.current);
+            addLog(`Debounced count: ${newCount}`);
+          }, 300);
+          return newCount;
+        });
       }, i * 50); // Call every 50ms
     }
   };
@@ -28,6 +33,7 @@ export function RapidCallsTest() {
   const reset = () => {
     setCount(0);
     setDebouncedCount(0);
+    debouncedCountRef.current = 0;
     setLogs([]);
   };
 

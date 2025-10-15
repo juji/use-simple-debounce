@@ -5,6 +5,7 @@ export function RapidCallsTest() {
   const [count, setCount] = createSignal(0)
   const [debouncedCount, setDebouncedCount] = createSignal(0)
   const [logs, setLogs] = createSignal<string[]>([])
+  const [debouncedCountRef, setDebouncedCountRef] = createSignal(0)
 
   const addLog = (message: string) => {
     setLogs(prev => [...prev, `${new Date().toLocaleTimeString()}: ${message}`])
@@ -19,7 +20,8 @@ export function RapidCallsTest() {
           const newCount = prev + 1
           addLog(`Immediate count: ${newCount}`)
           debounced(() => {
-            setDebouncedCount(newCount)
+            setDebouncedCountRef(prev => prev + 1)
+            setDebouncedCount(debouncedCountRef() + 1)
             addLog(`Debounced count: ${newCount}`)
           }, 300)
           return newCount
@@ -31,6 +33,7 @@ export function RapidCallsTest() {
   const reset = () => {
     setCount(0)
     setDebouncedCount(0)
+    setDebouncedCountRef(0)
     setLogs([])
   }
 
