@@ -1,5 +1,5 @@
 ---
-// Site header component with navigation and theme toggle
+// Site header component with logo and theme toggle
 ---
 
 <header class="site-header">
@@ -11,23 +11,12 @@
 				</a>
 			</div>
 
-			<div class="header-actions">
-				<!-- Mobile menu button -->
-				<button
-					class="mobile-menu-toggle"
-					aria-label="Toggle navigation menu"
-					aria-expanded="false"
-				>
-					<span class="hamburger-line"></span>
-					<span class="hamburger-line"></span>
-					<span class="hamburger-line"></span>
-				</button>
-
+			<div class="header-right">
 				<!-- Navigation -->
-				<nav class="main-nav" aria-label="Main navigation">
+				<nav class="main-nav">
 					<ul class="nav-list">
-						<li><a href="/" class="nav-link">Home</a></li>
-						<li><a href="/docs" class="nav-link">Docs</a></li>
+						<li><a href="/" class="nav-link" id="nav-home">Home</a></li>
+						<li><a href="/demo" class="nav-link" id="nav-docs">Demo</a></li>
 					</ul>
 				</nav>
 
@@ -54,44 +43,23 @@
 					</svg>
 				</button>
 			</div>
+
+			<!-- Mobile menu button -->
+			<button
+				class="mobile-menu-toggle"
+				aria-label="Toggle navigation menu"
+				aria-expanded="false"
+			>
+				<span class="hamburger-line"></span>
+				<span class="hamburger-line"></span>
+				<span class="hamburger-line"></span>
+			</button>
+		</div>
 		</div>
 	</div>
 </header>
 
-<!-- Mobile menu script -->
-<script is:inline>
-	document.addEventListener('DOMContentLoaded', function() {
-		const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-		const mainNav = document.querySelector('.main-nav');
-
-		if (mobileMenuToggle && mainNav) {
-			mobileMenuToggle.addEventListener('click', function() {
-				const isExpanded = this.getAttribute('aria-expanded') === 'true';
-				this.setAttribute('aria-expanded', !isExpanded);
-				mainNav.classList.toggle('open');
-			});
-
-			// Close menu when clicking outside
-			document.addEventListener('click', function(e) {
-				if (!mobileMenuToggle.contains(e.target) && !mainNav.contains(e.target)) {
-					mobileMenuToggle.setAttribute('aria-expanded', 'false');
-					mainNav.classList.remove('open');
-				}
-			});
-
-			// Close menu when pressing Escape
-			document.addEventListener('keydown', function(e) {
-				if (e.key === 'Escape' && mainNav.classList.contains('open')) {
-					mobileMenuToggle.setAttribute('aria-expanded', 'false');
-					mainNav.classList.remove('open');
-				}
-			});
-		}
-	});
-</script>
-
 <style>
-	/* Container */
 	.container {
 		width: 100%;
 		max-width: var(--max-width);
@@ -114,12 +82,19 @@
 		align-items: center;
 		justify-content: space-between;
 		height: var(--header-height);
+		position: relative;
 	}
 
-	.header-actions {
+	.header-right {
 		display: flex;
 		align-items: center;
-		gap: var(--spacing-md);
+		gap: var(--spacing-lg);
+	}
+
+	.header-right {
+		display: flex;
+		align-items: center;
+		gap: var(--spacing-lg);
 	}
 
 	.logo-link {
@@ -134,31 +109,6 @@
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
 		background-clip: text;
-	}
-
-	/* Mobile menu toggle */
-	.mobile-menu-toggle {
-		display: none;
-		flex-direction: column;
-		background: none;
-		border: none;
-		cursor: pointer;
-		padding: var(--spacing-xs);
-		border-radius: var(--border-radius);
-		transition: background-color var(--transition-fast);
-	}
-
-	.mobile-menu-toggle:hover {
-		background-color: var(--color-bg-tertiary);
-	}
-
-	.hamburger-line {
-		width: 20px;
-		height: 2px;
-		background-color: var(--color-text-primary);
-		margin: 2px 0;
-		transition: all var(--transition-fast);
-		border-radius: 1px;
 	}
 
 	/* Navigation */
@@ -248,28 +198,63 @@
 		display: block;
 	}
 
+	/* Mobile menu toggle */
+	.mobile-menu-toggle {
+		display: none;
+		flex-direction: column;
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: var(--spacing-xs);
+		border-radius: var(--border-radius);
+		transition: background-color var(--transition-fast);
+		color: var(--color-text-secondary);
+		margin-left: var(--spacing-md);
+	}
+
+	.mobile-menu-toggle:hover {
+		background-color: var(--color-bg-tertiary);
+		color: var(--color-text-primary);
+	}
+
+	.hamburger-line {
+		width: 20px;
+		height: 2px;
+		background-color: var(--color-text-primary);
+		margin: 2px 0;
+		transition: all var(--transition-fast);
+		border-radius: 1px;
+	}
+
 	/* Mobile responsive styles */
 	@media (max-width: 768px) {
+		.header-content {
+			position: relative;
+		}
+
 		.mobile-menu-toggle {
 			display: flex;
 		}
 
-		.main-nav {
+		.header-right {
 			position: absolute;
 			top: 100%;
-			left: 0;
 			right: 0;
 			background-color: var(--color-bg-primary);
-			border-bottom: 1px solid var(--color-border);
+			border: 1px solid var(--color-border);
+			border-top: none;
 			box-shadow: 0 4px 6px var(--color-shadow);
 			transform: translateY(-100%);
 			opacity: 0;
 			visibility: hidden;
 			transition: all var(--transition-normal);
 			padding: var(--spacing-md);
+			min-width: 200px;
+			flex-direction: column;
+			gap: var(--spacing-md);
 		}
 
-		.main-nav.open {
+		.header-right.open {
 			transform: translateY(0);
 			opacity: 1;
 			visibility: visible;
@@ -279,6 +264,7 @@
 			flex-direction: column;
 			gap: var(--spacing-sm);
 			align-items: stretch;
+			width: 100%;
 		}
 
 		.nav-link {
@@ -286,19 +272,43 @@
 			padding: var(--spacing-sm);
 			text-align: center;
 		}
-
-		.header-actions {
-			position: relative;
-		}
 	}
 
 	@media (max-width: 480px) {
 		.logo-text {
 			font-size: var(--font-size-base);
 		}
-
-		.nav-link {
-			font-size: var(--font-size-sm);
-		}
 	}
 </style>
+
+<!-- Mobile menu script -->
+<script is:inline>
+	document.addEventListener('DOMContentLoaded', function() {
+		const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+		const headerRight = document.querySelector('.header-right');
+
+		if (mobileMenuToggle && headerRight) {
+			mobileMenuToggle.addEventListener('click', function() {
+				const isExpanded = this.getAttribute('aria-expanded') === 'true';
+				this.setAttribute('aria-expanded', !isExpanded);
+				headerRight.classList.toggle('open');
+			});
+
+			// Close menu when clicking outside
+			document.addEventListener('click', function(e) {
+				if (!mobileMenuToggle.contains(e.target) && !headerRight.contains(e.target)) {
+					mobileMenuToggle.setAttribute('aria-expanded', 'false');
+					headerRight.classList.remove('open');
+				}
+			});
+
+			// Close menu when pressing Escape
+			document.addEventListener('keydown', function(e) {
+				if (e.key === 'Escape' && headerRight.classList.contains('open')) {
+					mobileMenuToggle.setAttribute('aria-expanded', 'false');
+					headerRight.classList.remove('open');
+				}
+			});
+		}
+	});
+</script>
