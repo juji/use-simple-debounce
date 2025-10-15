@@ -3,70 +3,60 @@
 ---
 
 <header class="site-header">
-	<div class="container">
-		<div class="header-content">
-			<div class="logo">
-				<a href="/" class="logo-link">
-					<span class="logo-text">use-simple-debounce</span>
-				</a>
-			</div>
-
-			<div class="header-right">
-				<!-- Navigation -->
-				<nav class="main-nav">
-					<ul class="nav-list">
-						<li><a href="/" class="nav-link" id="nav-home">Home</a></li>
-						<li><a href="/demo" class="nav-link" id="nav-docs">Demo</a></li>
-					</ul>
-				</nav>
-
-				<!-- Theme toggle -->
-				<button
-					id="theme-toggle"
-					class="theme-toggle"
-					aria-label="Switch to dark mode"
-					onclick="toggleTheme()"
-				>
-					<svg class="theme-icon light-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<circle cx="12" cy="12" r="5"></circle>
-						<line x1="12" y1="1" x2="12" y2="3"></line>
-						<line x1="12" y1="21" x2="12" y2="23"></line>
-						<line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-						<line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-						<line x1="1" y1="12" x2="3" y2="12"></line>
-						<line x1="21" y1="12" x2="23" y2="12"></line>
-						<line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-						<line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-					</svg>
-					<svg class="theme-icon dark-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-					</svg>
-				</button>
-			</div>
-
-			<!-- Mobile menu button -->
-			<button
-				class="mobile-menu-toggle"
-				aria-label="Toggle navigation menu"
-				aria-expanded="false"
-			>
-				<span class="hamburger-line"></span>
-				<span class="hamburger-line"></span>
-				<span class="hamburger-line"></span>
-			</button>
+	<div class="header-content">
+		<div class="logo">
+			<a href="/" class="logo-link">
+				<span class="logo-text">use-simple-debounce</span>
+			</a>
 		</div>
+
+		<!-- Mobile menu button -->
+		<button
+			class="mobile-menu-toggle"
+			aria-label="Toggle navigation menu"
+			aria-expanded="false"
+		>
+			<span class="hamburger-line"></span>
+			<span class="hamburger-line"></span>
+			<span class="hamburger-line"></span>
+		</button>
+
+		<div class="header-right">
+			<!-- Navigation -->
+			<nav class="main-nav">
+				<ul class="nav-list">
+					<li><a href="/" class="nav-link" id="nav-home">Home</a></li>
+					<li><a href="/demo" class="nav-link" id="nav-docs">Demo</a></li>
+				</ul>
+			</nav>
+
+			<!-- Theme toggle -->
+			<button
+				id="theme-toggle"
+				class="theme-toggle"
+				aria-label="Switch to dark mode"
+				onclick="toggleTheme()"
+			>
+				<svg class="theme-icon light-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<circle cx="12" cy="12" r="5"></circle>
+					<line x1="12" y1="1" x2="12" y2="3"></line>
+					<line x1="12" y1="21" x2="12" y2="23"></line>
+					<line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+					<line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+					<line x1="1" y1="12" x2="3" y2="12"></line>
+					<line x1="21" y1="12" x2="23" y2="12"></line>
+					<line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+					<line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+				</svg>
+				<svg class="theme-icon dark-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+				</svg>
+			</button>
 		</div>
 	</div>
 </header>
 
 <style>
-	.container {
-		width: 100%;
-		max-width: var(--max-width);
-		margin: 0 auto;
-		padding: 0 var(--side-padding);
-	}
-
 	/* Header */
 	.site-header {
 		position: sticky;
@@ -78,17 +68,14 @@
 	}
 
 	.header-content {
+		max-width: var(--max-width);
+		margin: 0 auto;
+		padding: 0 var(--side-padding);
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		height: var(--header-height);
 		position: relative;
-	}
-
-	.header-right {
-		display: flex;
-		align-items: center;
-		gap: var(--spacing-lg);
 	}
 
 	.header-right {
@@ -152,7 +139,7 @@
 		bottom: -1px;
 		left: 50%;
 		transform: translateX(-50%);
-		width: 20px;
+		width: 50%;
 		height: 2px;
 		background-color: var(--color-accent);
 		border-radius: 1px;
@@ -227,9 +214,17 @@
 	}
 
 	/* Mobile responsive styles */
-	@media (max-width: 768px) {
+	@media (max-width: 640px) {
 		.header-content {
 			position: relative;
+			padding: 0 var(--side-padding);
+		}
+
+		/* Hide navigation on mobile by default */
+		.main-nav {
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity var(--transition-normal), visibility var(--transition-normal);
 		}
 
 		.mobile-menu-toggle {
@@ -240,22 +235,31 @@
 			position: absolute;
 			top: 100%;
 			right: 0;
+			left: 0;
 			background-color: var(--color-bg-primary);
 			border: 1px solid var(--color-border);
 			border-top: none;
-			box-shadow: 0 4px 6px var(--color-shadow);
-			transform: translateY(-100%);
+			border-radius: 0 0 var(--border-radius) var(--border-radius);
+			box-shadow: 0 4px 12px var(--color-shadow);
+			transform: translateY(-10px);
 			opacity: 0;
 			visibility: hidden;
 			transition: all var(--transition-normal);
-			padding: var(--spacing-md);
-			min-width: 200px;
+			padding: var(--spacing-lg);
 			flex-direction: column;
 			gap: var(--spacing-md);
+			z-index: 50;
+			max-width: 100vw;
+			box-sizing: border-box;
 		}
 
 		.header-right.open {
 			transform: translateY(0);
+			opacity: 1;
+			visibility: visible;
+		}
+
+		.header-right.open .main-nav {
 			opacity: 1;
 			visibility: visible;
 		}
@@ -269,14 +273,32 @@
 
 		.nav-link {
 			display: block;
-			padding: var(--spacing-sm);
+			padding: var(--spacing-md);
 			text-align: center;
+			border-radius: var(--border-radius);
+			font-size: var(--font-size-base);
+		}
+
+		.nav-link:hover,
+		.nav-link:focus {
+			background-color: var(--color-bg-tertiary);
+			color: var(--color-accent);
 		}
 	}
 
 	@media (max-width: 480px) {
 		.logo-text {
 			font-size: var(--font-size-base);
+		}
+
+		.header-content {
+			padding: 0 calc(var(--side-padding) * 0.75);
+		}
+
+		.header-right {
+			right: 0;
+			left: 0;
+			max-width: 100vw;
 		}
 	}
 </style>
@@ -310,5 +332,51 @@
 				}
 			});
 		}
+	});
+
+	// Theme management
+	function initTheme() {
+		const savedTheme = localStorage.getItem('theme') || 'light';
+		document.documentElement.className = savedTheme;
+
+		// Update theme toggle button
+		const themeToggle = document.getElementById('theme-toggle');
+		if (themeToggle) {
+			themeToggle.setAttribute('aria-label', savedTheme === 'light' ? 'Switch to dark mode' : 'Switch to light mode');
+		}
+	}
+
+	function toggleTheme() {
+		const currentTheme = document.documentElement.className;
+		const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+		document.documentElement.className = newTheme;
+		localStorage.setItem('theme', newTheme);
+
+		const themeToggle = document.getElementById('theme-toggle');
+		if (themeToggle) {
+			themeToggle.setAttribute('aria-label', newTheme === 'light' ? 'Switch to dark mode' : 'Switch to light mode');
+		}
+	}
+
+	// Initialize theme on load
+	document.addEventListener('DOMContentLoaded', initTheme);
+
+	// Listen for theme changes from other tabs
+	window.addEventListener('storage', (e) => {
+		if (e.key === 'theme') {
+			document.documentElement.className = e.newValue || 'light';
+		}
+	});
+
+	// Set active nav link based on current page
+	document.addEventListener('DOMContentLoaded', () => {
+		const currentPath = window.location.pathname;
+		const navLinks = document.querySelectorAll('.nav-link');
+
+		navLinks.forEach(link => {
+			if (link.getAttribute('href') === currentPath) {
+				link.classList.add('active');
+			}
+		});
 	});
 </script>
