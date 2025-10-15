@@ -1,12 +1,15 @@
 # use-simple-debounce
 
-A simple, dependency-free React hook for debouncing function execution. No external dependencies, works with all React versions.
+A simple, dependency-free debounce utility for **React**, **Solid**, **Svelte**, **Vue**, and **vanilla JavaScript** with async support.
 
 ```tsx
-import { useDebounce } from 'use-simple-debounce';
+import { useDebounce } from 'use-simple-debounce'; // React
+import { createDebounce } from 'use-simple-debounce/solid'; // Solid
+import { createDebounce } from 'use-simple-debounce/svelte'; // Svelte
+import { useDebounce } from 'use-simple-debounce/vue'; // Vue
 
 // Create a debouncer (defaults to 300ms)
-const debounced = useDebounce();
+const debounced = useDebounce(); // or createDebounce()
 
 // Use it to debounce any function
 debounced(() => { /* debounced for 300ms */ });
@@ -23,6 +26,7 @@ debounced(async () => { /* debounced for 300ms */ });
 - 🎯 **Flexible** - Works with sync and async functions, any delay
 - 🧹 **Memory Safe** - Automatic cleanup prevents memory leaks
 - ⚡ **Async Support** - Handles both synchronous and asynchronous functions
+- 🎨 **Multi-Framework** - Supports React, Solid, Svelte, and Vue
 
 ## Installation
 
@@ -30,9 +34,9 @@ debounced(async () => { /* debounced for 300ms */ });
 npm install use-simple-debounce
 ```
 
-## Usage
+## Framework Support
 
-### Basic Example
+### React
 
 ```tsx
 import { useDebounce } from 'use-simple-debounce';
@@ -55,6 +59,105 @@ function SearchComponent() {
     />
   );
 }
+```
+
+### Solid
+
+```tsx
+import { createSignal } from 'solid-js';
+import { createDebounce } from 'use-simple-debounce/solid';
+
+function SearchComponent() {
+  const [query, setQuery] = createSignal('');
+  const debouncedSearch = createDebounce(300);
+
+  const handleSearch = (value: string) => {
+    setQuery(value);
+    debouncedSearch(() => {
+      // This will only execute 300ms after the user stops typing
+      performSearch(value);
+    });
+  };
+
+  return (
+    <input
+      type="text"
+      value={query()}
+      onInput={e => handleSearch(e.target.value)}
+      placeholder="Search..."
+    />
+  );
+}
+```
+
+### Svelte
+
+```svelte
+<script>
+  import { createDebounce } from 'use-simple-debounce/svelte';
+
+  let query = '';
+  const debouncedSearch = createDebounce(300);
+
+  function handleSearch(value) {
+    query = value;
+    debouncedSearch(() => {
+      // This will only execute 300ms after the user stops typing
+      performSearch(value);
+    });
+  }
+</script>
+
+<input
+  type="text"
+  bind:value={query}
+  on:input={e => handleSearch(e.target.value)}
+  placeholder="Search..."
+/>
+```
+
+### Vue
+
+```vue
+<template>
+  <input
+    v-model="query"
+    @input="handleSearch"
+    placeholder="Search..."
+  />
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import { useDebounce } from 'use-simple-debounce/vue';
+
+const query = ref('');
+const debouncedSearch = useDebounce(300);
+
+const handleSearch = () => {
+  debouncedSearch(() => {
+    // This will be debounced - only executes 300ms after the last call
+    performSearch(query.value);
+  });
+};
+</script>
+```
+
+### Vanilla JavaScript
+
+```javascript
+import { useDebounce } from 'use-simple-debounce/native';
+
+const debouncedSearch = useDebounce(300);
+
+// Get the debounced function and cancel function
+const [search, cancel] = debouncedSearch(() => {
+  // This will be debounced - only executes 300ms after the last call
+  performSearch(query);
+});
+
+// To cancel the pending execution
+cancel();
 ```
 
 ### Advanced Example
@@ -130,7 +233,7 @@ function SearchComponent() {
 
 ### API Reference
 
-#### `useDebounce(delay?: number)`
+#### `useDebounce(delay?: number)` / `createDebounce(delay?: number)`
 
 Returns a debounced executor function.
 
@@ -143,12 +246,20 @@ A function that accepts another function to debounce its execution.
 **Type:**
 ```typescript
 function useDebounce(delay?: number): (fn: () => void | Promise<void>) => void
+function createDebounce(delay?: number): (fn: () => void | Promise<void>) => void
 ```
 
 **Supported Function Types:**
 - Synchronous functions: `() => void`
 - Asynchronous functions: `() => Promise<void>`
 - Any function that returns void or a Promise<void>
+
+**Framework Usage:**
+- **React**: `import { useDebounce } from 'use-simple-debounce'` or `import { useDebounce } from 'use-simple-debounce/react'`
+- **Solid**: `import { createDebounce } from 'use-simple-debounce/solid'`
+- **Svelte**: `import { createDebounce } from 'use-simple-debounce/svelte'`
+- **Vue**: `import { useDebounce } from 'use-simple-debounce/vue'`
+- **Vanilla JS**: `import { useDebounce } from 'use-simple-debounce/native'`
 
 ## Choosing the Right Delay
 
@@ -179,15 +290,22 @@ The most frequently used delay across React applications is **`300ms`** - it pro
 ## Why Choose use-simple-debounce?
 
 1. **Zero Dependencies** - No risk of version conflicts or security issues
-2. **Universal Compatibility** - Works with React 16.8+ and beyond
+2. **Universal Compatibility** - Works with React 16.8+, Solid, Svelte, Vue, and vanilla JavaScript
 3. **Tiny Bundle Size** - Minimal impact on your app's size
-4. **Simple API** - Easy to understand and use
+4. **Simple API** - Easy to understand and use across all frameworks
 5. **Memory Safe** - Automatic cleanup prevents memory leaks
+6. **Multi-Framework** - Same API and behavior across all supported frameworks
 
 ## License
 
 MIT © [juji](https://github.com/juji)
 ## Changelog
+
+### v1.1.0
+- 🎉 **Multi-Framework Support**: Added Solid, Svelte, Vue, and vanilla JavaScript implementations
+- 📦 **Modular Exports**: Framework-specific entry points for tree-shaking
+- 🔧 **Consistent API**: Same debounce function across all frameworks (except native which provides cancellation)
+- 📚 **Updated Documentation**: Examples for React, Solid, Svelte, Vue, and vanilla JavaScript
 
 ### v1.0.0
 - 🎉 **Initial Release**: Simple, dependency-free React debouncing hook

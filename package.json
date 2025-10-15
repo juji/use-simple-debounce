@@ -1,7 +1,7 @@
 {
   "name": "use-simple-debounce",
   "version": "1.0.1",
-  "description": "A simple, dependency-free React hook for debouncing function execution with async support",
+  "description": "A simple, dependency-free debounce utility for React, Solid, Svelte, Vue, and vanilla JavaScript with async support",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -11,6 +11,31 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
+    },
+    "./react": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./solid": {
+      "types": "./dist/solid.d.ts",
+      "import": "./dist/solid.mjs",
+      "require": "./dist/solid.js"
+    },
+    "./svelte": {
+      "types": "./dist/svelte.d.ts",
+      "import": "./dist/svelte.mjs",
+      "require": "./dist/svelte.js"
+    },
+    "./vue": {
+      "types": "./dist/vue.d.ts",
+      "import": "./dist/vue.mjs",
+      "require": "./dist/vue.js"
+    },
+    "./native": {
+      "types": "./dist/native.d.ts",
+      "import": "./dist/native.mjs",
+      "require": "./dist/native.js"
     }
   },
   "files": [
@@ -19,11 +44,17 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "test": "node test.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
     "react",
+    "solid",
+    "svelte",
+    "vue",
+    "vanilla",
+    "javascript",
     "hook",
     "debounce",
     "typescript",
@@ -35,13 +66,21 @@
   "author": "juji",
   "license": "MIT",
   "peerDependencies": {
-    "react": ">=16.8.0"
+    "react": ">=16.8.0",
+    "solid-js": ">=1.0.0",
+    "svelte": ">=3.0.0",
+    "vue": ">=3.0.0"
   },
   "devDependencies": {
-    "@types/react": "^19.1.16",
+    "@types/react": "^19.2.2",
+    "@vitest/ui": "^3.2.4",
     "react": "^19.1.1",
+    "solid-js": "^1.9.9",
+    "svelte": "^5.40.0",
     "tsup": "^8.5.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4",
+    "vue": "^3.5.22"
   },
   "repository": {
     "type": "git",
