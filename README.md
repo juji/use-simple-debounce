@@ -174,13 +174,14 @@ import { useDebounce } from 'use-simple-debounce';
 
 function AutoSaveEditor() {
   const [content, setContent] = useState('');
-  const debounced = useDebounce(); // Save after 1 second of inactivity
+  const debounced = useDebounce();
 
   const handleChange = (newContent: string) => {
     setContent(newContent);
 
     debounced(async () => {
       try {
+        // Save after 1 second of inactivity
         await saveToServer(newContent);
         console.log('Auto-saved!');
       } catch (err) {
