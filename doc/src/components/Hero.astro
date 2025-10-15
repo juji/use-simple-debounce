@@ -1,5 +1,6 @@
 ---
 // Hero component for the homepage
+import ShikiHighlighter from './ShikiHighlighter.astro';
 ---
 
 <section class="hero">
@@ -63,27 +64,30 @@
 					</div>
 					<span class="code-title">useDebounce.js</span>
 				</div>
-				<div class="code-content" set:html={`
-					<pre><code><span class="keyword">import</span> { useDebounce } <span class="keyword">from</span> <span class="string">'use-simple-debounce'</span>;
+				<div class="code-content">
+					<ShikiHighlighter
+						code={`import { useDebounce } from 'use-simple-debounce';
 
-<span class="keyword">function</span> <span class="function">SearchComponent</span>() {
-  <span class="keyword">const</span> [query, setQuery] = <span class="function">useState</span>('');
-  <span class="keyword">const</span> debouncedQuery = <span class="function">useDebounce</span>(query, <span class="number">300</span>);
+function SearchComponent() {
+  const [query, setQuery] = useState('');
+  const debouncedQuery = useDebounce(query, 300);
 
-  <span class="comment">// Search API call happens here</span>
-  <span class="function">useEffect</span>(() => {
-    <span class="function">searchAPI</span>(debouncedQuery);
+  // Search API call happens here
+  useEffect(() => {
+    searchAPI(debouncedQuery);
   }, [debouncedQuery]);
 
-  <span class="keyword">return</span> (
-    &lt;input
+  return (
+    <input
       value={query}
       onChange={(e) => setQuery(e.target.value)}
       placeholder="Search..."
-    /&gt;
+    />
   );
-}</code></pre>
-				`}></div>
+}`}
+						lang="javascript"
+					/>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -281,48 +285,10 @@
 	}
 
 	.code-content {
-		padding: var(--spacing-lg);
+		padding: 0;
 		font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
 		font-size: var(--font-size-sm);
 		line-height: 1.5;
-		overflow-x: auto;
-	}
-
-	.code-content code {
-		color: var(--color-text-primary);
-	}
-
-	.keyword {
-		color: #c792ea;
-	}
-
-	.function {
-		color: #82aaff;
-	}
-
-	.string {
-		color: #c3e88d;
-	}
-
-	.comment {
-		color: #546e7a;
-		font-style: italic;
-	}
-
-	.number {
-		color: #f78c6c;
-	}
-
-	.tag {
-		color: #f07178;
-	}
-
-	.attr {
-		color: #c792ea;
-	}
-
-	.punctuation {
-		color: var(--color-text-secondary);
 	}
 
 	/* Mobile responsive styles */
@@ -392,7 +358,6 @@
 		}
 
 		.code-content {
-			padding: var(--spacing-md);
 			font-size: var(--font-size-xs);
 		}
 	}
