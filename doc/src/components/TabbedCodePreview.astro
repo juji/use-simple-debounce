@@ -158,7 +158,7 @@ input.addEventListener('input', e => handleSearch(e.target.value));`
       <button
         class={`tab ${index === 0 ? 'active' : ''}`}
         data-tab={index}
-        onclick="switchTab(event)"
+        id={`tab-btn-${index}`}
       >
         <span class="tab-icon" set:html={icons[tab.icon as keyof typeof icons]}></span>
         <span class="tab-name">{tab.name}</span>
@@ -174,22 +174,25 @@ input.addEventListener('input', e => handleSearch(e.target.value));`
   </div>
 </div>
 
-<script>
-  window.switchTab = function(event: Event) {
-    const button = event.currentTarget as HTMLElement;
-    const tabIndex = parseInt(button.dataset.tab || '0');
-    const container = button.closest('.tabbed-code-preview');
+<script type="module">
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.tabbed-code-preview .tab').forEach((button) => {
+      button.addEventListener('click', (event) => {
+        const tabIndex = parseInt(button.dataset.tab || '0');
+        const container = button.closest('.tabbed-code-preview');
 
-    // Update tab buttons
-    container?.querySelectorAll('.tab').forEach((tab: Element, index: number) => {
-      tab.classList.toggle('active', index === tabIndex);
-    });
+        // Update tab buttons
+        container?.querySelectorAll('.tab').forEach((tab, index) => {
+          tab.classList.toggle('active', index === tabIndex);
+        });
 
-    // Update code content
-    container?.querySelectorAll('.code-content').forEach((content: Element, index: number) => {
-      content.classList.toggle('active', index === tabIndex);
+        // Update code content
+        container?.querySelectorAll('.code-content').forEach((content, index) => {
+          content.classList.toggle('active', index === tabIndex);
+        });
+      });
     });
-  };
+  });
 </script>
 
 <style>
