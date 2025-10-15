@@ -48,6 +48,7 @@
   ],
   "scripts": {
     "build": "tsup",
+    "build:all": "node scripts/build-all.js",
     "dev": "node scripts/dev-all.js",
     "dev:all": "node scripts/dev-all.js",
     "test": "vitest run",
