@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'preact/hooks';
+import { useRef /*  useEffect */ } from 'preact/hooks';
 
 /**
  * Returns a debounced executor function that delays execution of the provided function.
@@ -32,14 +32,14 @@ import { useRef, useEffect } from 'preact/hooks';
 export function useDebounce() {
   const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Cleanup on component unmount
-  useEffect(() => {
-    return () => {
-      if (timeout.current) {
-        clearTimeout(timeout.current);
-      }
-    };
-  }, []);
+  // // Cleanup on component unmount
+  // useEffect(() => {
+  //   return () => {
+  //     if (timeout.current) {
+  //       clearTimeout(timeout.current);
+  //     }
+  //   };
+  // }, []);
 
   return (fn: () => void, delay: number = 300) => {
     if (timeout.current) {
@@ -49,5 +49,12 @@ export function useDebounce() {
       fn();
       timeout.current = null;
     }, delay);
+
+    // return cleanup
+    return () => {
+      if (timeout.current) {
+        clearTimeout(timeout.current);
+      }
+    };
   };
 }

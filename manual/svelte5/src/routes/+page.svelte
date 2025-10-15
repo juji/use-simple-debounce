@@ -82,7 +82,7 @@
 		<header class="page-header">
 			<h1>use-simple-debounce Svelte 5 Manual Tests</h1>
 			<p>
-				<img src="/src/assets/svelte5-logo.svg" alt="Svelte 5" class="framework-logo" /> Svelte 5 Implementation
+				Svelte 5 Implementation
 			</p>
 		</header>
 
