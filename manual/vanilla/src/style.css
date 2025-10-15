@@ -397,3 +397,18 @@ button:disabled:hover {
     padding: 1rem;
   }
 }
+
+.framework-logo {
+  width: 32px;
+  height: 32px;
+  margin-right: 0.75rem;
+  vertical-align: middle;
+}
+
+.page-header p {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 0;
+  font-weight: 400;
+}

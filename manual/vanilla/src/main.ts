@@ -48,8 +48,8 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
     <div class="main-content">
       <header class="page-header">
-        <h1>use-simple-debounce Manual Tests</h1>
-        <p>Vanilla JavaScript Implementation</p>
+        <h1>use-simple-debounce Vanilla Manual Tests</h1>
+        <p><img src="/src/assets/vanilla-logo.svg" alt="Vanilla JS" class="framework-logo" /> Vanilla JavaScript Implementation</p>
       </header>
 
       <div id="test-container">
