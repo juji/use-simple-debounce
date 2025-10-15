@@ -8,6 +8,7 @@ import solidJs from '@astrojs/solid-js';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://use-simple-debounce.jujiplay.com',
   integrations: [
     react({
       include: ['**/react/**'],
