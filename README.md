@@ -253,24 +253,18 @@ A function that accepts a function to debounce and an optional delay.
 **Type:**
 
 ```typescript
-function useDebounce(): (fn: () => void | Promise<void>, delay?: number) => void;
-function createDebounce(): (fn: () => void | Promise<void>, delay?: number) => void;
+function useDebounce(): (fn: () => void, delay?: number) => void;
+function createDebounce(): (fn: () => void, delay?: number) => void;
 ```
-
-**Supported Function Types:**
-
-- Synchronous functions: `() => void`
-- Asynchronous functions: `() => Promise<void>`
-- Any function that returns void or a Promise<void>
 
 **Framework Usage:**
 
-- **React**: `import { useDebounce } from 'use-simple-debounce'` or `import { useDebounce } from 'use-simple-debounce/react'`
+- **React**: `import { useDebounce } from 'use-simple-debounce'`
 - **Preact**: `import { useDebounce } from 'use-simple-debounce/preact'`
 - **Solid**: `import { createDebounce } from 'use-simple-debounce/solid'`
 - **Svelte**: `import { createDebounce } from 'use-simple-debounce/svelte'`
 - **Vue**: `import { useDebounce } from 'use-simple-debounce/vue'`
-- **Vanilla JS**: `import { useDebounce } from 'use-simple-debounce/vanilla'` (returns cancel function)
+- **Vanilla JS**: `import { useDebounce } from 'use-simple-debounce/vanilla'`
 
 ## Choosing the Right Delay
 
@@ -310,34 +304,6 @@ The most frequently used delay across React applications is **`300ms`** - it pro
 ## License
 
 MIT © [juji](https://github.com/juji)
-
-## Changelog
-
-### v1.2.0
-
-- 🔄 **API Enhancement**: Changed from `useDebounce(delay)` to `useDebounce()` for more flexible per-call delay specification
-- 🎯 **Improved Flexibility**: Users can now specify different delays for different debounced operations
-- 📚 **Updated Documentation**: All examples and API reference updated to reflect new usage patterns
-- ✅ **Backward Compatibility**: Breaking change - existing code will need to be updated
-- 🎉 **Preact Support**: Added dedicated Preact implementation with proper hooks integration
-
-### v1.1.0
-
-- 🎉 **Multi-Framework Support**: Added Solid, Svelte, Vue, and vanilla JavaScript implementations
-- 📦 **Modular Exports**: Framework-specific entry points for tree-shaking
-- 🔧 **Consistent API**: Same debounce function across all frameworks (except vanilla which provides cancellation)
-- 📚 **Updated Documentation**: Examples for React, Solid, Svelte, Vue, and vanilla JavaScript
-
-### v1.0.0
-
-- 🎉 **Initial Release**: Simple, dependency-free React debouncing hook
-- 🚀 **Zero Dependencies**: No external libraries, works with all React versions
-- ⚡ **Async Support**: Handles both sync and async functions with `Promise<void>` types
-- 🎯 **Smart Defaults**: 300ms delay (most common usage pattern)
-- 📦 **Dual Builds**: ESM + CommonJS with full TypeScript support
-- 🔒 **Type Safe**: Complete TypeScript definitions and JSDoc
-- 📚 **Rich Documentation**: Usage examples, delay guides, and comparisons
-- 🧹 **Memory Safe**: Automatic cleanup prevents memory leaks
 
 ## Contributing
 
