@@ -36,11 +36,6 @@ export const RapidCallsTest: React.FC = () => {
 
   return (
     <div className="test-case">
-      <header className="page-header">
-        <h1>use-simple-debounce Manual Tests</h1>
-        <p>React Implementation - Rapid Calls Test</p>
-      </header>
-
       <h3>⚡ Rapid Calls Test</h3>
       <p>Test debouncing with rapid successive calls (10 calls in 500ms).</p>
 

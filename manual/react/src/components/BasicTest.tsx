@@ -24,11 +24,6 @@ export const BasicTest: React.FC = () => {
 
   return (
     <div className="test-case">
-      <header className="page-header">
-        <h1>use-simple-debounce Manual Tests</h1>
-        <p>React Implementation - Basic Debounce Test</p>
-      </header>
-
       <h3>⚡ Basic Debounce Test</h3>
       <p>Test basic debouncing with a 500ms delay.</p>
 

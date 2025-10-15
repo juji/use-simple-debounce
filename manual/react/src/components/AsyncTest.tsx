@@ -33,11 +33,6 @@ export const AsyncTest: React.FC = () => {
 
   return (
     <div className="test-case">
-      <header className="page-header">
-        <h1>use-simple-debounce Manual Tests</h1>
-        <p>React Implementation - Async Functions Test</p>
-      </header>
-
       <h3>⚡ Async Function Test</h3>
       <p>Test debouncing with async functions (simulates API call).</p>
 

@@ -29,11 +29,6 @@ export const DelayTest: React.FC = () => {
 
   return (
     <div className="test-case">
-      <header className="page-header">
-        <h1>use-simple-debounce Manual Tests</h1>
-        <p>React Implementation - Custom Delay Test</p>
-      </header>
-
       <h3>⚡ Custom Delay Test</h3>
       <p>Test debouncing with adjustable delay.</p>
 

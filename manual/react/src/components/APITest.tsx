@@ -58,11 +58,6 @@ export const APITest: React.FC = () => {
 
   return (
     <div className="test-case">
-      <header className="page-header">
-        <h1>use-simple-debounce Manual Tests</h1>
-        <p>React Implementation - API Simulation Test</p>
-      </header>
-
       <h3>⚡ API Simulation Test</h3>
       <p>Test debouncing with simulated API calls (search functionality).</p>
 

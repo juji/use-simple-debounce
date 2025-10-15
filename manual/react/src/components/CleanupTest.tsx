@@ -70,11 +70,6 @@ export const CleanupTest: React.FC = () => {
 
   return (
     <div className="test-case">
-      <header className="page-header">
-        <h1>use-simple-debounce Manual Tests</h1>
-        <p>React Implementation - Cleanup Test</p>
-      </header>
-
       <h3>⚡ Cleanup Test</h3>
       <p>Test that debounced functions are properly cleaned up when components unmount.</p>
       <p><em>Type in the input, then unmount the component before the 5s delay expires.</em></p>
