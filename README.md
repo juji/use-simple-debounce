@@ -2,6 +2,8 @@
 
 A simple, dependency-free debounce utility for **React**, **Preact**, **Solid**, **Svelte**, **Vue**, and **vanilla JavaScript** with async support.
 
+For those who like simple things: https://use-simple-debounce.jujiplay.com/
+
 ```tsx
 import { useDebounce } from 'use-simple-debounce'; // React
 import { useDebounce } from 'use-simple-debounce/preact'; // Preact
