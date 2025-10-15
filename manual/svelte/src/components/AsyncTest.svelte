@@ -1,32 +1,32 @@
-<script lang="ts">
-  import { debounce } from 'use-simple-debounce/svelte'
+<script>
+  import { createDebounce } from 'use-simple-debounce/svelte'
 
   let input = ''
   let result = ''
   let loading = false
-  let logs: string[] = []
+  let logs = []
 
-  function addLog(message: string) {
+  function addLog(message) {
     logs = [...logs, `${new Date().toLocaleTimeString()}: ${message}`]
   }
 
-  const debouncedAsyncOperation = debounce(async () => {
-    loading = true
-    addLog(`Starting async operation for: "${input}"`)
+  const debouncedAsyncOperation = createDebounce(500)
 
-    // Simulate async operation
-    await new Promise(resolve => setTimeout(resolve, 1000))
-
-    result = input.toUpperCase()
-    loading = false
-    addLog(`Async operation completed: "${result}"`)
-  }, 500)
-
-  function handleInputChange(event: Event) {
-    const target = event.target as HTMLInputElement
+  function handleInputChange(event) {
+    const target = event.target
     input = target.value
     addLog(`Input changed: "${input}"`)
-    debouncedAsyncOperation()
+    debouncedAsyncOperation(async () => {
+      loading = true
+      addLog(`Starting async operation for: "${input}"`)
+
+      // Simulate async operation
+      await new Promise(resolve => setTimeout(resolve, 1000))
+
+      result = input.toUpperCase()
+      loading = false
+      addLog(`Async operation completed: "${result}"`)
+    })
   }
 </script>
 

@@ -1,35 +1,32 @@
-<script lang="ts">
-  import { debounce } from 'use-simple-debounce/svelte'
+<script>
+  import { createDebounce } from 'use-simple-debounce/svelte'
 
   let input = ''
   let output = ''
   let delay = 1000
-  let logs: string[] = []
+  let logs = []
 
-  function addLog(message: string) {
+  function addLog(message) {
     logs = [...logs, `${new Date().toLocaleTimeString()}: ${message}`]
   }
 
-  let debouncedUpdate = debounce(() => {
-    output = input
-    addLog(`Debounced update: "${input}"`)
-  }, delay)
+  let debouncedUpdate = createDebounce(delay)
 
-  function handleInputChange(event: Event) {
-    const target = event.target as HTMLInputElement
+  function handleInputChange(event) {
+    const target = event.target
     input = target.value
     addLog(`Input changed: "${input}"`)
-    debouncedUpdate()
-  }
-
-  function handleDelayChange(event: Event) {
-    const target = event.target as HTMLInputElement
-    delay = Number(target.value)
-    // Recreate debounce with new delay
-    debouncedUpdate = debounce(() => {
+    debouncedUpdate(() => {
       output = input
       addLog(`Debounced update: "${input}"`)
-    }, delay)
+    })
+  }
+
+  function handleDelayChange(event) {
+    const target = event.target
+    delay = Number(target.value)
+    // Recreate debounce with new delay
+    debouncedUpdate = createDebounce(delay)
   }
 </script>
 

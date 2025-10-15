@@ -1,17 +1,13 @@
-<script lang="ts">
-  import { debounce } from 'use-simple-debounce/svelte'
+<script>
+  import { createDebounce } from 'use-simple-debounce/svelte'
   import { onMount, onDestroy } from 'svelte'
 
-  export let addLog: (message: string) => void
+  export let addLog
 
   let input = ''
   let output = ''
 
-  const debouncedUpdate = debounce(() => {
-    console.log('Debounced callback executed')
-    output = input
-    addLog(`Debounced callback executed: "${input}"`)
-  }, 5000)
+  const debouncedUpdate = createDebounce(5000)
 
   onMount(() => {
     addLog('DebounceComponent mounted')
@@ -21,11 +17,15 @@
     addLog('DebounceComponent unmounting - cleanup should prevent pending debounced callbacks')
   })
 
-  function handleInputChange(event: Event) {
-    const target = event.target as HTMLInputElement
+  function handleInputChange(event) {
+    const target = event.target
     input = target.value
     addLog(`Input changed: "${input}"`)
-    debouncedUpdate()
+    debouncedUpdate(() => {
+      console.log('Debounced callback executed')
+      output = input
+      addLog(`Debounced callback executed: "${input}"`)
+    })
   }
 </script>
 

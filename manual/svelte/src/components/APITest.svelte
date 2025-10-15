@@ -1,17 +1,17 @@
-<script lang="ts">
-  import { debounce } from 'use-simple-debounce/svelte'
+<script>
+  import { createDebounce } from 'use-simple-debounce/svelte'
 
   let query = ''
-  let results: { query: string; results: string[] } | null = null
+  let results = null
   let loading = false
-  let logs: string[] = []
+  let logs = []
 
-  function addLog(message: string) {
+  function addLog(message) {
     logs = [...logs, `${new Date().toLocaleTimeString()}: ${message}`]
   }
 
   // Mock API function
-  async function mockAPI(searchQuery: string): Promise<{ query: string; results: string[] }> {
+  async function mockAPI(searchQuery) {
     addLog(`API call started for: "${searchQuery}"`)
     await new Promise(resolve => setTimeout(resolve, 800)) // Simulate network delay
 
@@ -25,28 +25,28 @@
     return { query: searchQuery, results: mockResults }
   }
 
-  const debouncedSearch = debounce(async () => {
-    if (!query.trim()) {
-      results = null
-      return
-    }
+  const debouncedSearch = createDebounce(300)
 
-    loading = true
-    try {
-      results = await mockAPI(query)
-      addLog(`API call completed for: "${query}"`)
-    } catch (error) {
-      addLog(`API call failed: ${error}`)
-    } finally {
-      loading = false
-    }
-  }, 300)
-
-  function handleInputChange(event: Event) {
-    const target = event.target as HTMLInputElement
+  function handleInputChange(event) {
+    const target = event.target
     query = target.value
     addLog(`Search query changed: "${query}"`)
-    debouncedSearch()
+    debouncedSearch(async () => {
+      if (!query.trim()) {
+        results = null
+        return
+      }
+
+      loading = true
+      try {
+        results = await mockAPI(query)
+        addLog(`API call completed for: "${query}"`)
+      } catch (error) {
+        addLog(`API call failed: ${error}`)
+      } finally {
+        loading = false
+      }
+    })
   }
 </script>
 

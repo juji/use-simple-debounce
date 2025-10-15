@@ -1,11 +1,11 @@
-<script lang="ts">
-  import { debounce } from 'use-simple-debounce/svelte'
+<script>
+  import { createDebounce } from 'use-simple-debounce/svelte'
   import DebounceComponent from './DebounceComponent.svelte'
 
   let componentMounted = true
-  let logs: string[] = []
+  let logs = []
 
-  function addLog(message: string) {
+  function addLog(message) {
     logs = [...logs, `${new Date().toLocaleTimeString()}: ${message}`]
   }
 

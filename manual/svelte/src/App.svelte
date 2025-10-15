@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
   import BasicTest from './components/BasicTest.svelte'
   import RapidCallsTest from './components/RapidCallsTest.svelte'
   import AsyncTest from './components/AsyncTest.svelte'
@@ -6,9 +6,9 @@
   import APITest from './components/APITest.svelte'
   import CleanupTest from './components/CleanupTest.svelte'
 
-  let activeTest: string = 'basic'
+  let activeTest = 'basic'
 
-  function setActiveTest(test: string) {
+  function setActiveTest(test) {
     activeTest = test
   }
 </script>

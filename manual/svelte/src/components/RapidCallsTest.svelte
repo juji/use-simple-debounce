@@ -1,25 +1,25 @@
-<script lang="ts">
-  import { debounce } from 'use-simple-debounce/svelte'
+<script>
+  import { createDebounce } from 'use-simple-debounce/svelte'
 
   let count = 0
   let debouncedCount = 0
-  let logs: string[] = []
+  let logs = []
 
-  function addLog(message: string) {
+  function addLog(message) {
     logs = [...logs, `${new Date().toLocaleTimeString()}: ${message}`]
   }
 
-  const debouncedUpdate = debounce((newCount: number) => {
-    debouncedCount = newCount
-    addLog(`Debounced count: ${newCount}`)
-  }, 300)
+  const debouncedUpdate = createDebounce(300)
 
   function handleRapidCalls() {
     for (let i = 0; i < 10; i++) {
       setTimeout(() => {
         count += 1
         addLog(`Immediate count: ${count}`)
-        debouncedUpdate(count)
+        debouncedUpdate(() => {
+          debouncedCount = count
+          addLog(`Debounced count: ${count}`)
+        })
       }, i * 50) // Call every 50ms
     }
   }
