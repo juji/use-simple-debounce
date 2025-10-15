@@ -1,6 +1,7 @@
 ---
 // Base layout for documentation site
 import Header from '../components/Header.astro';
+import '../styles/global.css';
 
 export interface Props {
 	title: string;
@@ -216,14 +217,6 @@ const { title, description = "A simple, dependency-free debounce utility for Rea
 		top: 6px;
 	}
 
-	/* Container */
-	.container {
-		width: 100%;
-		max-width: var(--container-max-width);
-		margin: 0 auto;
-		padding: 0 var(--spacing-md);
-	}
-
 	/* Main content */
 	.main-content {
 		flex: 1;
@@ -300,10 +293,6 @@ const { title, description = "A simple, dependency-free debounce utility for Rea
 			grid-template-columns: 1fr;
 			gap: var(--spacing-lg);
 			padding: var(--spacing-lg) 0;
-		}
-
-		.container {
-			padding: 0 var(--spacing-sm);
 		}
 	}
 

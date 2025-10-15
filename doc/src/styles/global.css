@@ -1,0 +1,20 @@
+/* Global CSS Variables */
+:root {
+	/* Layout */
+	--max-width: 888px;
+	--side-padding-mobile: 1rem;
+	--side-padding-desktop: 2rem;
+}
+
+/* Responsive side padding */
+@media (max-width: 768px) {
+	:root {
+		--side-padding: var(--side-padding-mobile);
+	}
+}
+
+@media (min-width: 769px) {
+	:root {
+		--side-padding: var(--side-padding-desktop);
+	}
+}
