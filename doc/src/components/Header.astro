@@ -336,13 +336,22 @@
 
 	// Theme management
 	function initTheme() {
-		const savedTheme = localStorage.getItem('theme') || 'light';
-		document.documentElement.className = savedTheme;
+		const savedTheme = localStorage.getItem('theme');
+		let themeToUse = savedTheme;
+
+		// If no saved theme, check system preference and save it
+		if (!savedTheme) {
+			const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+			themeToUse = prefersDark ? 'dark' : 'light';
+			localStorage.setItem('theme', themeToUse);
+		}
+
+		document.documentElement.className = themeToUse;
 
 		// Update theme toggle button
 		const themeToggle = document.getElementById('theme-toggle');
 		if (themeToggle) {
-			themeToggle.setAttribute('aria-label', savedTheme === 'light' ? 'Switch to dark mode' : 'Switch to light mode');
+			themeToggle.setAttribute('aria-label', themeToUse === 'light' ? 'Switch to dark mode' : 'Switch to light mode');
 		}
 	}
 
