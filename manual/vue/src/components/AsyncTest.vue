@@ -30,36 +30,36 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useDebounce } from 'use-simple-debounce/vue'
+import { ref } from 'vue';
+import { useDebounce } from 'use-simple-debounce/vue';
 
-const input = ref('')
-const result = ref('')
-const loading = ref(false)
-const logs = ref<string[]>([])
+const input = ref('');
+const result = ref('');
+const loading = ref(false);
+const logs = ref<string[]>([]);
 
 const addLog = (message: string) => {
-  logs.value.push(`${new Date().toLocaleTimeString()}: ${message}`)
-}
+  logs.value.push(`${new Date().toLocaleTimeString()}: ${message}`);
+};
 
-const debounced = useDebounce()
+const debounced = useDebounce();
 
 const handleInputChange = (e: Event) => {
-  const target = e.target as HTMLInputElement
-  const value = target.value
-  input.value = value
-  addLog(`Input changed: "${value}"`)
+  const target = e.target as HTMLInputElement;
+  const value = target.value;
+  input.value = value;
+  addLog(`Input changed: "${value}"`);
   debounced(async () => {
-    loading.value = true
-    addLog(`Starting async operation for: "${value}"`)
+    loading.value = true;
+    addLog(`Starting async operation for: "${value}"`);
 
     // Simulate async operation
-    await new Promise(resolve => setTimeout(resolve, 1000))
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    const processed = value.toUpperCase()
-    result.value = processed
-    loading.value = false
-    addLog(`Async operation completed: "${processed}"`)
-  }, 500)
-}
+    const processed = value.toUpperCase();
+    result.value = processed;
+    loading.value = false;
+    addLog(`Async operation completed: "${processed}"`);
+  }, 500);
+};
 </script>

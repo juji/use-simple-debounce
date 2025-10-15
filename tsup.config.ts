@@ -1,7 +1,14 @@
-import { defineConfig } from 'tsup'
+import { defineConfig } from 'tsup';
 
 export default defineConfig({
-  entry: ['src/index.ts', 'src/preact.ts', 'src/solid.ts', 'src/svelte.ts', 'src/vue.ts', 'src/vanilla.ts'],
+  entry: [
+    'src/index.ts',
+    'src/preact.ts',
+    'src/solid.ts',
+    'src/svelte.ts',
+    'src/vue.ts',
+    'src/vanilla.ts',
+  ],
   format: ['cjs', 'esm'],
   dts: true,
   clean: true,
@@ -9,6 +16,6 @@ export default defineConfig({
   sourcemap: true,
   external: ['preact', 'react', 'solid-js', 'svelte', 'vue'],
   outExtension: ({ format }) => ({
-    js: format === 'esm' ? '.mjs' : '.js'
+    js: format === 'esm' ? '.mjs' : '.js',
   }),
-})
+});

@@ -20,13 +20,13 @@ export function createAPITest(container: HTMLElement) {
 
   function addLog(message: string) {
     logs.push(`${new Date().toLocaleTimeString()}: ${message}`);
-    logsContainer.innerHTML = logs.map(log => `<div class="log-entry">${log}</div>`).join('');
+    logsContainer.innerHTML = logs.map((log) => `<div class="log-entry">${log}</div>`).join('');
   }
 
   // Mock API function
   async function mockAPI(searchQuery: string) {
     addLog(`API call started for: "${searchQuery}"`);
-    await new Promise(resolve => setTimeout(resolve, 800)); // Simulate network delay
+    await new Promise((resolve) => setTimeout(resolve, 800)); // Simulate network delay
 
     // Mock search results
     const mockResults = [
@@ -71,7 +71,7 @@ export function createAPITest(container: HTMLElement) {
       resultsDiv.innerHTML = `
         <p><strong>Search Results for "${results.query}":</strong></p>
         <ul>
-          ${results.results.map(result => `<li>${result}</li>`).join('')}
+          ${results.results.map((result) => `<li>${result}</li>`).join('')}
         </ul>
       `;
     } else {

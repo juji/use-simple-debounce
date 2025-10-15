@@ -7,15 +7,15 @@ export const RapidCallsTest: React.FC = () => {
   const [logs, setLogs] = useState<string[]>([]);
 
   const addLog = (message: string) => {
-    setLogs(prev => [...prev, `${new Date().toLocaleTimeString()}: ${message}`]);
+    setLogs((prev) => [...prev, `${new Date().toLocaleTimeString()}: ${message}`]);
   };
 
   const debounced = useDebounce();
-  const debouncedCountRef = useRef(0)
+  const debouncedCountRef = useRef(0);
   const handleRapidCalls = () => {
     for (let i = 0; i < 10; i++) {
       setTimeout(() => {
-        setCount(prev => {
+        setCount((prev) => {
           const newCount = prev + 1;
           addLog(`Immediate count: ${newCount}`);
           debounced(() => {
@@ -46,15 +46,21 @@ export const RapidCallsTest: React.FC = () => {
       </div>
 
       <div className="test-output">
-        <p><strong>Immediate Count:</strong> {count}</p>
-        <p><strong>Debounced Count:</strong> {debouncedCount}</p>
+        <p>
+          <strong>Immediate Count:</strong> {count}
+        </p>
+        <p>
+          <strong>Debounced Count:</strong> {debouncedCount}
+        </p>
       </div>
 
       <div className="test-logs">
         <h4>Logs:</h4>
         <div className="logs-container">
           {logs.map((log, index) => (
-            <div key={index} className="log-entry">{log}</div>
+            <div key={index} className="log-entry">
+              {log}
+            </div>
           ))}
         </div>
       </div>

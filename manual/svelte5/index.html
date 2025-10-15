@@ -1,37 +1,37 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Svelte5</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        padding: 2rem;
-        background: #f0f0f0;
-      }
-      .test {
-        background: white;
-        padding: 2rem;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      }
-    </style>
-  </head>
-  <body>
-    <div class="test">
-      <h1>Basic HTML Test</h1>
-      <p>If you can see this, the dev server is working!</p>
-      <p>Time: <span id="time"></span></p>
-    </div>
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="icon" type="image/svg+xml" href="/vite.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Svelte5</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				padding: 2rem;
+				background: #f0f0f0;
+			}
+			.test {
+				background: white;
+				padding: 2rem;
+				border-radius: 8px;
+				box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="test">
+			<h1>Basic HTML Test</h1>
+			<p>If you can see this, the dev server is working!</p>
+			<p>Time: <span id="time"></span></p>
+		</div>
 
-    <div id="app"></div>
+		<div id="app"></div>
 
-    <script>
-      console.log('HTML loaded, time:', new Date().toLocaleTimeString());
-      document.getElementById('time').textContent = new Date().toLocaleTimeString();
-    </script>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+		<script>
+			console.log('HTML loaded, time:', new Date().toLocaleTimeString());
+			document.getElementById('time').textContent = new Date().toLocaleTimeString();
+		</script>
+		<script type="module" src="/src/main.ts"></script>
+	</body>
 </html>

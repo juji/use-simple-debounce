@@ -6,7 +6,7 @@ export function CleanupTest() {
   const [logs, setLogs] = useState<string[]>([]);
 
   const addLog = (message: string) => {
-    setLogs(prev => [...prev, `${new Date().toLocaleTimeString()}: ${message}`]);
+    setLogs((prev) => [...prev, `${new Date().toLocaleTimeString()}: ${message}`]);
   };
 
   const mountComponent = () => {
@@ -27,8 +27,12 @@ export function CleanupTest() {
     <div className="test-case">
       <h3>⚡ Cleanup Test</h3>
       <p>Test that debounced functions are properly cleaned up when components unmount.</p>
-      <p><em>Type in the input, then unmount the component before the 5s delay expires.</em></p>
-      <p><em>The debounced function is called with console.log after 5 seconds.</em></p>
+      <p>
+        <em>Type in the input, then unmount the component before the 5s delay expires.</em>
+      </p>
+      <p>
+        <em>The debounced function is called with console.log after 5 seconds.</em>
+      </p>
 
       <div className="test-controls">
         <button onClick={mountComponent} disabled={componentMounted}>
@@ -48,7 +52,9 @@ export function CleanupTest() {
         <h4>Logs:</h4>
         <div className="logs-container">
           {logs.map((log, index) => (
-            <div key={index} className="log-entry">{log}</div>
+            <div key={index} className="log-entry">
+              {log}
+            </div>
           ))}
         </div>
       </div>

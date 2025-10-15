@@ -29,27 +29,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useDebounce } from 'use-simple-debounce/vue'
+import { ref } from 'vue';
+import { useDebounce } from 'use-simple-debounce/vue';
 
-const input = ref('')
-const output = ref('')
-const logs = ref<string[]>([])
+const input = ref('');
+const output = ref('');
+const logs = ref<string[]>([]);
 
 const addLog = (message: string) => {
-  logs.value.push(`${new Date().toLocaleTimeString()}: ${message}`)
-}
+  logs.value.push(`${new Date().toLocaleTimeString()}: ${message}`);
+};
 
-const debounced = useDebounce()
+const debounced = useDebounce();
 
 const handleInputChange = (e: Event) => {
-  const target = e.target as HTMLInputElement
-  const value = target.value
-  input.value = value
-  addLog(`Input changed: "${value}"`)
+  const target = e.target as HTMLInputElement;
+  const value = target.value;
+  input.value = value;
+  addLog(`Input changed: "${value}"`);
   debounced(() => {
-    output.value = value
-    addLog(`Debounced update: "${value}"`)
-  }, 500)
-}
+    output.value = value;
+    addLog(`Debounced update: "${value}"`);
+  }, 500);
+};
 </script>

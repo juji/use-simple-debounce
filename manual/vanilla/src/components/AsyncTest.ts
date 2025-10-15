@@ -21,7 +21,7 @@ export function createAsyncTest(container: HTMLElement) {
 
   function addLog(message: string) {
     logs.push(`${new Date().toLocaleTimeString()}: ${message}`);
-    logsContainer.innerHTML = logs.map(log => `<div class="log-entry">${log}</div>`).join('');
+    logsContainer.innerHTML = logs.map((log) => `<div class="log-entry">${log}</div>`).join('');
   }
 
   const debounced = useDebounce();
@@ -36,7 +36,7 @@ export function createAsyncTest(container: HTMLElement) {
       addLog(`Starting async operation for: "${value}"`);
 
       // Simulate async operation
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       const processed = value.toUpperCase();
       result.textContent = `Result: ${processed}`;

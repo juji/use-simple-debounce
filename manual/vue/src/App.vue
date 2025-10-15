@@ -57,7 +57,9 @@
     <main class="main-content">
       <header class="page-header">
         <h1>use-simple-debounce Vue Manual Tests</h1>
-        <p><img src="/src/assets/vue-logo.svg" alt="Vue" class="framework-logo" /> Vue Implementation</p>
+        <p>
+          <img src="/src/assets/vue-logo.svg" alt="Vue" class="framework-logo" /> Vue Implementation
+        </p>
       </header>
       <component :is="currentComponent" />
     </main>
@@ -65,40 +67,40 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import BasicTest from './components/BasicTest.vue'
-import RapidCallsTest from './components/RapidCallsTest.vue'
-import AsyncTest from './components/AsyncTest.vue'
-import DelayTest from './components/DelayTest.vue'
-import APITest from './components/APITest.vue'
-import CleanupTest from './components/CleanupTest.vue'
+import { ref, computed } from 'vue';
+import BasicTest from './components/BasicTest.vue';
+import RapidCallsTest from './components/RapidCallsTest.vue';
+import AsyncTest from './components/AsyncTest.vue';
+import DelayTest from './components/DelayTest.vue';
+import APITest from './components/APITest.vue';
+import CleanupTest from './components/CleanupTest.vue';
 
-type TestCase = 'basic' | 'rapid' | 'async' | 'delay' | 'api' | 'cleanup'
+type TestCase = 'basic' | 'rapid' | 'async' | 'delay' | 'api' | 'cleanup';
 
-const activeTest = ref<TestCase>('basic')
+const activeTest = ref<TestCase>('basic');
 
 const setActiveTest = (test: TestCase) => {
-  activeTest.value = test
-}
+  activeTest.value = test;
+};
 
 const currentComponent = computed(() => {
   switch (activeTest.value) {
     case 'basic':
-      return BasicTest
+      return BasicTest;
     case 'rapid':
-      return RapidCallsTest
+      return RapidCallsTest;
     case 'async':
-      return AsyncTest
+      return AsyncTest;
     case 'delay':
-      return DelayTest
+      return DelayTest;
     case 'api':
-      return APITest
+      return APITest;
     case 'cleanup':
-      return CleanupTest
+      return CleanupTest;
     default:
-      return BasicTest
+      return BasicTest;
   }
-})
+});
 </script>
 
 <style>

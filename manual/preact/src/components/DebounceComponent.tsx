@@ -37,7 +37,9 @@ export function DebounceComponent({ addLog }: Props) {
         </label>
       </div>
       <div className="test-output">
-        <p><strong>Debounced Output:</strong> {output}</p>
+        <p>
+          <strong>Debounced Output:</strong> {output}
+        </p>
       </div>
     </div>
   );

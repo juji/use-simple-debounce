@@ -8,7 +8,7 @@ export function APITest() {
   const [logs, setLogs] = useState<string[]>([]);
 
   const addLog = (message: string) => {
-    setLogs(prev => [...prev, `${new Date().toLocaleTimeString()}: ${message}`]);
+    setLogs((prev) => [...prev, `${new Date().toLocaleTimeString()}: ${message}`]);
   };
 
   const debounced = useDebounce();
@@ -24,13 +24,13 @@ export function APITest() {
 
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
       // Mock results
       const mockResults = [
         `${searchQuery} result 1`,
         `${searchQuery} result 2`,
-        `${searchQuery} result 3`
+        `${searchQuery} result 3`,
       ];
 
       setResults(mockResults);
@@ -67,12 +67,12 @@ export function APITest() {
       </div>
 
       <div className="test-output">
-        <p><strong>Loading:</strong> {loading ? 'Yes' : 'No'}</p>
+        <p>
+          <strong>Loading:</strong> {loading ? 'Yes' : 'No'}
+        </p>
         <div className="results">
           <h4>Results:</h4>
-          {results.length === 0 && !loading && query && (
-            <p>No results found</p>
-          )}
+          {results.length === 0 && !loading && query && <p>No results found</p>}
           <ul>
             {results.map((result, index) => (
               <li key={index}>{result}</li>
@@ -85,7 +85,9 @@ export function APITest() {
         <h4>Logs:</h4>
         <div className="logs-container">
           {logs.map((log, index) => (
-            <div key={index} className="log-entry">{log}</div>
+            <div key={index} className="log-entry">
+              {log}
+            </div>
           ))}
         </div>
       </div>

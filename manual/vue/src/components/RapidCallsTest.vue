@@ -23,38 +23,38 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useDebounce } from 'use-simple-debounce/vue'
+import { ref } from 'vue';
+import { useDebounce } from 'use-simple-debounce/vue';
 
-const count = ref(0)
-const debouncedCount = ref(0)
-const logs = ref<string[]>([])
-const debouncedCountRef = ref(0)
+const count = ref(0);
+const debouncedCount = ref(0);
+const logs = ref<string[]>([]);
+const debouncedCountRef = ref(0);
 
 const addLog = (message: string) => {
-  logs.value.push(`${new Date().toLocaleTimeString()}: ${message}`)
-}
+  logs.value.push(`${new Date().toLocaleTimeString()}: ${message}`);
+};
 
-const debounced = useDebounce()
+const debounced = useDebounce();
 
 const handleRapidCalls = () => {
   for (let i = 0; i < 10; i++) {
     setTimeout(() => {
-      count.value += 1
-      addLog(`Immediate count: ${count.value}`)
+      count.value += 1;
+      addLog(`Immediate count: ${count.value}`);
       debounced(() => {
-        debouncedCountRef.value = debouncedCountRef.value + 1
-        debouncedCount.value = debouncedCountRef.value
-        addLog(`Debounced count: ${count.value}`)
-      }, 300)
-    }, i * 50) // Call every 50ms
+        debouncedCountRef.value = debouncedCountRef.value + 1;
+        debouncedCount.value = debouncedCountRef.value;
+        addLog(`Debounced count: ${count.value}`);
+      }, 300);
+    }, i * 50); // Call every 50ms
   }
-}
+};
 
 const reset = () => {
-  count.value = 0
-  debouncedCount.value = 0
-  debouncedCountRef.value = 0
-  logs.value = []
-}
+  count.value = 0;
+  debouncedCount.value = 0;
+  debouncedCountRef.value = 0;
+  logs.value = [];
+};
 </script>

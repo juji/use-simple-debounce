@@ -1,12 +1,12 @@
-import './style.css'
+import './style.css';
 import {
   createBasicTest,
   createAPITest,
   createAsyncTest,
   createDelayTest,
   createRapidCallsTest,
-  createCleanupTest
-} from './components/index.js'
+  createCleanupTest,
+} from './components/index.js';
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div class="app">
@@ -57,7 +57,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       </div>
     </div>
   </div>
-`
+`;
 
 // Test management
 let activeTest = 'basic';
@@ -65,7 +65,7 @@ const testContainer = document.querySelector<HTMLDivElement>('#test-container')!
 
 function setActiveTest(testName: string) {
   // Update active button
-  document.querySelectorAll('.test-button').forEach(btn => {
+  document.querySelectorAll('.test-button').forEach((btn) => {
     btn.classList.remove('active');
   });
   document.querySelector(`[data-test="${testName}"]`)!.classList.add('active');

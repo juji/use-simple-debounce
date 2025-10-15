@@ -36,8 +36,8 @@ export async function getHighlighter() {
         'dockerfile',
         'makefile',
         'vue',
-        'svelte'
-      ]
+        'svelte',
+      ],
     });
   }
   return highlighter;

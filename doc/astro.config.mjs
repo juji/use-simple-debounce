@@ -10,16 +10,16 @@ import solidJs from '@astrojs/solid-js';
 export default defineConfig({
   integrations: [
     react({
-      include: ['**/react/**']
+      include: ['**/react/**'],
     }),
     preact({
-      include: ['**/preact/**']
+      include: ['**/preact/**'],
     }),
     svelte({
-      include: ['**/svelte/**']
+      include: ['**/svelte/**'],
     }),
     solidJs({
-      include: ['**/solid/**']
-    })
-  ]
+      include: ['**/solid/**'],
+    }),
+  ],
 });

@@ -1,27 +1,27 @@
-import { createSignal } from 'solid-js'
-import { createDebounce } from 'use-simple-debounce/solid'
+import { createSignal } from 'solid-js';
+import { createDebounce } from 'use-simple-debounce/solid';
 
 export function BasicTest() {
-  const [input, setInput] = createSignal('')
-  const [output, setOutput] = createSignal('')
-  const [logs, setLogs] = createSignal<string[]>([])
+  const [input, setInput] = createSignal('');
+  const [output, setOutput] = createSignal('');
+  const [logs, setLogs] = createSignal<string[]>([]);
 
   const addLog = (message: string) => {
-    setLogs(prev => [...prev, `${new Date().toLocaleTimeString()}: ${message}`])
-  }
+    setLogs((prev) => [...prev, `${new Date().toLocaleTimeString()}: ${message}`]);
+  };
 
-  const debounced = createDebounce()
+  const debounced = createDebounce();
 
   const handleInputChange = (e: Event) => {
-    const target = e.target as HTMLInputElement
-    const value = target.value
-    setInput(value)
-    addLog(`Input changed: "${value}"`)
+    const target = e.target as HTMLInputElement;
+    const value = target.value;
+    setInput(value);
+    addLog(`Input changed: "${value}"`);
     debounced(() => {
-      setOutput(value)
-      addLog(`Debounced update: "${value}"`)
-    }, 500)
-  }
+      setOutput(value);
+      addLog(`Debounced update: "${value}"`);
+    }, 500);
+  };
 
   return (
     <div class="test-case">
@@ -41,7 +41,9 @@ export function BasicTest() {
       </div>
 
       <div class="test-output">
-        <p><strong>Output:</strong> {output()}</p>
+        <p>
+          <strong>Output:</strong> {output()}
+        </p>
       </div>
 
       <div class="test-logs">
@@ -53,5 +55,5 @@ export function BasicTest() {
         </div>
       </div>
     </div>
-  )
+  );
 }

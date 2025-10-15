@@ -8,7 +8,7 @@ export const AsyncTest: React.FC = () => {
   const [logs, setLogs] = useState<string[]>([]);
 
   const addLog = (message: string) => {
-    setLogs(prev => [...prev, `${new Date().toLocaleTimeString()}: ${message}`]);
+    setLogs((prev) => [...prev, `${new Date().toLocaleTimeString()}: ${message}`]);
   };
 
   const debounced = useDebounce();
@@ -22,7 +22,7 @@ export const AsyncTest: React.FC = () => {
       addLog(`Starting async operation for: "${value}"`);
 
       // Simulate async operation
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       const processed = value.toUpperCase();
       setResult(processed);
@@ -50,14 +50,18 @@ export const AsyncTest: React.FC = () => {
       </div>
 
       <div className="test-output">
-        <p><strong>Result:</strong> {result}</p>
+        <p>
+          <strong>Result:</strong> {result}
+        </p>
       </div>
 
       <div className="test-logs">
         <h4>Logs:</h4>
         <div className="logs-container">
           {logs.map((log, index) => (
-            <div key={index} className="log-entry">{log}</div>
+            <div key={index} className="log-entry">
+              {log}
+            </div>
           ))}
         </div>
       </div>

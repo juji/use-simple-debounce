@@ -13,13 +13,13 @@ export const APITest: React.FC = () => {
   const [logs, setLogs] = useState<string[]>([]);
 
   const addLog = (message: string) => {
-    setLogs(prev => [...prev, `${new Date().toLocaleTimeString()}: ${message}`]);
+    setLogs((prev) => [...prev, `${new Date().toLocaleTimeString()}: ${message}`]);
   };
 
   // Mock API function
   const mockAPI = async (searchQuery: string): Promise<SearchResult> => {
     addLog(`API call started for: "${searchQuery}"`);
-    await new Promise(resolve => setTimeout(resolve, 800)); // Simulate network delay
+    await new Promise((resolve) => setTimeout(resolve, 800)); // Simulate network delay
 
     // Mock search results
     const mockResults = [
@@ -77,7 +77,9 @@ export const APITest: React.FC = () => {
       <div className="test-output">
         {results && (
           <div>
-            <p><strong>Search Results for "{results.query}":</strong></p>
+            <p>
+              <strong>Search Results for "{results.query}":</strong>
+            </p>
             <ul>
               {results.results.map((result, index) => (
                 <li key={index}>{result}</li>
@@ -91,7 +93,9 @@ export const APITest: React.FC = () => {
         <h4>Logs:</h4>
         <div className="logs-container">
           {logs.map((log, index) => (
-            <div key={index} className="log-entry">{log}</div>
+            <div key={index} className="log-entry">
+              {log}
+            </div>
           ))}
         </div>
       </div>

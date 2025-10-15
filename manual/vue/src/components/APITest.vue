@@ -18,7 +18,9 @@
 
     <div class="test-output">
       <div v-if="results">
-        <p><strong>Search Results for "{{ results.query }}":</strong></p>
+        <p>
+          <strong>Search Results for "{{ results.query }}":</strong>
+        </p>
         <ul>
           <li v-for="(result, index) in results.results" :key="index">{{ result }}</li>
         </ul>
@@ -35,61 +37,61 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useDebounce } from 'use-simple-debounce/vue'
+import { ref } from 'vue';
+import { useDebounce } from 'use-simple-debounce/vue';
 
 interface SearchResult {
-  query: string
-  results: string[]
+  query: string;
+  results: string[];
 }
 
-const query = ref('')
-const results = ref<SearchResult | null>(null)
-const loading = ref(false)
-const logs = ref<string[]>([])
+const query = ref('');
+const results = ref<SearchResult | null>(null);
+const loading = ref(false);
+const logs = ref<string[]>([]);
 
 const addLog = (message: string) => {
-  logs.value.push(`${new Date().toLocaleTimeString()}: ${message}`)
-}
+  logs.value.push(`${new Date().toLocaleTimeString()}: ${message}`);
+};
 
 // Mock API function
 const mockAPI = async (searchQuery: string): Promise<SearchResult> => {
-  addLog(`API call started for: "${searchQuery}"`)
-  await new Promise(resolve => setTimeout(resolve, 800)) // Simulate network delay
+  addLog(`API call started for: "${searchQuery}"`);
+  await new Promise((resolve) => setTimeout(resolve, 800)); // Simulate network delay
 
   // Mock search results
   const mockResults = [
     `${searchQuery} result 1`,
     `${searchQuery} result 2`,
     `${searchQuery} result 3`,
-  ]
+  ];
 
-  return { query: searchQuery, results: mockResults }
-}
+  return { query: searchQuery, results: mockResults };
+};
 
-const debounced = useDebounce()
+const debounced = useDebounce();
 
 const handleInputChange = (e: Event) => {
-  const target = e.target as HTMLInputElement
-  const value = target.value
-  query.value = value
-  addLog(`Search query changed: "${value}"`)
+  const target = e.target as HTMLInputElement;
+  const value = target.value;
+  query.value = value;
+  addLog(`Search query changed: "${value}"`);
   debounced(async () => {
     if (!value.trim()) {
-      results.value = null
-      return
+      results.value = null;
+      return;
     }
 
-    loading.value = true
+    loading.value = true;
     try {
-      const searchResults = await mockAPI(value)
-      results.value = searchResults
-      addLog(`API call completed for: "${value}"`)
+      const searchResults = await mockAPI(value);
+      results.value = searchResults;
+      addLog(`API call completed for: "${value}"`);
     } catch (error) {
-      addLog(`API call failed: ${error}`)
+      addLog(`API call failed: ${error}`);
     } finally {
-      loading.value = false
+      loading.value = false;
     }
-  }, 300)
-}
+  }, 300);
+};
 </script>

@@ -8,7 +8,7 @@ export const DelayTest: React.FC = () => {
   const [logs, setLogs] = useState<string[]>([]);
 
   const addLog = (message: string) => {
-    setLogs(prev => [...prev, `${new Date().toLocaleTimeString()}: ${message}`]);
+    setLogs((prev) => [...prev, `${new Date().toLocaleTimeString()}: ${message}`]);
   };
 
   const debounced = useDebounce();
@@ -57,15 +57,21 @@ export const DelayTest: React.FC = () => {
       </div>
 
       <div className="test-output">
-        <p><strong>Output:</strong> {output}</p>
-        <p><strong>Current Delay:</strong> {delay}ms</p>
+        <p>
+          <strong>Output:</strong> {output}
+        </p>
+        <p>
+          <strong>Current Delay:</strong> {delay}ms
+        </p>
       </div>
 
       <div className="test-logs">
         <h4>Logs:</h4>
         <div className="logs-container">
           {logs.map((log, index) => (
-            <div key={index} className="log-entry">{log}</div>
+            <div key={index} className="log-entry">
+              {log}
+            </div>
           ))}
         </div>
       </div>

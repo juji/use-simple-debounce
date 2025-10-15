@@ -1,35 +1,35 @@
-import { createSignal } from 'solid-js'
-import './index.css'
-import { BasicTest } from './components/BasicTest'
-import { RapidCallsTest } from './components/RapidCallsTest'
-import { AsyncTest } from './components/AsyncTest'
-import { DelayTest } from './components/DelayTest'
-import { APITest } from './components/APITest'
-import { CleanupTest } from './components/CleanupTest'
+import { createSignal } from 'solid-js';
+import './index.css';
+import { BasicTest } from './components/BasicTest';
+import { RapidCallsTest } from './components/RapidCallsTest';
+import { AsyncTest } from './components/AsyncTest';
+import { DelayTest } from './components/DelayTest';
+import { APITest } from './components/APITest';
+import { CleanupTest } from './components/CleanupTest';
 
-type TestCase = 'basic' | 'rapid' | 'async' | 'delay' | 'api' | 'cleanup'
+type TestCase = 'basic' | 'rapid' | 'async' | 'delay' | 'api' | 'cleanup';
 
 export default function App() {
-  const [activeTest, setActiveTest] = createSignal<TestCase>('basic')
+  const [activeTest, setActiveTest] = createSignal<TestCase>('basic');
 
   const renderTestCase = () => {
     switch (activeTest()) {
       case 'basic':
-        return <BasicTest />
+        return <BasicTest />;
       case 'rapid':
-        return <RapidCallsTest />
+        return <RapidCallsTest />;
       case 'async':
-        return <AsyncTest />
+        return <AsyncTest />;
       case 'delay':
-        return <DelayTest />
+        return <DelayTest />;
       case 'api':
-        return <APITest />
+        return <APITest />;
       case 'cleanup':
-        return <CleanupTest />
+        return <CleanupTest />;
       default:
-        return <BasicTest />
+        return <BasicTest />;
     }
-  }
+  };
 
   return (
     <div class="app">
@@ -90,10 +90,13 @@ export default function App() {
       <main class="main-content">
         <header class="page-header">
           <h1>use-simple-debounce Solid Manual Tests</h1>
-          <p><img src="/src/assets/solid-logo.svg" alt="Solid" class="framework-logo" /> SolidJS Implementation</p>
+          <p>
+            <img src="/src/assets/solid-logo.svg" alt="Solid" class="framework-logo" /> SolidJS
+            Implementation
+          </p>
         </header>
         {renderTestCase()}
       </main>
     </div>
-  )
+  );
 }

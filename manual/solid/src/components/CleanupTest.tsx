@@ -1,32 +1,34 @@
-import { createSignal, onMount, onCleanup } from 'solid-js'
-import { createDebounce } from 'use-simple-debounce/solid'
+import { createSignal, onMount, onCleanup } from 'solid-js';
+import { createDebounce } from 'use-simple-debounce/solid';
 
 // Component that uses debounce - this will be mounted/unmounted
 function DebounceComponent(props: { addLog: (msg: string) => void }) {
-  const [input, setInput] = createSignal('')
-  const [output, setOutput] = createSignal('')
+  const [input, setInput] = createSignal('');
+  const [output, setOutput] = createSignal('');
 
-  const debounced = createDebounce()
+  const debounced = createDebounce();
 
   onMount(() => {
-    props.addLog('DebounceComponent mounted')
-  })
+    props.addLog('DebounceComponent mounted');
+  });
 
   onCleanup(() => {
-    props.addLog('DebounceComponent unmounting - cleanup should prevent pending debounced callbacks')
-  })
+    props.addLog(
+      'DebounceComponent unmounting - cleanup should prevent pending debounced callbacks'
+    );
+  });
 
   const handleInputChange = (e: Event) => {
-    const target = e.target as HTMLInputElement
-    const value = target.value
-    setInput(value)
-    props.addLog(`Input changed: "${value}"`)
+    const target = e.target as HTMLInputElement;
+    const value = target.value;
+    setInput(value);
+    props.addLog(`Input changed: "${value}"`);
     debounced(() => {
-      console.log('Debounced callback executed')
-      setOutput(value)
-      props.addLog(`Debounced callback executed: "${value}"`)
-    }, 5000)
-  }
+      console.log('Debounced callback executed');
+      setOutput(value);
+      props.addLog(`Debounced callback executed: "${value}"`);
+    }, 5000);
+  };
 
   return (
     <div class="debounce-component">
@@ -42,40 +44,46 @@ function DebounceComponent(props: { addLog: (msg: string) => void }) {
         </label>
       </div>
       <div class="test-output">
-        <p><strong>Debounced Output:</strong> {output()}</p>
+        <p>
+          <strong>Debounced Output:</strong> {output()}
+        </p>
       </div>
     </div>
-  )
+  );
 }
 
 export function CleanupTest() {
-  const [componentMounted, setComponentMounted] = createSignal(true)
-  const [logs, setLogs] = createSignal<string[]>([])
+  const [componentMounted, setComponentMounted] = createSignal(true);
+  const [logs, setLogs] = createSignal<string[]>([]);
 
   const addLog = (message: string) => {
-    setLogs(prev => [...prev, `${new Date().toLocaleTimeString()}: ${message}`])
-  }
+    setLogs((prev) => [...prev, `${new Date().toLocaleTimeString()}: ${message}`]);
+  };
 
   const mountComponent = () => {
-    setComponentMounted(true)
-    addLog('Mounting DebounceComponent')
-  }
+    setComponentMounted(true);
+    addLog('Mounting DebounceComponent');
+  };
 
   const unmountComponent = () => {
-    setComponentMounted(false)
-    addLog('Unmounting DebounceComponent')
-  }
+    setComponentMounted(false);
+    addLog('Unmounting DebounceComponent');
+  };
 
   const clearLogs = () => {
-    setLogs([])
-  }
+    setLogs([]);
+  };
 
   return (
     <div class="test-case">
       <h3>⚡ Cleanup Test</h3>
       <p>Test that debounced functions are properly cleaned up when components unmount.</p>
-      <p><em>Type in the input, then unmount the component before the 5s delay expires.</em></p>
-      <p><em>The debounced function is called with console.log after 5 seconds.</em></p>
+      <p>
+        <em>Type in the input, then unmount the component before the 5s delay expires.</em>
+      </p>
+      <p>
+        <em>The debounced function is called with console.log after 5 seconds.</em>
+      </p>
 
       <div class="test-controls">
         <button onClick={mountComponent} disabled={componentMounted()}>
@@ -100,5 +108,5 @@ export function CleanupTest() {
         </div>
       </div>
     </div>
-  )
+  );
 }

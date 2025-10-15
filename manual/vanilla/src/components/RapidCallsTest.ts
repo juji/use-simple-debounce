@@ -24,7 +24,7 @@ export function createRapidCallsTest(container: HTMLElement) {
 
   function addLog(message: string) {
     logs.push(`${new Date().toLocaleTimeString()}: ${message}`);
-    logsContainer.innerHTML = logs.map(log => `<div class="log-entry">${log}</div>`).join('');
+    logsContainer.innerHTML = logs.map((log) => `<div class="log-entry">${log}</div>`).join('');
   }
 
   const debounced = useDebounce();

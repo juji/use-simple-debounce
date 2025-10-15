@@ -4,6 +4,8 @@ export function useDebounce() {
   return (fn: () => void, delay: number = 300): (() => void) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => fn(), delay);
-    return () => { clearTimeout(timeoutId) }
+    return () => {
+      clearTimeout(timeoutId);
+    };
   };
 }

@@ -13,10 +13,14 @@ import { useDebounce } from 'use-simple-debounce/vue'; // Vue
 const debounced = useDebounce(); // or createDebounce()
 
 // Use it to debounce any function with custom delay
-debounced(() => { /* debounced for 300ms */ }, 300);
+debounced(() => {
+  /* debounced for 300ms */
+}, 300);
 
 // Works with async functions too
-debounced(async () => { /* debounced for 500ms */ }, 500);
+debounced(async () => {
+  /* debounced for 500ms */
+}, 500);
 ```
 
 ## Features
@@ -53,11 +57,7 @@ function SearchComponent() {
   };
 
   return (
-    <input
-      type="text"
-      onChange={e => handleSearch(e.target.value)}
-      placeholder="Search..."
-    />
+    <input type="text" onChange={(e) => handleSearch(e.target.value)} placeholder="Search..." />
   );
 }
 ```
@@ -84,7 +84,7 @@ function SearchComponent() {
     <input
       type="text"
       value={query}
-      onInput={e => handleSearch(e.target.value)}
+      onInput={(e) => handleSearch(e.target.value)}
       placeholder="Search..."
     />
   );
@@ -113,7 +113,7 @@ function SearchComponent() {
     <input
       type="text"
       value={query()}
-      onInput={e => handleSearch(e.target.value)}
+      onInput={(e) => handleSearch(e.target.value)}
       placeholder="Search..."
     />
   );
@@ -150,11 +150,7 @@ function SearchComponent() {
 
 ```vue
 <template>
-  <input
-    v-model="query"
-    @input="handleSearch"
-    placeholder="Search..."
-  />
+  <input v-model="query" @input="handleSearch" placeholder="Search..." />
 </template>
 
 <script setup>
@@ -215,7 +211,7 @@ function AutoSaveEditor() {
   return (
     <textarea
       value={content}
-      onChange={e => handleChange(e.target.value)}
+      onChange={(e) => handleChange(e.target.value)}
       placeholder="Start typing..."
     />
   );
@@ -248,11 +244,11 @@ function SearchComponent() {
       <input
         type="text"
         value={query}
-        onChange={e => handleInputChange(e.target.value)}
+        onChange={(e) => handleInputChange(e.target.value)}
         placeholder="Search..."
       />
       <ul>
-        {results.map(result => (
+        {results.map((result) => (
           <li key={result.id}>{result.title}</li>
         ))}
       </ul>
@@ -274,17 +270,20 @@ None
 A function that accepts a function to debounce and an optional delay.
 
 **Type:**
+
 ```typescript
-function useDebounce(): (fn: () => void | Promise<void>, delay?: number) => void
-function createDebounce(): (fn: () => void | Promise<void>, delay?: number) => void
+function useDebounce(): (fn: () => void | Promise<void>, delay?: number) => void;
+function createDebounce(): (fn: () => void | Promise<void>, delay?: number) => void;
 ```
 
 **Supported Function Types:**
+
 - Synchronous functions: `() => void`
 - Asynchronous functions: `() => Promise<void>`
 - Any function that returns void or a Promise<void>
 
 **Framework Usage:**
+
 - **React**: `import { useDebounce } from 'use-simple-debounce'` or `import { useDebounce } from 'use-simple-debounce/react'`
 - **Preact**: `import { useDebounce } from 'use-simple-debounce/preact'`
 - **Solid**: `import { createDebounce } from 'use-simple-debounce/solid'`
@@ -300,14 +299,14 @@ The most frequently used delay across React applications is **`300ms`** - it pro
 
 ### Delay Recommendations by Use Case
 
-| Use Case | Recommended Delay | Reason |
-|----------|------------------|---------|
-| **Search/Autocomplete** | `300ms` ⭐ | Most common - balances UX with API efficiency |
-| **Form Validation** | `300-500ms` | Give users time to finish typing |
-| **Auto-save** | `1000-2000ms` | Allow time for continuous editing |
-| **Window Resize** | `150-250ms` | Handle rapid resize events smoothly |
-| **Scroll Events** | `100-200ms` | Maintain smooth scrolling experience |
-| **API Calls** | `300-600ms` | Prevent excessive server requests |
+| Use Case                | Recommended Delay | Reason                                        |
+| ----------------------- | ----------------- | --------------------------------------------- |
+| **Search/Autocomplete** | `300ms` ⭐        | Most common - balances UX with API efficiency |
+| **Form Validation**     | `300-500ms`       | Give users time to finish typing              |
+| **Auto-save**           | `1000-2000ms`     | Allow time for continuous editing             |
+| **Window Resize**       | `150-250ms`       | Handle rapid resize events smoothly           |
+| **Scroll Events**       | `100-200ms`       | Maintain smooth scrolling experience          |
+| **API Calls**           | `300-600ms`       | Prevent excessive server requests             |
 
 ### Quick Reference
 
@@ -330,9 +329,11 @@ The most frequently used delay across React applications is **`300ms`** - it pro
 ## License
 
 MIT © [juji](https://github.com/juji)
+
 ## Changelog
 
 ### v1.2.0
+
 - 🔄 **API Enhancement**: Changed from `useDebounce(delay)` to `useDebounce()` for more flexible per-call delay specification
 - 🎯 **Improved Flexibility**: Users can now specify different delays for different debounced operations
 - 📚 **Updated Documentation**: All examples and API reference updated to reflect new usage patterns
@@ -340,12 +341,14 @@ MIT © [juji](https://github.com/juji)
 - 🎉 **Preact Support**: Added dedicated Preact implementation with proper hooks integration
 
 ### v1.1.0
+
 - 🎉 **Multi-Framework Support**: Added Solid, Svelte, Vue, and vanilla JavaScript implementations
 - 📦 **Modular Exports**: Framework-specific entry points for tree-shaking
 - 🔧 **Consistent API**: Same debounce function across all frameworks (except vanilla which provides cancellation)
 - 📚 **Updated Documentation**: Examples for React, Solid, Svelte, Vue, and vanilla JavaScript
 
 ### v1.0.0
+
 - 🎉 **Initial Release**: Simple, dependency-free React debouncing hook
 - 🚀 **Zero Dependencies**: No external libraries, works with all React versions
 - ⚡ **Async Support**: Handles both sync and async functions with `Promise<void>` types

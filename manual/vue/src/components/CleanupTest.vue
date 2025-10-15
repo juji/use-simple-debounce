@@ -29,28 +29,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useDebounce } from 'use-simple-debounce/vue'
-import DebounceComponent from './DebounceComponent.vue'
+import { ref } from 'vue';
+import { useDebounce } from 'use-simple-debounce/vue';
+import DebounceComponent from './DebounceComponent.vue';
 
-const componentMounted = ref(true)
-const logs = ref<string[]>([])
+const componentMounted = ref(true);
+const logs = ref<string[]>([]);
 
 const addLog = (message: string) => {
-  logs.value.push(`${new Date().toLocaleTimeString()}: ${message}`)
-}
+  logs.value.push(`${new Date().toLocaleTimeString()}: ${message}`);
+};
 
 const mountComponent = () => {
-  componentMounted.value = true
-  addLog('Mounting DebounceComponent')
-}
+  componentMounted.value = true;
+  addLog('Mounting DebounceComponent');
+};
 
 const unmountComponent = () => {
-  componentMounted.value = false
-  addLog('Unmounting DebounceComponent')
-}
+  componentMounted.value = false;
+  addLog('Unmounting DebounceComponent');
+};
 
 const clearLogs = () => {
-  logs.value = []
-}
+  logs.value = [];
+};
 </script>
