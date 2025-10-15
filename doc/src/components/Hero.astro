@@ -1,6 +1,12 @@
 ---
 // Hero component for the homepage
 import TabbedCodePreview from './TabbedCodePreview.astro';
+
+export interface Props {
+  defaultTab?: string;
+}
+
+const { defaultTab = 'react' } = Astro.props as Props;
 ---
 
 <section class="hero">
@@ -13,7 +19,7 @@ import TabbedCodePreview from './TabbedCodePreview.astro';
 		</div>
 
 		<div class="hero-visual">
-			<TabbedCodePreview />
+			<TabbedCodePreview defaultOpen={defaultTab} />
 		</div>
 
 		<p class="hero-description">

@@ -1,8 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
+
+const url = new URL(Astro.request.url);
+const defaultTab = url.searchParams.get('tab') || url.searchParams.get('default') || 'react';
 ---
 
 <BaseLayout title="use-simple-debounce - Simple, dependency-free debouncing for modern web development">
-	<Hero />
+	<Hero defaultTab={defaultTab} />
 </BaseLayout>
