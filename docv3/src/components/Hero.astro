@@ -15,7 +15,7 @@ const { defaultTab = 'react' } = Astro.props as Props;
 			<h1 class="hero-title">
 				<span class="hero-title-main">use-simple-debounce</span>
 				<span class="hero-title-subtitle">Simple, dependency-free debouncing</span>
-				<span class="hero-title-version">v.3.0.0</span>
+				<span class="hero-title-version">v.3.0.0 | Looking for <a href="https://usdv2.jujiplay.com" class="version-link" target="_blank" rel="noopener">v2</a>?</span>
 			</h1>
 		</div>
 
@@ -140,6 +140,18 @@ const { defaultTab = 'react' } = Astro.props as Props;
 		color: var(--color-text-muted);
 		font-weight: 400;
 		margin-top: var(--spacing-xs);
+	}
+
+	.version-link {
+		color: var(--color-accent);
+		text-decoration: none;
+		font-weight: 500;
+		transition: color var(--transition-fast);
+	}
+
+	.version-link:hover {
+		color: var(--color-accent-hover);
+		text-decoration: underline;
 	}
 
 	.hero-description {
