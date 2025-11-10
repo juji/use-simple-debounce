@@ -15,6 +15,7 @@ const { defaultTab = 'react' } = Astro.props as Props;
 			<h1 class="hero-title">
 				<span class="hero-title-main">use-simple-debounce</span>
 				<span class="hero-title-subtitle">Simple, dependency-free debouncing</span>
+				<span class="hero-title-version">v.2.1.0</span>
 			</h1>
 		</div>
 
@@ -124,6 +125,13 @@ const { defaultTab = 'react' } = Astro.props as Props;
 		font-size: var(--font-size-xl);
 		color: var(--color-text-secondary);
 		font-weight: 400;
+	}
+
+	.hero-title-version {
+		font-size: var(--font-size-sm);
+		color: var(--color-text-muted);
+		font-weight: 400;
+		margin-top: var(--spacing-xs);
 	}
 
 	.hero-description {
@@ -239,6 +247,10 @@ const { defaultTab = 'react' } = Astro.props as Props;
 
 		.hero-title-subtitle {
 			font-size: var(--font-size-lg);
+		}
+
+		.hero-title-version {
+			font-size: var(--font-size-xs);
 		}
 
 		.hero-description {
