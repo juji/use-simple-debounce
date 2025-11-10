@@ -138,4 +138,15 @@ describe('debounce (Vanilla)', () => {
     expect(mockFn1).not.toHaveBeenCalled();
     expect(mockFn2).toHaveBeenCalledTimes(1);
   });
+
+  it('should handle function calls with parameters', () => {
+    const mockFn = vi.fn();
+    const debouncedFn = debounce((a: string, b: number) => mockFn(a, b), 100);
+
+    debouncedFn('test', 42);
+
+    vi.advanceTimersByTime(100);
+
+    expect(mockFn).toHaveBeenCalledWith('test', 42);
+  });
 });

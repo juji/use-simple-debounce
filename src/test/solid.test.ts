@@ -104,4 +104,34 @@ describe('createDebounce (Solid)', () => {
     vi.advanceTimersByTime(100);
     expect(mockFn).not.toHaveBeenCalled();
   });
+
+  it('should handle cancellation of specific debouncer', () => {
+    const mockFn1 = vi.fn();
+    const mockFn2 = vi.fn();
+
+    const debouncedFn1 = createDebounce(mockFn1, 100);
+    const debouncedFn2 = createDebounce(mockFn2, 100);
+
+    const cancel1 = debouncedFn1();
+    debouncedFn2();
+
+    // Cancel only the first one
+    cancel1();
+
+    vi.advanceTimersByTime(100);
+
+    expect(mockFn1).not.toHaveBeenCalled();
+    expect(mockFn2).toHaveBeenCalledTimes(1);
+  });
+
+  it('should handle function calls with parameters', () => {
+    const mockFn = vi.fn();
+    const debouncedFn = createDebounce((a: string, b: number) => mockFn(a, b), 100);
+
+    debouncedFn('test', 42);
+
+    vi.advanceTimersByTime(100);
+
+    expect(mockFn).toHaveBeenCalledWith('test', 42);
+  });
 });
