@@ -1,46 +1,58 @@
 import { useRef, useEffect } from 'react';
 
 /**
- * Returns a debounced executor function that delays execution of the provided function.
+ * Returns a debounced version of the provided function that delays execution.
  *
- * @returns A function that accepts a function to debounce and an optional delay
+ * @param func - The function to debounce
+ * @param wait - The delay in milliseconds (default: 300)
+ * @returns A debounced function that returns a cancel function
  *
  * @example
  * ```tsx
  * import { useDebounce } from 'use-simple-debounce';
  *
  * function MyComponent() {
- *   const debounced = useDebounce();
+ *   const debouncedSave = useDebounce((value: string) => saveToServer(value), 300);
  *
  *   const handleInputChange = (value: string) => {
- *     // This will be debounced - only executes 300ms after the last call
- *     debounced(() => saveToServer(value), 300);
+ *     const cancel = debouncedSave(value);
+ *     // Can cancel if needed
  *   };
  *
  *   return <input onChange={e => handleInputChange(e.target.value)} />;
  * }
  * ```
  */
-export function useDebounce() {
+export function useDebounce<F extends (...args: Parameters<F>) => ReturnType<F>>(
+  func: F,
+  wait: number = 300
+): (...args: Parameters<F>) => () => void {
   const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // An AI added proper cleanup on component unmount to prevent potential issues
-  // with pending timeouts executing on unmounted components
+  // Cleanup on component unmount
   useEffect(() => {
     return () => {
       if (timeout.current) {
         clearTimeout(timeout.current);
+        timeout.current = null;
       }
     };
   }, []);
 
-  return (fn: () => void, delay: number = 300) => {
+  return (...args: Parameters<F>) => {
     if (timeout.current) {
       clearTimeout(timeout.current);
     }
     timeout.current = setTimeout(() => {
-      fn();
-      timeout.current = null;
-    }, delay);
+      func(...args);
+    }, wait);
+
+    // Return cleanup function
+    return () => {
+      if (timeout.current) {
+        clearTimeout(timeout.current);
+        timeout.current = null;
+      }
+    };
   };
 }

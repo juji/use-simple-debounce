@@ -1,11 +1,25 @@
-// Simple debouncing utility for vanilla JavaScript
-export function useDebounce() {
-  let timeoutId: ReturnType<typeof setTimeout> | undefined;
-  return (fn: () => void, delay: number = 300): (() => void) => {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => fn(), delay);
+// debounce utility
+export function debounce<F extends (...args: Parameters<F>) => ReturnType<F>>(
+  func: F,
+  wait: number
+): (...args: Parameters<F>) => () => void {
+  let timeout: ReturnType<typeof setTimeout> | null = null;
+
+  return (...args: Parameters<F>) => {
+    if (timeout) {
+      clearTimeout(timeout);
+    }
+
+    timeout = setTimeout(() => {
+      func(...args);
+    }, wait);
+
+    // Return cleanup function
     return () => {
-      clearTimeout(timeoutId);
+      if (timeout) {
+        clearTimeout(timeout);
+        timeout = null;
+      }
     };
   };
 }

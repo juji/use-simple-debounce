@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { useDebounce } from '../vanilla';
+import { debounce } from '../vanilla';
 
-describe('useDebounce (Vanilla)', () => {
+describe('debounce (Vanilla)', () => {
   beforeEach(() => {
     vi.useFakeTimers();
   });
@@ -12,21 +12,20 @@ describe('useDebounce (Vanilla)', () => {
   });
 
   it('should return a cancel function', () => {
-    const debounced = useDebounce();
-    const cancelFn = debounced(() => {}, 100);
+    const debouncedFn = debounce(() => {}, 100);
+    const cancelFn = debouncedFn();
 
     expect(typeof cancelFn).toBe('function');
   });
 
   it('should debounce function calls', () => {
     const mockFn = vi.fn();
-    const debounced = useDebounce();
-    const cancelFn = debounced(mockFn, 100);
+    const debouncedFn = debounce(mockFn, 100);
 
     // Call multiple times rapidly - each call returns a new cancel function
-    debounced(mockFn, 100);
-    debounced(mockFn, 100);
-    debounced(mockFn, 100);
+    debouncedFn();
+    debouncedFn();
+    debouncedFn();
 
     // Function should not be called immediately
     expect(mockFn).not.toHaveBeenCalled();
@@ -39,27 +38,24 @@ describe('useDebounce (Vanilla)', () => {
   });
 
   it('should cancel previous calls when called again', () => {
-    const mockFn1 = vi.fn();
-    const mockFn2 = vi.fn();
-    const debounced = useDebounce();
+    const mockFn = vi.fn();
+    const debouncedFn = debounce(mockFn, 100);
 
-    // Call with first function
-    debounced(mockFn1, 100);
-    // Call with second function before delay
-    debounced(mockFn2, 100);
+    // Call multiple times rapidly on the same debouncer
+    debouncedFn();
+    debouncedFn();
 
     // Advance time
     vi.advanceTimersByTime(100);
 
-    // Only second function should be called
-    expect(mockFn1).not.toHaveBeenCalled();
-    expect(mockFn2).toHaveBeenCalledTimes(1);
+    // Function should be called once (last call wins)
+    expect(mockFn).toHaveBeenCalledTimes(1);
   });
 
   it('should support cancellation', () => {
     const mockFn = vi.fn();
-    const debounced = useDebounce();
-    const cancel = debounced(mockFn, 100);
+    const debouncedFn = debounce(mockFn, 100);
+    const cancel = debouncedFn();
 
     // Call cancel immediately
     cancel();
@@ -71,19 +67,19 @@ describe('useDebounce (Vanilla)', () => {
 
   it('should support async functions', async () => {
     const mockAsyncFn = vi.fn().mockResolvedValue('done');
-    const debounced = useDebounce();
+    const debouncedFn = debounce(mockAsyncFn, 100);
 
-    debounced(mockAsyncFn, 100);
+    debouncedFn();
 
     vi.advanceTimersByTime(100);
 
     await expect(mockAsyncFn()).resolves.toBe('done');
   });
 
-  it('should use default delay of 300ms when no delay provided', () => {
+  it('should handle 300ms delay', () => {
     const mockFn = vi.fn();
-    const debounced = useDebounce();
-    const cancelFn = debounced(mockFn);
+    const debouncedFn = debounce(mockFn, 300);
+    const cancelFn = debouncedFn();
 
     // Advance by less than delay
     vi.advanceTimersByTime(200);
@@ -96,8 +92,8 @@ describe('useDebounce (Vanilla)', () => {
 
   it('should handle different delay values', () => {
     const mockFn = vi.fn();
-    const debounced = useDebounce();
-    const cancelFn = debounced(mockFn, 50);
+    const debouncedFn = debounce(mockFn, 50);
+    const cancelFn = debouncedFn();
 
     // Advance by less than delay
     vi.advanceTimersByTime(25);
@@ -112,11 +108,11 @@ describe('useDebounce (Vanilla)', () => {
     const mockFn1 = vi.fn();
     const mockFn2 = vi.fn();
 
-    const debounced1 = useDebounce();
-    const debounced2 = useDebounce();
+    const debouncedFn1 = debounce(mockFn1, 100);
+    const debouncedFn2 = debounce(mockFn2, 100);
 
-    debounced1(mockFn1, 100);
-    debounced2(mockFn2, 100);
+    debouncedFn1();
+    debouncedFn2();
 
     vi.advanceTimersByTime(100);
 
@@ -128,11 +124,11 @@ describe('useDebounce (Vanilla)', () => {
     const mockFn1 = vi.fn();
     const mockFn2 = vi.fn();
 
-    const debounced1 = useDebounce();
-    const debounced2 = useDebounce();
+    const debouncedFn1 = debounce(mockFn1, 100);
+    const debouncedFn2 = debounce(mockFn2, 100);
 
-    const cancel1 = debounced1(mockFn1, 100);
-    debounced2(mockFn2, 100);
+    const cancel1 = debouncedFn1();
+    debouncedFn2();
 
     // Cancel only the first one
     cancel1();

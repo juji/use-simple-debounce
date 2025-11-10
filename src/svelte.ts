@@ -1,45 +1,55 @@
 import { onDestroy } from 'svelte';
 
 /**
- * Returns a debounced executor function that delays execution of the provided function.
+ * Returns a debounced version of the provided function that delays execution.
  *
- * @returns A function that accepts a function to debounce and an optional delay
+ * @param func - The function to debounce
+ * @param wait - The delay in milliseconds (default: 300)
+ * @returns A debounced function that returns a cancel function
  *
  * @example
  * ```svelte
  * <script>
  *   import { createDebounce } from 'use-simple-debounce/svelte';
  *
- *   const debounced = createDebounce();
+ *   const debouncedSave = createDebounce((value) => saveToServer(value), 500);
  *
  *   function handleInputChange(value) {
- *     // This will be debounced - only executes 500ms after the last call
- *     debounced(() => {
- *       saveToServer(value);
- *     }, 500);
+ *     const cancel = debouncedSave(value);
  *   }
  * </script>
  *
  * <input on:input={e => handleInputChange(e.target.value)} />
  * ```
  */
-export function createDebounce() {
+export function createDebounce<F extends (...args: Parameters<F>) => ReturnType<F>>(
+  func: F,
+  wait: number = 300
+): (...args: Parameters<F>) => () => void {
   let timeout: ReturnType<typeof setTimeout> | null = null;
 
   // Cleanup on component destroy
   onDestroy(() => {
     if (timeout) {
       clearTimeout(timeout);
+      timeout = null;
     }
   });
 
-  return (fn: () => void, delay: number = 300) => {
+  return (...args: Parameters<F>) => {
     if (timeout) {
       clearTimeout(timeout);
     }
     timeout = setTimeout(() => {
-      fn();
-      timeout = null;
-    }, delay);
+      func(...args);
+    }, wait);
+
+    // Return cleanup function
+    return () => {
+      if (timeout) {
+        clearTimeout(timeout);
+        timeout = null;
+      }
+    };
   };
 }

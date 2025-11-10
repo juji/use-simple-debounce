@@ -1,9 +1,11 @@
 import { ref, onUnmounted } from 'vue';
 
 /**
- * Returns a debounced executor function that delays execution of the provided function.
+ * Returns a debounced version of the provided function that delays execution.
  *
- * @returns A function that accepts a function to debounce and an optional delay
+ * @param func - The function to debounce
+ * @param wait - The delay in milliseconds (default: 300)
+ * @returns A debounced function that returns a cancel function
  *
  * @example
  * ```vue
@@ -16,34 +18,42 @@ import { ref, onUnmounted } from 'vue';
  * import { useDebounce } from 'use-simple-debounce/vue';
  *
  * const query = ref('');
- * const debounced = useDebounce();
+ * const debouncedSearch = useDebounce((query: string) => performSearch(query), 300);
  *
  * const handleInputChange = () => {
- *   debounced(() => {
- *     // This will be debounced - only executes 300ms after the last call
- *     performSearch(query.value);
- *   }, 300);
+ *   const cancel = debouncedSearch(query.value);
  * };
  * </script>
  * ```
  */
-export function useDebounce() {
+export function useDebounce<F extends (...args: Parameters<F>) => ReturnType<F>>(
+  func: F,
+  wait: number = 300
+): (...args: Parameters<F>) => () => void {
   const timeout = ref<ReturnType<typeof setTimeout> | null>(null);
 
   // Cleanup on component unmount
   onUnmounted(() => {
     if (timeout.value) {
       clearTimeout(timeout.value);
+      timeout.value = null;
     }
   });
 
-  return (fn: () => void, delay: number = 300) => {
+  return (...args: Parameters<F>) => {
     if (timeout.value) {
       clearTimeout(timeout.value);
     }
     timeout.value = setTimeout(() => {
-      fn();
-      timeout.value = null;
-    }, delay);
+      func(...args);
+    }, wait);
+
+    // Return cleanup function
+    return () => {
+      if (timeout.value) {
+        clearTimeout(timeout.value);
+        timeout.value = null;
+      }
+    };
   };
 }
