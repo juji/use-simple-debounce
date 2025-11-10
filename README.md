@@ -10,15 +10,34 @@ For those who like simple things: https://use-simple-debounce.jujiplay.com/
 - ⚡ **Performance** - Uses native `setTimeout` for reliable debouncing
 - 🔒 **TypeScript** - Full TypeScript support with proper types
 - 🎯 **Flexible** - Works with sync and async functions, any delay
-- 🧹 **Memory Safe** - Automatic cleanup prevents memory leaks
+- 🧹 **Memory Safe** - Automatic cleanup prevents memory leaks (framework hooks)
 - ⚡ **Async Support** - Handles both synchronous and asynchronous functions
-- 🎨 **Multi-Framework** - Supports React, Solid, Svelte, and Vue
+- 🎨 **Multi-Framework** - Supports React, Solid, Svelte, Vue, and Vanilla JS
+- 🔄 **Cancel Support** - Returns optional cancel function for manual cleanup
 
 ## Installation
 
 ```bash
 npm install use-simple-debounce
 ```
+
+## ⚠️ Breaking Changes in v3.0.0
+
+**API Change**: The debounce API has been simplified and improved. Instead of creating a debouncer instance and calling it with a function, you now pass the function directly to the debounce creator.
+
+**Migration Guide:**
+
+```typescript
+// Old API (v2.x)
+const debounced = useDebounce();
+debounced(() => performSearch(query), 300);
+
+// New API (v3.x)
+const debouncedSearch = useDebounce((query) => performSearch(query), 300);
+debouncedSearch(query);
+```
+
+The new API is more intuitive and provides better TypeScript support with automatic argument inference.
 
 ## Framework Support
 
@@ -28,13 +47,11 @@ npm install use-simple-debounce
 import { useDebounce } from 'use-simple-debounce';
 
 function SearchComponent() {
-  const debounced = useDebounce();
+  const debouncedSearch = useDebounce((query: string) => performSearch(query), 300);
 
   const handleSearch = (query: string) => {
-    debounced(() => {
-      // This will only execute 300ms after the user stops typing
-      performSearch(query);
-    }, 300);
+    // Optional: cleanup is handled by the library
+    const cancel = debouncedSearch(query);
   };
 
   return (
@@ -51,14 +68,12 @@ import { createDebounce } from 'use-simple-debounce/solid';
 
 function SearchComponent() {
   const [query, setQuery] = createSignal('');
-  const debounced = createDebounce();
+  const debouncedSearch = createDebounce((query: string) => performSearch(query), 300);
 
-  const handleSearch = (value: string) => {
-    setQuery(value);
-    debounced(() => {
-      // This will only execute 300ms after the user stops typing
-      performSearch(value);
-    }, 300);
+  const handleSearch = (query: string) => {
+    setQuery(query);
+    // Optional: cleanup is handled by the library
+    const cancel = debouncedSearch(query);
   };
 
   return (
@@ -79,21 +94,20 @@ function SearchComponent() {
   import { createDebounce } from 'use-simple-debounce/svelte';
 
   let query = '';
-  const debounced = createDebounce();
+  const debouncedSearch = createDebounce((value) => performSearch(value), 300);
 
-  function handleSearch(value) {
+  function handleInputChange(event) {
+    const value = event.target.value;
     query = value;
-    debounced(() => {
-      // This will only execute 300ms after the user stops typing
-      performSearch(value);
-    }, 300);
+    // Optional: cleanup is handled by the library
+    const cancel = debouncedSearch(value);
   }
 </script>
 
 <input
   type="text"
   bind:value={query}
-  on:input={e => handleSearch(e.target.value)}
+  on:input={handleInputChange}
   placeholder="Search..."
 />
 ```
@@ -102,7 +116,7 @@ function SearchComponent() {
 
 ```vue
 <template>
-  <input v-model="query" @input="handleSearch" placeholder="Search..." />
+  <input v-model="query" @input="handleInputChange" placeholder="Search..." />
 </template>
 
 <script setup>
@@ -110,13 +124,11 @@ import { ref } from 'vue';
 import { useDebounce } from 'use-simple-debounce/vue';
 
 const query = ref('');
-const debounced = useDebounce();
+const debouncedSearch = useDebounce((query: string) => performSearch(query), 300);
 
-const handleSearch = () => {
-  debounced(() => {
-    // This will be debounced - only executes 300ms after the last call
-    performSearch(query.value);
-  }, 300);
+const handleInputChange = () => {
+  // Optional: cleanup is handled by the library
+  const cancel = debouncedSearch(query.value);
 };
 </script>
 ```
@@ -124,18 +136,18 @@ const handleSearch = () => {
 ### Vanilla JavaScript
 
 ```javascript
-import { useDebounce } from 'use-simple-debounce/vanilla';
+import { debounce } from 'use-simple-debounce/vanilla';
 
-const debounced = useDebounce();
+const debouncedSearch = debounce((query) => performSearch(query), 300);
 
-// Get the cancel function for the debounced execution
-const cancel = debounced(() => {
-  // This will be debounced - only executes 300ms after the last call
-  performSearch(query);
-}, 300);
+function handleSearch(query) {
+  // Cleanup (if needed) should be executed manually - no automatic cleanup
+  // Example: cancel()
+  const cancel = debouncedSearch(query);
+}
 
-// To cancel the pending execution
-cancel();
+const input = document.querySelector('input');
+input.addEventListener('input', (e) => handleSearch(e.target.value));
 ```
 
 ### Advanced Example
@@ -145,20 +157,20 @@ import { useDebounce } from 'use-simple-debounce';
 
 function AutoSaveEditor() {
   const [content, setContent] = useState('');
-  const debounced = useDebounce();
+  const debouncedSave = useDebounce(async (newContent: string) => {
+    try {
+      // Save after 1 second of inactivity
+      await saveToServer(newContent);
+      console.log('Auto-saved!');
+    } catch (err) {
+      console.error('Save failed:', err);
+    }
+  }, 1000);
 
   const handleChange = (newContent: string) => {
     setContent(newContent);
-
-    debounced(async () => {
-      try {
-        // Save after 1 second of inactivity
-        await saveToServer(newContent);
-        console.log('Auto-saved!');
-      } catch (err) {
-        console.error('Save failed:', err);
-      }
-    }, 1000);
+    // Optional: cleanup is handled by the library
+    const cancel = debouncedSave(newContent);
   };
 
   return (
@@ -179,17 +191,16 @@ import { useDebounce } from 'use-simple-debounce';
 function SearchComponent() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
-  const debounced = useDebounce();
-
-  const performSearch = async (searchQuery: string) => {
+  const debouncedSearch = useDebounce(async (searchQuery: string) => {
     const response = await fetch(`/api/search?q=${searchQuery}`);
     const data = await response.json();
     setResults(data.results);
-  };
+  }, 300);
 
   const handleInputChange = (value: string) => {
     setQuery(value);
-    debounced(() => performSearch(value), 300);
+    // Optional: cleanup is handled by the library
+    const cancel = debouncedSearch(value);
   };
 
   return (
@@ -212,21 +223,25 @@ function SearchComponent() {
 
 ### API Reference
 
-#### `useDebounce()` / `createDebounce()`
+#### `debounce()` / `useDebounce()` / `createDebounce()`
 
-Returns a debounced executor function.
+Creates a debounced function that accepts arguments and returns an optional cancel function.
 
 **Parameters:**
-None
+
+- `fn: F` - The function to debounce
+- `wait?: number` - The delay in milliseconds (default: 300ms)
 
 **Returns:**
-A function that accepts a function to debounce and an optional delay.
+A debounced function that accepts the same arguments as the original function and returns an optional cancel function.
 
 **Type:**
 
 ```typescript
-function useDebounce(): (fn: () => void, delay?: number) => void;
-function createDebounce(): (fn: () => void, delay?: number) => void;
+function debounce<F extends (...args: any[]) => any>(
+  fn: F,
+  wait?: number
+): (...args: Parameters<F>) => (() => void) | undefined;
 ```
 
 **Framework Usage:**
@@ -235,7 +250,20 @@ function createDebounce(): (fn: () => void, delay?: number) => void;
 - **Solid**: `import { createDebounce } from 'use-simple-debounce/solid'`
 - **Svelte**: `import { createDebounce } from 'use-simple-debounce/svelte'`
 - **Vue**: `import { useDebounce } from 'use-simple-debounce/vue'`
-- **Vanilla JS**: `import { useDebounce } from 'use-simple-debounce/vanilla'`
+- **Vanilla JS**: `import { debounce } from 'use-simple-debounce/vanilla'`
+
+**Usage Examples:**
+
+```typescript
+// Create debounced function
+const debouncedSearch = debounce((query: string) => performSearch(query), 300);
+
+// Call with arguments - returns optional cancel function
+const cancel = debouncedSearch('hello world');
+
+// Cancel if needed (optional - cleanup is handled automatically by frameworks)
+if (cancel) cancel();
+```
 
 ## Choosing the Right Delay
 
@@ -269,8 +297,10 @@ The most frequently used delay across React applications is **`300ms`** - it pro
 2. **Universal Compatibility** - Works with React 16.8+, Solid, Svelte, Vue, and vanilla JavaScript
 3. **Tiny Bundle Size** - Minimal impact on your app's size
 4. **Simple API** - Easy to understand and use across all frameworks
-5. **Memory Safe** - Automatic cleanup prevents memory leaks
-6. **Multi-Framework** - Same API and behavior across all supported frameworks
+5. **Memory Safe** - Automatic cleanup prevents memory leaks in framework hooks
+6. **TypeScript First** - Excellent TypeScript support with automatic type inference
+7. **Cancel Support** - Optional manual cancellation when needed
+8. **Multi-Framework** - Same API and behavior across all supported frameworks
 
 ## License
 
