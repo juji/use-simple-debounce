@@ -1,0 +1,186 @@
+---
+// Base layout for documentation site
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+export interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description = "A simple, dependency-free debounce utility for React, Solid, Svelte, Vue, and vanilla JavaScript with async support" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en" class="light">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<title>{title}</title>
+
+		<!-- Prevent FOUC by setting theme immediately -->
+		<script is:inline>
+			(function() {
+				try {
+					const savedTheme = localStorage.getItem('theme');
+					let themeToUse = savedTheme;
+
+					if (!savedTheme) {
+						const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+						themeToUse = prefersDark ? 'dark' : 'light';
+					}
+
+					document.documentElement.className = themeToUse;
+				} catch (e) {
+					// Fallback to light theme if anything goes wrong
+					document.documentElement.className = 'light';
+				}
+			})();
+		</script>
+
+		<!-- Preload critical fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<!-- Skip to main content for accessibility -->
+		<a href="#main-content" class="skip-link">Skip to main content</a>
+
+		<!-- Header -->
+		<Header />
+
+		<!-- Main content -->
+		<main id="main-content" class="main-content">
+			<slot />
+		</main>
+
+		<!-- Footer -->
+		<Footer />
+	</body>
+</html>
+
+<style>
+	/* CSS Variables for theming */
+	:root {
+		/* Light theme colors */
+		--color-bg-primary: #ffffff;
+		--color-bg-secondary: #f8f9fa;
+		--color-bg-tertiary: #e9ecef;
+		--color-text-primary: #212529;
+		--color-text-secondary: #6c757d;
+		--color-text-muted: #adb5bd;
+		--color-border: #dee2e6;
+		--color-accent: #059669; /* Emerald green */
+		--color-accent-hover: #047857; /* Darker emerald */
+		--color-success: #10b981; /* Green */
+		--color-warning: #ffc107;
+		--color-danger: #dc3545;
+		--color-code-bg: #f8f9fa;
+		--color-shadow: rgba(0, 0, 0, 0.1);
+
+		/* Spacing */
+		--spacing-xs: 0.25rem;
+		--spacing-sm: 0.5rem;
+		--spacing-md: 1rem;
+		--spacing-lg: 1.5rem;
+		--spacing-xl: 2rem;
+		--spacing-2xl: 3rem;
+
+		/* Typography */
+		--font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+		--font-size-xs: 0.75rem;
+		--font-size-sm: 0.875rem;
+		--font-size-base: 1rem;
+		--font-size-lg: 1.125rem;
+		--font-size-xl: 1.25rem;
+		--font-size-2xl: 1.5rem;
+		--font-size-3xl: 1.875rem;
+		--font-size-4xl: 2.25rem;
+
+		/* Layout */
+		--container-max-width: 1200px;
+		--header-height: 4rem;
+		--border-radius: 0.375rem;
+		--border-radius-lg: 0.5rem;
+
+		/* Transitions */
+		--transition-fast: 0.15s ease;
+		--transition-normal: 0.3s ease;
+	}
+
+	/* Dark theme overrides */
+	html.dark {
+		--color-bg-primary: #1a1a1a;
+		--color-bg-secondary: #2d2d2d;
+		--color-bg-tertiary: #404040;
+		--color-text-primary: #ffffff;
+		--color-text-secondary: #cccccc;
+		--color-text-muted: #888888;
+		--color-border: #404040;
+				--color-accent: #10b981; /* Lighter emerald for dark theme */
+		--color-accent-hover: #059669; /* Darker emerald for hover */
+		--color-code-bg: #2d2d2d;
+		--color-shadow: rgba(0, 0, 0, 0.3);
+	}
+
+	/* Reset and base styles */
+	* {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+	}
+
+	html {
+		font-family: var(--font-family);
+		font-size: 16px;
+		line-height: 1.6;
+		color: var(--color-text-primary);
+		background-color: var(--color-bg-primary);
+		scroll-behavior: smooth;
+	}
+
+	body {
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+	}
+
+	/* Skip link for accessibility */
+	.skip-link {
+		position: absolute;
+		top: -40px;
+		left: 6px;
+		background: var(--color-accent);
+		color: white;
+		padding: 8px;
+		text-decoration: none;
+		border-radius: var(--border-radius);
+		z-index: 1000;
+		font-size: var(--font-size-sm);
+		transition: top var(--transition-fast);
+	}
+
+	.skip-link:focus {
+		top: 6px;
+	}
+
+	/* Main content */
+	.main-content {
+		flex: 1;
+		min-height: calc(100vh - var(--header-height) - 200px);
+	}
+
+	/* Mobile responsive styles */
+	@media (max-width: 768px) {
+		.main-content {
+			width: 100%;
+			max-width: 100%;
+		}
+	}
+
+</style>

@@ -1,0 +1,94 @@
+---
+// Shiki Highlighter Component for Astro
+// Provides syntax highlighting with Shiki
+
+import { getHighlighter } from '../lib/shiki';
+
+interface Props {
+  code: string;
+  lang?: string;
+  class?: string;
+}
+
+const { code, lang = 'javascript', class: className }: Props = Astro.props;
+
+// Get the singleton highlighter instance
+const highlighter = await getHighlighter();
+
+// Generate HTML for both themes
+const lightHtml = highlighter.codeToHtml(code, {
+  lang,
+  theme: 'github-light',
+  transformers: [
+    {
+      line(node: any, line: number) {
+        node.properties['data-line'] = line;
+      }
+    }
+  ]
+});
+
+const darkHtml = highlighter.codeToHtml(code, {
+  lang,
+  theme: 'github-dark',
+  transformers: [
+    {
+      line(node: any, line: number) {
+        node.properties['data-line'] = line;
+      }
+    }
+  ]
+});
+---
+
+<div class={`shiki-highlighter ${className || ''}`} data-lang={lang}>
+  <!-- Light theme version -->
+  <div class="shiki-code light-theme" set:html={lightHtml}></div>
+  <!-- Dark theme version -->
+  <div class="shiki-code dark-theme" set:html={darkHtml}></div>
+</div>
+
+<style>
+  .shiki-highlighter {
+    width: 100%;
+    position: relative;
+    text-align: left;;
+  }
+
+  .shiki-code {
+    display: none;
+    width: 100%;
+  }
+
+  /* Show light theme by default */
+  .shiki-code.light-theme {
+    display: block;
+  }
+
+  /* Show dark theme when html has dark class */
+  html.dark .shiki-code.light-theme {
+    display: none;
+  }
+
+  html.dark .shiki-code.dark-theme {
+    display: block;
+  }
+
+  .shiki-highlighter :global(pre) {
+    margin: 0;
+    padding: var(--spacing-md);
+    background: transparent !important;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+    width: 100%;
+    overflow: auto;
+    box-sizing: border-box;
+  }
+
+  .shiki-highlighter :global(code) {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+</style>

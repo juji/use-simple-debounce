@@ -1,0 +1,266 @@
+---
+// Hero component for the homepage
+import TabbedCodePreview from './TabbedCodePreview.astro';
+
+export interface Props {
+  defaultTab?: string;
+}
+
+const { defaultTab = 'react' } = Astro.props as Props;
+---
+
+<section class="hero">
+	<div class="hero-container">
+		<div class="hero-content">
+			<h1 class="hero-title">
+				<span class="hero-title-main">use-simple-debounce</span>
+				<span class="hero-title-subtitle">Simple, dependency-free debouncing</span>
+			</h1>
+		</div>
+
+		<div class="hero-visual">
+			<TabbedCodePreview defaultOpen={defaultTab} />
+		</div>
+
+		<p class="hero-description">
+			A lightweight debounce utility for React, Solid, Svelte, Vue, and vanilla JavaScript.
+			Zero dependencies, TypeScript support, and async function handling.
+		</p>
+
+		<div class="hero-actions">
+			<a href="https://www.npmjs.com/package/use-simple-debounce" class="hero-button npm" target="_blank" rel="noopener">
+				<svg class="button-icon" viewBox="0 0 24 24" fill="currentColor">
+					<path d="M1.763 0C.786 0 0 .786 0 1.763v20.474C0 23.214.786 24 1.763 24h20.474c.977 0 1.763-.786 1.763-1.763V1.763C24 .786 23.214 0 22.237 0zM5.13 5.323l13.837.019-.009 13.836h-3.464l.01-10.382h-3.456L12.04 19.147H5.13z"/>
+				</svg>
+				<span class="button-text">View on npm</span>
+			</a>
+
+			<a href="https://github.com/juji/use-simple-debounce" class="hero-button secondary" target="_blank" rel="noopener">
+				<svg class="button-icon" viewBox="0 0 24 24" fill="currentColor">
+					<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+				</svg>
+				<span class="button-text">View on GitHub</span>
+			</a>
+		</div>
+
+		<div class="hero-features">
+			<div class="feature-item">
+				<svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<path d="M5 13l4 4L19 7"/>
+				</svg>
+				<span>Zero dependencies</span>
+			</div>
+			<div class="feature-item">
+				<svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+				</svg>
+				<span>TypeScript support</span>
+			</div>
+			<div class="feature-item">
+				<svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+				</svg>
+				<span>Async function support</span>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.hero {
+		padding: var(--spacing-2xl) 0;
+		background: linear-gradient(135deg, var(--color-bg-primary) 0%, var(--color-bg-secondary) 100%);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.hero::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: radial-gradient(circle at 20% 80%, rgba(0, 123, 255, 0.1) 0%, transparent 50%),
+					radial-gradient(circle at 80% 20%, rgba(40, 167, 69, 0.1) 0%, transparent 50%);
+		pointer-events: none;
+	}
+
+	.hero-container {
+		max-width: var(--max-width);
+		margin: 0 auto;
+		padding: 0 var(--side-padding);
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-2xl);
+		position: relative;
+		z-index: 1;
+	}
+
+	.hero-content {
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-lg);
+	}
+
+	.hero-title {
+		display: flex;
+		flex-direction: column;
+		gap: var(--spacing-sm);
+	}
+
+	.hero-title-main {
+		font-size: clamp(var(--font-size-2xl), 4vw, var(--font-size-3xl)); /* Smaller than before */
+		font-weight: 700; /* Bold */
+		background: linear-gradient(135deg, #26de81, #4ecdc4); /* Lighter gradient just for hero title */
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+		line-height: 1.1;
+		text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15); /* More visible drop shadow */
+	}
+
+	.hero-title-subtitle {
+		font-size: var(--font-size-xl);
+		color: var(--color-text-secondary);
+		font-weight: 400;
+	}
+
+	.hero-description {
+		font-size: var(--font-size-lg);
+		color: var(--color-text-secondary);
+		line-height: 1.6;
+		max-width: 500px;
+		text-align: left;
+	}
+
+	.hero-actions {
+		display: flex;
+		gap: var(--spacing-md);
+		flex-wrap: wrap;
+		justify-content: flex-start;
+	}
+
+	.hero-button {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--spacing-sm);
+		padding: var(--spacing-md) var(--spacing-lg);
+		border-radius: var(--border-radius-lg);
+		font-weight: 600;
+		font-size: var(--font-size-base);
+		text-decoration: none;
+		transition: all var(--transition-fast);
+		border: 2px solid transparent;
+	}
+
+	.hero-button.primary {
+		background: linear-gradient(135deg, var(--color-accent), var(--color-accent-hover));
+		color: white;
+		box-shadow: 0 4px 12px rgba(52, 211, 153, 0.3); /* Lighter emerald shadow */
+	}
+
+	.hero-button.primary:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4); /* Emerald green shadow on hover */
+	}
+
+	.hero-button.npm {
+		background: linear-gradient(135deg, #cb3837, #b32d2d); /* npm red gradient */
+		color: white;
+		box-shadow: 0 4px 12px rgba(203, 56, 55, 0.3); /* npm red shadow */
+	}
+
+	.hero-button.npm:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 6px 20px rgba(203, 56, 55, 0.4); /* npm red shadow on hover */
+	}
+
+	.hero-button.secondary {
+		background: var(--color-bg-tertiary);
+		color: var(--color-text-primary);
+		border-color: var(--color-border);
+	}
+
+	.hero-button.secondary:hover {
+		background: var(--color-bg-primary);
+		border-color: var(--color-accent);
+		color: var(--color-accent);
+	}
+
+	.button-icon {
+		width: 20px;
+		height: 20px;
+		flex-shrink: 0;
+	}
+
+	.hero-features {
+		display: flex;
+		gap: var(--spacing-lg);
+		flex-wrap: wrap;
+		justify-content: flex-start;
+	}
+
+	.feature-item {
+		display: flex;
+		align-items: center;
+		gap: var(--spacing-sm);
+		color: var(--color-text-secondary);
+		font-size: var(--font-size-sm);
+		font-weight: 500;
+	}
+
+	.feature-icon {
+		width: 16px;
+		height: 16px;
+		color: var(--color-success);
+		flex-shrink: 0;
+	}
+
+	.hero-visual {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	/* Mobile responsive styles */
+	@media (max-width: 640px) {
+		.hero {
+			padding: var(--spacing-xl) 0;
+		}
+
+		.hero-container {
+			padding: 0 var(--side-padding);
+		}
+
+		.hero-title-main {
+			font-size: var(--font-size-3xl);
+		}
+
+		.hero-title-subtitle {
+			font-size: var(--font-size-lg);
+		}
+
+		.hero-description {
+			font-size: var(--font-size-base);
+		}
+
+		.hero-actions {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		.hero-button {
+			padding: var(--spacing-lg);
+			width: 100%;
+			justify-content: center;
+			box-sizing: border-box;
+		}
+
+		.hero-features {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: var(--spacing-md);
+		}
+	}
+</style>

@@ -1,0 +1,221 @@
+---
+// Site header component with logo and theme toggle
+---
+
+<header class="site-header">
+	<div class="header-content">
+		<div class="logo">
+			<a href="/" class="logo-link">
+				<span class="logo-text">use-simple-debounce</span>
+			</a>
+		</div>
+
+		<div class="header-right">
+			<!-- Theme toggle -->
+			<button
+				id="theme-toggle"
+				class="theme-toggle"
+				aria-label="Switch to dark mode"
+				onclick="toggleTheme()"
+			>
+				<svg class="theme-icon light-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<circle cx="12" cy="12" r="5"></circle>
+					<line x1="12" y1="1" x2="12" y2="3"></line>
+					<line x1="12" y1="21" x2="12" y2="23"></line>
+					<line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+					<line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+					<line x1="1" y1="12" x2="3" y2="12"></line>
+					<line x1="21" y1="12" x2="23" y2="12"></line>
+					<line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+					<line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+				</svg>
+				<svg class="theme-icon dark-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+				</svg>
+			</button>
+		</div>
+	</div>
+</header>
+
+<style>
+	/* Header */
+	.site-header {
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		/* Glassmorphism effect */
+		background: rgba(255, 255, 255, 0.25);
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+		box-shadow: 0 4px 16px 0 rgba(31, 38, 135, 0.15); /* More subtle shadow */
+	}
+
+	/* Dark theme glassmorphism */
+	html.dark .site-header {
+		background: rgba(0, 0, 0, 0.25);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.125);
+		box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+	}
+
+	.header-content {
+		max-width: var(--max-width);
+		margin: 0 auto;
+		padding: 0 calc(var(--side-padding) * 0.75);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: var(--header-height);
+		position: relative;
+	}
+
+	.header-right {
+		display: flex;
+		align-items: center;
+		gap: var(--spacing-md); /* Reduced gap */
+	}
+
+	.logo-link {
+		text-decoration: none;
+		color: var(--color-text-primary);
+		font-weight: 600;
+		font-size: var(--font-size-sm); /* Slightly larger logo */
+	}
+
+	.logo-text {
+		background: linear-gradient(135deg, #059669, #10b981); /* Emerald to green gradient */
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+		text-shadow: 0 1px 3px rgba(0, 0, 0, 0.12); /* More visible but still subtle */
+	}
+
+	/* Theme toggle */
+	.theme-toggle {
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 2px; /* Much smaller padding */
+		border-radius: var(--border-radius);
+		color: var(--color-text-secondary);
+		transition: all var(--transition-fast);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.theme-toggle:hover {
+		background-color: var(--color-bg-tertiary);
+		color: var(--color-text-primary);
+	}
+
+	.theme-icon {
+		width: 16px; /* Smaller icons */
+		height: 16px;
+	}
+
+	.light-icon {
+		display: none;
+	}
+
+	.dark-icon {
+		display: block;
+	}
+
+	html.dark .light-icon {
+		display: block;
+	}
+
+	html.dark .dark-icon {
+		display: none;
+	}
+
+	/* Mobile responsive styles */
+	@media (max-width: 640px) {
+		.header-content {
+			position: relative;
+			padding: 0 var(--side-padding);
+		}
+
+		.header-right {
+			position: static;
+			width: auto;
+			background: none;
+			backdrop-filter: none;
+			-webkit-backdrop-filter: none;
+			border: none;
+			border-radius: 0;
+			box-shadow: none;
+			transform: none;
+			opacity: 1;
+			visibility: visible;
+			padding: 0;
+			flex-direction: row;
+			gap: var(--spacing-md);
+			z-index: auto;
+			box-sizing: border-box;
+		}
+
+		.theme-toggle {
+			width: auto;
+			padding: 2px;
+			margin: 0;
+			border-radius: var(--border-radius);
+		}
+
+	@media (max-width: 480px) {
+		.logo-text {
+			font-size: var(--font-size-sm); /* Reduced from base for mobile */
+		}
+
+		.header-content {
+			padding: 0 calc(var(--side-padding) * 0.75);
+		}
+	}
+</style>
+
+<!-- Theme management script -->
+<script is:inline>
+	// Theme management
+	function initTheme() {
+		const savedTheme = localStorage.getItem('theme');
+		let themeToUse = savedTheme;
+
+		// If no saved theme, check system preference and save it
+		if (!savedTheme) {
+			const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+			themeToUse = prefersDark ? 'dark' : 'light';
+			localStorage.setItem('theme', themeToUse);
+		}
+
+		document.documentElement.className = themeToUse;
+
+		// Update theme toggle button
+		const themeToggle = document.getElementById('theme-toggle');
+		if (themeToggle) {
+			themeToggle.setAttribute('aria-label', themeToUse === 'light' ? 'Switch to dark mode' : 'Switch to light mode');
+		}
+	}
+
+	function toggleTheme() {
+		const currentTheme = document.documentElement.className;
+		const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+		document.documentElement.className = newTheme;
+		localStorage.setItem('theme', newTheme);
+
+		const themeToggle = document.getElementById('theme-toggle');
+		if (themeToggle) {
+			themeToggle.setAttribute('aria-label', newTheme === 'light' ? 'Switch to dark mode' : 'Switch to light mode');
+		}
+	}
+
+	// Initialize theme on load
+	document.addEventListener('DOMContentLoaded', initTheme);
+
+	// Listen for theme changes from other tabs
+	window.addEventListener('storage', (e) => {
+		if (e.key === 'theme') {
+			document.documentElement.className = e.newValue || 'light';
+		}
+	});
+</script>
